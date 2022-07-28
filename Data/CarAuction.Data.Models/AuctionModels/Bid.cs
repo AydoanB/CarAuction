@@ -1,5 +1,4 @@
-﻿using CarAuction.Data.Models.CarModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarAuction.Data.Models.AuctionModels;
 
@@ -16,6 +15,7 @@ public class Bid
     public int UserId { get; set; }
     public virtual ApplicationUser User { get; set; }
 
+    [Column(TypeName = "decimal(4,0)")]
     public decimal AmountOfBid { get; set; }
 
     public bool IsBuyNow { get; set; }

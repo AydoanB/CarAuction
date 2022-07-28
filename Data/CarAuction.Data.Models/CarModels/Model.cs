@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using CarAuction.Data.Models.Enums;
 
 namespace CarAuction.Data.Models.CarModel;
@@ -9,6 +9,7 @@ public class Model
     public int Id { get; set; }
 
     [Required]
+    [Column(TypeName = "varchar(30)")]
     public string Name { get; set; }
 
     [Required]
@@ -21,6 +22,7 @@ public class Model
 
     public int? EuroStandart { get; set; }
 
+    [Column(TypeName = "varchar(10)")]
     public string Drivetrain { get; set; }
 
     [Required]

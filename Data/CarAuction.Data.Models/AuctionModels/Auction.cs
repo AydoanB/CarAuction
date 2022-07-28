@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using CarAuction.Data.Models.CarModel;
 
 namespace CarAuction.Data.Models.AuctionModels;
 
