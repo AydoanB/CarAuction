@@ -10,8 +10,9 @@ public class Car : BaseDeletableModel<int>
 {
     public Car()
     {
-        Accessories = new HashSet<Accessory>();
-        Bids = new HashSet<Bid>();
+        this.Accessories = new HashSet<Accessory>();
+        this.Bids = new HashSet<Bid>();
+        this.Images = new HashSet<Image>();
     }
     [Key]
     public int Id { get; set; }
@@ -44,7 +45,7 @@ public class Car : BaseDeletableModel<int>
 
     public bool IsRunning { get; set; }
 
-    //TODO Images Property
+    public virtual ICollection<Image> Images { get; set; }
 
     public virtual ICollection<Accessory> Accessories { get; set; }
 
