@@ -7,8 +7,9 @@ public class Accessory
 {
     public Accessory()
     {
-        this.CarsWithAccessory = new HashSet<Car>();
+        this.CarsAccessories = new HashSet<Car>();
     }
+
     [Key]
     public int Id { get; set; }
 
@@ -16,5 +17,5 @@ public class Accessory
     [Column(TypeName = "varchar(100)")]
     public string Name { get; set; }
 
-    public virtual ICollection<Car> CarsWithAccessory { get; set; }
+    public virtual ICollection<Car> CarsAccessories { get; set; }
 }

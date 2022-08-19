@@ -6,7 +6,7 @@ using CarAuction.Data.Models.CarModels;
 
 namespace CarAuction.Data.Models.CarModel;
 
-public class Car : BaseDeletableModel<int>
+public class Car
 {
     public Car()
     {
@@ -14,6 +14,7 @@ public class Car : BaseDeletableModel<int>
         this.Bids = new HashSet<Bid>();
         this.Images = new HashSet<Image>();
     }
+
     [Key]
     public int Id { get; set; }
 
