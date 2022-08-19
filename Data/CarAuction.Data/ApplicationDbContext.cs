@@ -1,5 +1,6 @@
 ﻿using CarAuction.Data.Models.AuctionModels;
 using CarAuction.Data.Models.CarModel;
+using CarAuction.Data.Models.CarModels;
 
 namespace CarAuction.Data
 {
@@ -107,8 +108,8 @@ namespace CarAuction.Data
                     entity.ModifiedOn = DateTime.UtcNow;
                 }
             }
-
         }
+
         public DbSet<Car> Cars { get; set; }
         public DbSet<Engine> Engines { get; set; }
         public DbSet<Model> Models { get; set; }
@@ -116,6 +117,6 @@ namespace CarAuction.Data
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Auction> Auctions { get; set; }
         public DbSet<Location> Locations{ get; set; }
-
+        public DbSet<Image> Images{ get; set; }
     }
 }
