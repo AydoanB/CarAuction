@@ -41,7 +41,7 @@ public class Car
     public long Milleage { get; set; }
 
     [Required]
-    [StringLength(14)]
+    [StringLength(17)]
     public string VIN { get; set; }
 
     public bool IsRunning { get; set; }

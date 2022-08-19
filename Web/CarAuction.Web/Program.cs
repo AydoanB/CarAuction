@@ -1,4 +1,6 @@
-﻿namespace CarAuction.Web
+﻿using CarAuction.Services.Cars;
+
+namespace CarAuction.Web
 {
     using System.Reflection;
 
@@ -65,6 +67,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ICarsService, CarsService>();
         }
 
         private static void Configure(WebApplication app)
