@@ -8,6 +8,5 @@ namespace CarAuction.Services.Cars
     public interface ICarsService
     {
         IEnumerable<ShowCarsViewModel> ShowAll();
-        Task AddCar(string modelName, string color, int mileage);
     }
 }

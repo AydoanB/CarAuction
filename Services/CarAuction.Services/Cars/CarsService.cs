@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CarAuction.Data;
+using CarAuction.Data.Models.AuctionModels;
 using CarAuction.Data.Models.CarModel;
 using CarAuction.Data.Models.CarModels;
 using CarAuction.Web.ViewModels;
@@ -23,27 +25,13 @@ namespace CarAuction.Services.Cars
             {
                 Make = x.Model.Manufacturer.Name,
                 Model = x.Model.Name,
-                StartPrice = x.BuyNowPrice
-            }).ToList();
+                StartPrice = x.BuyNowPrice,
+                DoorsCount = int.Parse(x.Model.CountOfDoors.ToString()),
+                Transmission = x.Model.Engine.GearBox.ToString()
+            })
+                .ToList();
 
             return data;
-        }
-        public async Task AddCar(string modelName, string color, int mileage)
-        {
-            var modelId = dbContext.Models.FirstOrDefault(x => x.Name == modelName).Id;
-
-            var car = new Car()
-            {
-                Accessories = new List<Accessory>(),
-                AuctionId = 4,
-                Color = color,
-                IsRunning = true,
-                Milleage = mileage,
-                ModelId = modelId
-            };
-
-            dbContext.Cars.Add(car);
-            dbContext.SaveChangesAsync();
         }
     }
 }
