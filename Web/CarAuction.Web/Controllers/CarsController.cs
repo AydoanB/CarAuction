@@ -9,17 +9,14 @@ namespace CarAuction.Web.Controllers
 
         public CarsController(ICarsService CarsService)
         {
-            carsService = CarsService;
+            this.carsService = CarsService;
         }
 
         public IActionResult All()
         {
-            return View();
-        }
+            var carsViewModels = carsService.ShowAll();
 
-        public IActionResult AddCar()
-        {
-            return this.View();
+            return View(carsViewModels);
         }
     }
 }

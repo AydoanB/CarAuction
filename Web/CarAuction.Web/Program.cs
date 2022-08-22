@@ -67,7 +67,7 @@ namespace CarAuction.Web
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<ICarsService, CarsService>();
+            services.AddScoped<ICarsService, CarsService>();
         }
 
         private static void Configure(WebApplication app)
@@ -79,7 +79,7 @@ namespace CarAuction.Web
                 dbContext.Database.Migrate();
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
-
+            
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             if (app.Environment.IsDevelopment())
