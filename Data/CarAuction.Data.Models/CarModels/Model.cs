@@ -15,14 +15,8 @@ public class Model
     [Required]
     public int YearOfProduction { get; set; }
 
-    [Required]
-    public Doors CountOfDoors { get; set; }
+    public string VehicleType { get; set; }
 
-    public CarType VehicleType { get; set; }
-
-    public int? EuroStandart { get; set; }
-
-    [Column(TypeName = "varchar(10)")]
     public string Drivetrain { get; set; }
 
     [Required]
