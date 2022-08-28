@@ -4,7 +4,7 @@ using CarAuction.Data.Models.CarModel;
 using Newtonsoft.Json;
 using RestSharp;
 
-namespace CarAuction.Services.Data
+namespace CarAuction.Services
 {
     public class CarsApiService
     {

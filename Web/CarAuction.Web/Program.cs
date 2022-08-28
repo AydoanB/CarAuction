@@ -1,4 +1,4 @@
-﻿using CarAuction.Services.Cars;
+﻿using CarAuction.Services.Data.Cars;
 
 namespace CarAuction.Web
 {
@@ -10,6 +10,7 @@ namespace CarAuction.Web
     using CarAuction.Data.Models;
     using CarAuction.Data.Repositories;
     using CarAuction.Data.Seeding;
+    using CarAuction.Services;
     using CarAuction.Services.Data;
     using CarAuction.Services.Mapping;
     using CarAuction.Services.Messaging;
@@ -74,13 +75,16 @@ namespace CarAuction.Web
         private static void Configure(WebApplication app)
         {
             // Seed data on application startup
-            using (var serviceScope = app.Services.CreateScope())
+            using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
+
+
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
-
+            
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             if (app.Environment.IsDevelopment())

@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <LangVersion>latest</LangVersion>
+    <UserSecretsId>6f4917b7-6d4a-4266-b4cc-0515b257cd3f</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -23,7 +24,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -37,6 +37,7 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,4 +46,7 @@
     <ProjectReference Include="..\CarAuction.Data.Models\CarAuction.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+  </ItemGroup>
 </Project>

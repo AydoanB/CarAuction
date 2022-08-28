@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\Data\CarAuction.Data\CarAuction.Data.csproj" />
     <ProjectReference Include="..\..\Web\CarAuction.Web.ViewModels\CarAuction.Web.ViewModels.csproj" />
     <ProjectReference Include="..\CarAuction.Services.Data\CarAuction.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Data\CarAuction.Data\CarAuction.Data.csproj" />
   </ItemGroup>
 
 </Project>

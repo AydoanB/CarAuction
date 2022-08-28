@@ -1,5 +1,4 @@
-﻿using CarAuction.Services.Cars;
-using CarAuction.Services.Data;
+﻿using CarAuction.Services.Data.Cars;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarAuction.Web.Controllers
