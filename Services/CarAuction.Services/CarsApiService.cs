@@ -8,25 +8,20 @@ namespace CarAuction.Services
 {
     public class CarsApiService
     {
-        public async Task AddCars(string make, int limit)
+        public async Task<IEnumerable<Car>> AddCars(string make, int limit)
         {
-            var client = new RestClient();
+            var client = new RestClient("https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=corolla");
 
-            var url = $"https://api.api-ninjas.com/v1/cars?limit={limit}" + $"&make={make}";
+            var request = new RestRequest();
 
+            request.AddHeader("X-RapidAPI-Key", "574c62cd9cmsh104458aa8847d87p1b1cc6jsn464602503935");
+            request.AddHeader("X-RapidAPI-Host", "cars-by-api-ninjas.p.rapidapi.com");
 
-            var request = new RestRequest(url);
-            request.AddHeader("x-api-key", "c9f5dleiao8N6d+3LmsrmA==qf17CKr6PhhuleZD");
+            var response = client.Execute(request);
 
-            var response = client.Get(request);
-            //TODO Response is done, problem with json deserializing
-            
             var serialized = JsonConvert.DeserializeObject<List<Car>>(response.Content);
 
-            foreach (var carDto in serialized)
-            {
-                var car = new Car();
-            }
+            return serialized;
         }
     }
 }
