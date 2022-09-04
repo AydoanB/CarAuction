@@ -27,6 +27,9 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+                              new EngineSeeder(),
+                              new ManufacturersSeeder(),
+                              new ModelsSeeder()
                           };
 
             foreach (var seeder in seeders)

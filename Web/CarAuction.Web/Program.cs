@@ -1,9 +1,6 @@
-﻿using CarAuction.Services.Data.Cars;
-
-namespace CarAuction.Web
+﻿namespace CarAuction.Web
 {
     using System.Reflection;
-
     using CarAuction.Data;
     using CarAuction.Data.Common;
     using CarAuction.Data.Common.Repositories;
@@ -15,7 +12,6 @@ namespace CarAuction.Web
     using CarAuction.Services.Mapping;
     using CarAuction.Services.Messaging;
     using CarAuction.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -51,10 +47,8 @@ namespace CarAuction.Web
                 });
 
             services.AddControllersWithViews(
-                options =>
-                {
-                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                }).AddRazorRuntimeCompilation();
+                    options => { options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()); })
+                .AddRazorRuntimeCompilation();
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -68,8 +62,6 @@ namespace CarAuction.Web
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
-            services.AddScoped<ICarsService, CarsService>();
-            services.AddScoped<CarsApiService, CarsApiService>();
         }
 
         private static void Configure(WebApplication app)
@@ -82,9 +74,10 @@ namespace CarAuction.Web
                 dbContext.Database.Migrate();
 
 
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter()
+                    .GetResult();
             }
-            
+
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             if (app.Environment.IsDevelopment())

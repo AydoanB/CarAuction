@@ -28,9 +28,6 @@
     <None Remove="Carsn\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Cars\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Data\CarAuction.Data\CarAuction.Data.csproj" />
     <ProjectReference Include="..\..\Data\CarAuction.Data.Models\CarAuction.Data.Models.csproj" />
     <ProjectReference Include="..\..\Web\CarAuction.Web.ViewModels\CarAuction.Web.ViewModels.csproj" />

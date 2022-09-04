@@ -233,9 +233,6 @@ namespace CarAuction.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<bool>("IsRunning")
-                        .HasColumnType("bit");
-
                     b.Property<long>("Milleage")
                         .HasColumnType("bigint");
 
@@ -246,7 +243,6 @@ namespace CarAuction.Data.Migrations
                         .HasColumnType("decimal(4,0)");
 
                     b.Property<string>("VIN")
-                        .IsRequired()
                         .HasMaxLength(17)
                         .HasColumnType("nvarchar(17)");
 
@@ -268,6 +264,9 @@ namespace CarAuction.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CombinationMpg")
                         .HasColumnType("int");
 
                     b.Property<int>("Cylinders")
