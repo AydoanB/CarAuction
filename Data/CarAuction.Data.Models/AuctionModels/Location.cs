@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+﻿namespace CarAuction.Data.Models.AuctionModels;
+
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CarAuction.Data.Models.AuctionModels;
+using CarAuction.Data.Common.Models;
 
-public class Location
+public class Location : BaseDeletableModel<int>
 {
     public Location()
     {
         this.AuctionsOnLocation = new HashSet<Auction>();
     }
-    [Key]
-    public int Id { get; set; }
-
+    
     [Required]
     [Column(TypeName = "nvarchar(200)")]
     public string Name { get; set; }

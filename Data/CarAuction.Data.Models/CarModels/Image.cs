@@ -1,11 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace CarAuction.Data.Models.CarModels;
 
-namespace CarAuction.Data.Models.CarModels;
+using System;
 
-public class Image
+using CarAuction.Data.Common.Models;
+
+public class Image : BaseModel<string>
 {
-    [Key]
-    public int Id { get; set; }
+    public Image()
+    {
+        this.Id = Guid.NewGuid().ToString();
+    }
 
     public byte[] Bytes { get; set; }
 
@@ -17,5 +21,4 @@ public class Image
 
     public int CarId { get; set; }
     public virtual Car Car { get; set; }
-
 }

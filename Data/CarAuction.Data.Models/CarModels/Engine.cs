@@ -1,17 +1,19 @@
-﻿using System.Collections.Generic;
+﻿namespace CarAuction.Data.Models.CarModel;
+
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using CarAuction.Data.Models.Enums;
 
-namespace CarAuction.Data.Models.CarModel;
+using CarAuction.Data.Common.Models;
+using Enums;
 
-public class Engine
+public class Engine : BaseDeletableModel<string>
 {
     public Engine()
     {
-        Models = new HashSet<Model>();
+        this.Id = Guid.NewGuid().ToString();
+        this.Models = new HashSet<Model>();
     }
-    [Key]
-    public int Id { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(30)")]

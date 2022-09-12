@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace CarAuction.Data.Models.AuctionModels;
 
-namespace CarAuction.Data.Models.AuctionModels;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Bid
+using CarAuction.Data.Common.Models;
+
+public class Bid : BaseDeletableModel<int>
 {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     public int CarId { get; set; }
     public Car Car { get; set; }

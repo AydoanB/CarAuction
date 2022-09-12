@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿namespace CarAuction.Data.Models.CarModel;
+
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CarAuction.Data.Models.CarModel;
+using CarAuction.Data.Common.Models;
 
-public class Manufacturer
+public class Manufacturer : BaseDeletableModel<string>
 {
     public Manufacturer()
     {
-        Models = new HashSet<Model>();
+        this.Id = Guid.NewGuid().ToString();
+        this.Models = new HashSet<Model>();
     }
-    [Key]
-    public int Id { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(30)")]

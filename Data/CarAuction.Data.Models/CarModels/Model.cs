@@ -1,12 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using CarAuction.Data.Models.Enums;
+﻿namespace CarAuction.Data.Models.CarModel;
 
-namespace CarAuction.Data.Models.CarModel;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Model
+using CarAuction.Data.Common.Models;
+
+public class Model : BaseDeletableModel<string>
 {
-    [Key]
-    public int Id { get; set; }
+    public Model()
+    {
+        this.Id = Guid.NewGuid().ToString();
+    }
 
     [Required]
     [Column(TypeName = "varchar(30)")]

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using CarAuction.Data.Common.Models;
 using CarAuction.Data.Models.AuctionModels;
@@ -6,17 +7,15 @@ using CarAuction.Data.Models.CarModels;
 
 namespace CarAuction.Data.Models.CarModel;
 
-public class Car
+public class Car : BaseDeletableModel<string>
 {
     public Car()
     {
+        this.Id = Guid.NewGuid().ToString();
         this.Bids = new HashSet<Bid>();
         this.Images = new HashSet<Image>();
     }
-
-    [Key]
-    public int Id { get; set; }
-
+    
     [Required]
     public int ModelId { get; set; }
     public virtual Model Model { get; set; }
