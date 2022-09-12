@@ -1,11 +1,17 @@
 ﻿namespace CarAuction.Data.Models.AuctionModels;
 
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using CarAuction.Data.Common.Models;
 
-public class Bid : BaseDeletableModel<int>
+public class Bid : BaseDeletableModel<string>
 {
+    public Bid()
+    {
+        this.Id = Guid.NewGuid().ToString();
+    }
+
     [Required]
     public int CarId { get; set; }
     public Car Car { get; set; }

@@ -4,14 +4,10 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using CarAuction.Data.Common.Models;
+using CarAuction.Data.Models.Enums;
 
-public class Model : BaseDeletableModel<string>
+public class Model : BaseDeletableModel<int>
 {
-    public Model()
-    {
-        this.Id = Guid.NewGuid().ToString();
-    }
-
     [Required]
     [Column(TypeName = "varchar(30)")]
     public string Name { get; set; }
@@ -19,9 +15,9 @@ public class Model : BaseDeletableModel<string>
     [Required]
     public int YearOfProduction { get; set; }
 
-    public string VehicleType { get; set; }
+    public VehicleType VehicleType { get; set; }
 
-    public string Drivetrain { get; set; }
+    public DrivetrainType Drivetrain { get; set; }
 
     [Required]
     public int ManufacturerId { get; set; }

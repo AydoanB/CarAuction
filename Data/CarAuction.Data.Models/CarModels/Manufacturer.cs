@@ -6,11 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using CarAuction.Data.Common.Models;
 
-public class Manufacturer : BaseDeletableModel<string>
+public class Manufacturer : BaseDeletableModel<int>
 {
     public Manufacturer()
     {
-        this.Id = Guid.NewGuid().ToString();
         this.Models = new HashSet<Model>();
     }
 

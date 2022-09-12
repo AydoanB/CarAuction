@@ -5,13 +5,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using CarAuction.Data.Common.Models;
-using Enums;
+using CarAuction.Data.Models.Enums;
 
-public class Engine : BaseDeletableModel<string>
+public class Engine : BaseDeletableModel<int>
 {
     public Engine()
     {
-        this.Id = Guid.NewGuid().ToString();
         this.Models = new HashSet<Model>();
     }
 
@@ -19,13 +18,11 @@ public class Engine : BaseDeletableModel<string>
     [Column(TypeName = "varchar(30)")]
     public string Name { get; set; }
 
-    public GearBox GearBox { get; set; }
-
-    public int Capacity { get; set; }
+    public TransmissionType TransmissionType { get; set; }
 
     public int Cylinders { get; set; }
 
-    public string FuelType { get; set; }
+    public FuelType FuelType { get; set; }
 
     public virtual ICollection<Model> Models { get; set; }
 }

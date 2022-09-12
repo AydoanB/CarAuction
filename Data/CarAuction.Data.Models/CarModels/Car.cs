@@ -1,21 +1,21 @@
-﻿using System;
+﻿namespace CarAuction.Data.Models.CarModel;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using CarAuction.Data.Common.Models;
 using CarAuction.Data.Models.AuctionModels;
 using CarAuction.Data.Models.CarModels;
 
-namespace CarAuction.Data.Models.CarModel;
-
-public class Car : BaseDeletableModel<string>
+public class Car : BaseDeletableModel<int>
 {
     public Car()
     {
-        this.Id = Guid.NewGuid().ToString();
         this.Bids = new HashSet<Bid>();
         this.Images = new HashSet<Image>();
     }
-    
+
     [Required]
     public int ModelId { get; set; }
     public virtual Model Model { get; set; }
