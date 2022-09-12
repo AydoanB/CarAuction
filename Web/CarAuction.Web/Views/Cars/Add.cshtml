@@ -1,25 +1,34 @@
-﻿@model CarsViewModel
-<html>
-<section class="gradient-custom">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-11 col-md-9 col-lg-8">
-                <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                    <div class="card-body p-5 text-center">
-                        <form asp-controller="Cars" asp-action="Add" method="post" class="form-control">
-                            <div asp-validation-summary="All" class="text-danger"></div>
-                            <label asp-for="Make" class="col-md-2 form-control"></label>
-                            <div class="col-md-10">
-                                <input asp-for="Make" class="form-control"/>
-                            </div>
-                            <input class="btn btn-danger" type="submit" value="Add"/>
+﻿@model CarInputModel 
+@{
+    this.ViewData["Title"] = "Create new listing";
+}
 
-                        </form>
-
-                    </div>
-                </div>
-            </div>
+<form method="post" class="col-lg-6 offset-lg-3">
+    <h1>@this.ViewData["Title"]</h1>
+    <div class="form-group">
+        <div class="form-group">
+            <label asp-for="ManufacturerId"></label>
+            <select asp-for="ManufacturerId" class="form-control" asp-items="Model.Manufacturers"></select>
         </div>
+        <div class="form-group">
+            <label asp-for="ModelId"></label>
+            <select asp-for="ModelId" class="form-control" asp-items="Model.Models"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="EngineId"></label>
+            <select asp-for="EngineId" class="form-control" asp-items="Model.Engines"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="TransmissionId"></label>
+            <select asp-for="TransmissionId" class="form-control" asp-items="Model.Transmissions"></select>
+        </div>
+        <label asp-for="DoorsCount"></label>
+        <input asp-for="DoorsCount" class="form-control"/>
+        <span asp-validation-for="DoorsCount" class="text-danger"></span>
+        <label asp-for="Year"></label>
+        <input asp-for="Year" class="form-control"/>
+        <span asp-validation-for="Year" class="text-danger"></span>
     </div>
-</section>
-</html>
+
+    <input type="submit" class="btn btn-primary"/>
+</form>
