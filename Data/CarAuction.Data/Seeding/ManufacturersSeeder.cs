@@ -16,16 +16,16 @@ namespace CarAuction.Data.Seeding
 
             var bmw = new Manufacturer()
             {
-                Name = "BMW"
+                Name = "BMW",
             };
 
             var audi = new Manufacturer()
             {
-                Name = "AUDI"
+                Name = "AUDI",
             };
             var mb = new Manufacturer()
             {
-                Name = "Mercedes-Benz"
+                Name = "Mercedes-Benz",
             };
             await dbContext.Manufacturers.AddAsync(bmw);
             await dbContext.Manufacturers.AddAsync(audi);
