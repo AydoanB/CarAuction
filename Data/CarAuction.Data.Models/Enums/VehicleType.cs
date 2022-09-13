@@ -1,6 +1,6 @@
 ﻿namespace CarAuction.Data.Models.Enums;
 
-public enum CarType
+public enum VehicleType
 {
     Sedan,
     Combi,

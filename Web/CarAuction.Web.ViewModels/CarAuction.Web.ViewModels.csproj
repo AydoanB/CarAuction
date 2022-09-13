@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\CarAuction.Data.Models\CarAuction.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\CarAuction.Services.Mapping\CarAuction.Services.Mapping.csproj" />
+    <ProjectReference Include="..\CarAuction.Web.Infrastructure\CarAuction.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -59,7 +59,10 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-            // Application services
+            services.AddTransient<IModelsService, ModelsService>();
+            services.AddTransient<IEnginesService, EnginesService>();
+            services.AddTransient<ICarsService, CarsService>();
+            services.AddTransient<IManufacturersService, ManufacturersesService>();
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
         }
@@ -72,8 +75,7 @@
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
-
-
+                
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter()
                     .GetResult();
             }
@@ -96,6 +98,7 @@
             app.UseCookiePolicy();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

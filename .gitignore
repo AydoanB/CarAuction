@@ -354,3 +354,7 @@ MigrationBackup/
 **/wwwroot/lib
 *.min.css
 *.min.js
+.DS_Store
+.idea/.idea.CarAuction/.idea/dataSources.local.xml
+.idea/.idea.CarAuction/.idea/projectSettingsUpdater.xml
+.idea/.idea.CarAuction/.idea/workspace.xml

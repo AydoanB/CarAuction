@@ -1,16 +1,16 @@
-﻿using System;
+﻿namespace CarAuction.Data.Models.AuctionModels;
+
+using System;
 using System.Collections.Generic;
 
-namespace CarAuction.Data.Models.AuctionModels;
+using CarAuction.Data.Common.Models;
 
-public class Auction
+public class Auction : BaseDeletableModel<int>
 {
     public Auction()
     {
         this.CarsInAuction = new HashSet<Car>();
     }
-    [Key]
-    public int Id { get; set; }
 
     [Required]
     public int LocationId { get; set; }

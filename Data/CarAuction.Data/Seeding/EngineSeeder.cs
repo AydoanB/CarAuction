@@ -1,12 +1,13 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using CarAuction.Data.Models.CarModel;
-using CarAuction.Data.Models.Enums;
-using Microsoft.EntityFrameworkCore;
-
 namespace CarAuction.Data.Seeding
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using CarAuction.Data.Models.CarModel;
+    using CarAuction.Data.Models.Enums;
+    using Microsoft.EntityFrameworkCore;
+
     public class EngineSeeder : ISeeder
 
     {
@@ -20,11 +21,9 @@ namespace CarAuction.Data.Seeding
             await dbContext.Engines.AddAsync(new Engine()
             {
                 Name = "335D",
-                Capacity = 3500,
-                Cylinders = 6,
-                FuelType = "Diesel",
-                GearBox = GearBox.Automatic,
-                
+                HorsePower = 6,
+                FuelType = FuelType.Diesel,
+                TransmissionType = TransmissionType.Automatic,
             });
         }
     }

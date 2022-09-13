@@ -1,62 +1,88 @@
-﻿<html>
-    <section class="w3ls-reg">
-			<form method="post" id="form" action="#">
-				<div class="row">
-					<div class="agile_full field">
-						<label for="labelName">Model Name <span>*</span></label>
-						<input type="text" id="labelName" class="form-control" data-field="modelName">
-						<div class="valid-message"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="agile_full field">
-						<label for="labelSurname">Color<span>*</span></label>
-						<input type="text" id="labelSurname" class="form-control" data-field="color">
-						<div class="valid-message"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="agile_full field">
-						<label for="labelEmail">Mileage<span>*</span></label>
-						<input type="text" id="labelEmail" class="form-control" data-field="mileage">
-						<div class="valid-message"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="agile_full field">
-						<label for="labelPhone">Phone number <span>*</span></label>
-						<input type="text" id="labelPhone" class="form-control" data-field="phone">
-						<div class="valid-message"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="agile_cont field-street field">
-						<label for="labelStreet">Street</label>
-						<input type="text" id="labelStreet" class="form-control" data-field="street">
-						<div class="valid-message"></div>
-					</div>
-					<div class="wthree_sec field-homenumber field">
-						<label for="labelHomeNumber">Home number</label>
-						<input type="text" id="labelHomeNumber" class="form-control" data-field="homenumber">
-						<div class="valid-message"></div>
-					</div>
-				</div>
-				<div class="row between_agile">
-					<div class="agile_cont field-city field">
-						<label for="labelCity">City</label>
-						<input type="text" id="labelCity" class="form-control" data-field="city">
-						<div class="valid-message"></div>
-					</div>
-					<div class="wthree_sec left-wthree field">
-						<label for="labelPostCode">Postal code</label>
-						<input type="text" id="labelPostCode" class="form-control" data-field="postcode">
-						<div class="valid-message"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="agile_full field">
-						<button class="" type="submit">Submit</button>
-					</div>
-				</div>
-			</form>
-		</section>></html>
+﻿@model CarInputModel 
+@{
+    this.ViewData["Title"] = "Create new listing";
+}
+
+<form method="post" class="col-lg-6 offset-lg-3">
+    <h1>@this.ViewData["Title"]</h1>
+    <div class="form-group">
+
+        <div class="form-group">
+            <label asp-for="ManufacturerId"></label>
+            <select asp-for="ManufacturerId" class="form-control" asp-items="Model.Manufacturers"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ModelId"></label>
+            <select asp-for="ModelId" class="form-control" asp-items="Model.Models"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EngineId"></label>
+            <select asp-for="EngineId" class="form-control" asp-items="Model.Engines"></select>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="VehicleType"></label>
+            <select asp-for="VehicleType" class="form-control" asp-items="Model.Vehicles"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TransmissionType"></label>
+            <select asp-for="TransmissionType" class="form-control" asp-items="Model.Transmissions"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DrivetrainType"></label>
+            <select asp-for="DrivetrainType" class="form-control" asp-items="Model.Drivetrains"></select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FuelType"></label>
+            <select asp-for="FuelType" class="form-control" asp-items="Model.Fuels"></select>
+        </div>
+
+        <label asp-for="HorsePower"></label>
+        <input asp-for="HorsePower" class="form-control"/>
+        <span asp-validation-for="HorsePower" class="text-danger"></span>
+
+        <label asp-for="DoorsCount"></label>
+        <input asp-for="DoorsCount" class="form-control"/>
+        <span asp-validation-for="DoorsCount" class="text-danger"></span>
+
+        <div class="form-group">
+            <label asp-for="ColorType"></label>
+            <select asp-for="ColorType" class="form-control" asp-items="Model.Colors"></select>
+        </div>
+
+        <label asp-for="Year"></label>
+        <input asp-for="Year" class="form-control"/>
+        <span asp-validation-for="Year" class="text-danger"></span>
+
+        <label asp-for="Milleage"></label>
+        <input asp-for="Milleage" class="form-control"/>
+        <span asp-validation-for="Milleage" class="text-danger"></span>
+
+
+        <label asp-for="StartPrice"></label>
+        <input asp-for="StartPrice" class="form-control" value="1500"/>
+        <span asp-validation-for="StartPrice" class="text-danger"></span>
+
+        <label asp-for="BuyNowPrice"></label>
+        <input asp-for="BuyNowPrice" class="form-control" value="1500"/>
+        <span asp-validation-for="BuyNowPrice" class="text-danger"></span>
+
+        <div class="form-group">
+            <label asp-for="Images" class="form-label"></label>
+            <input asp-for="Images" class="form-control form-control-lg input transparent-input" multiple/>
+            <span asp-validation-for="Images" class="text-danger"></span>
+        </div>
+
+        <label asp-for="IsRunning"></label>
+        <input type="radio" value="true" asp-for="IsRunning" checked class="form-control"/>
+        <input type="radio" value="false" asp-for="IsRunning" class="form-control"/>
+        <span asp-validation-for="IsRunning" class="text-danger"></span>
+    </div>
+
+    <input type="submit" class="btn btn-primary"/>
+</form>

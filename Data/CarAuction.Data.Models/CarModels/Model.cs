@@ -1,13 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace CarAuction.Data.Models.CarModel;
+
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
+using CarAuction.Data.Common.Models;
 using CarAuction.Data.Models.Enums;
 
-namespace CarAuction.Data.Models.CarModel;
-
-public class Model
+public class Model : BaseDeletableModel<int>
 {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     [Column(TypeName = "varchar(30)")]
     public string Name { get; set; }
@@ -15,9 +15,9 @@ public class Model
     [Required]
     public int YearOfProduction { get; set; }
 
-    public string VehicleType { get; set; }
+    public VehicleType VehicleType { get; set; }
 
-    public string Drivetrain { get; set; }
+    public DrivetrainType Drivetrain { get; set; }
 
     [Required]
     public int ManufacturerId { get; set; }

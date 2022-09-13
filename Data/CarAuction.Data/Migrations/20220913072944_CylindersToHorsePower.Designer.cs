@@ -12,32 +12,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarAuction.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220819081604_InitialModelCreate")]
-    partial class InitialModelCreate
+    [Migration("20220913072944_CylindersToHorsePower")]
+    partial class CylindersToHorsePower
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("AccessoryCar", b =>
-                {
-                    b.Property<int>("AccessoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CarsAccessoriesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AccessoriesId", "CarsAccessoriesId");
-
-                    b.HasIndex("CarsAccessoriesId");
-
-                    b.ToTable("AccessoryCar");
-                });
 
             modelBuilder.Entity("CarAuction.Data.Models.ApplicationRole", b =>
                 {
@@ -167,16 +152,30 @@ namespace CarAuction.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LocationId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("LocationId");
 
@@ -185,11 +184,8 @@ namespace CarAuction.Data.Migrations
 
             modelBuilder.Entity("CarAuction.Data.Models.AuctionModels.Bid", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("AmountOfBid")
                         .HasColumnType("decimal(4,0)");
@@ -197,8 +193,20 @@ namespace CarAuction.Data.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsBuyNow")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -209,6 +217,8 @@ namespace CarAuction.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CarId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("UserId1");
 
@@ -223,11 +233,25 @@ namespace CarAuction.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Locations");
                 });
@@ -250,6 +274,15 @@ namespace CarAuction.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsRunning")
                         .HasColumnType("bit");
 
@@ -259,17 +292,17 @@ namespace CarAuction.Data.Migrations
                     b.Property<int>("ModelId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal>("StartingPrice")
                         .HasColumnType("decimal(4,0)");
-
-                    b.Property<string>("VIN")
-                        .IsRequired()
-                        .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuctionId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("ModelId");
 
@@ -284,20 +317,34 @@ namespace CarAuction.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Capacity")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FuelType")
                         .HasColumnType("int");
 
-                    b.Property<int>("GearBox")
+                    b.Property<int>("HorsePower")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(30)");
 
+                    b.Property<int>("TransmissionType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Engines");
                 });
@@ -310,11 +357,25 @@ namespace CarAuction.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Manufacturers");
                 });
@@ -327,20 +388,26 @@ namespace CarAuction.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CountOfDoors")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Drivetrain")
-                        .HasColumnType("varchar(10)");
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Drivetrain")
+                        .HasColumnType("int");
 
                     b.Property<int>("EngineId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EuroStandart")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ManufacturerId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -356,35 +423,17 @@ namespace CarAuction.Data.Migrations
 
                     b.HasIndex("EngineId");
 
+                    b.HasIndex("IsDeleted");
+
                     b.HasIndex("ManufacturerId");
 
                     b.ToTable("Models");
                 });
 
-            modelBuilder.Entity("CarAuction.Data.Models.CarModels.Accessory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Accessory");
-                });
-
             modelBuilder.Entity("CarAuction.Data.Models.CarModels.Image", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("Bytes")
                         .HasColumnType("varbinary(max)");
@@ -392,11 +441,17 @@ namespace CarAuction.Data.Migrations
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileExtension")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Size")
                         .HasColumnType("decimal(18,2)");
@@ -545,21 +600,6 @@ namespace CarAuction.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("AccessoryCar", b =>
-                {
-                    b.HasOne("CarAuction.Data.Models.CarModels.Accessory", null)
-                        .WithMany()
-                        .HasForeignKey("AccessoriesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CarAuction.Data.Models.CarModel.Car", null)
-                        .WithMany()
-                        .HasForeignKey("CarsAccessoriesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CarAuction.Data.Models.AuctionModels.Auction", b =>

@@ -1,21 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System.Drawing;
+using CarAuction.Data.Models.Enums;
+using Color = CarAuction.Data.Models.Enums.Color;
+
+namespace CarAuction.Data.Models.CarModel;
+
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using CarAuction.Data.Common.Models;
 using CarAuction.Data.Models.AuctionModels;
 using CarAuction.Data.Models.CarModels;
 
-namespace CarAuction.Data.Models.CarModel;
-
-public class Car
+public class Car : BaseDeletableModel<int>
 {
     public Car()
     {
         this.Bids = new HashSet<Bid>();
         this.Images = new HashSet<Image>();
     }
-
-    [Key]
-    public int Id { get; set; }
 
     [Required]
     public int ModelId { get; set; }
@@ -34,14 +37,10 @@ public class Car
 
     [Required]
     [Column(TypeName = "varchar(50)")]
-    public string Color { get; set; }
+    public Color Color { get; set; }
 
     [Required]
     public long Milleage { get; set; }
-
-    [Required]
-    [StringLength(17)]
-    public string VIN { get; set; }
 
     public bool IsRunning { get; set; }
 
