@@ -1,3 +1,5 @@
+using System;
+
 namespace CarAuction.Web.Controllers
 {
     using System.Linq;
@@ -21,7 +23,7 @@ namespace CarAuction.Web.Controllers
         {
             var viewModel = new CarInputModel();
 
-            viewModel = this.carsService.PopulateDropdown(viewModel);
+            viewModel = this.carsService.PopulateDropdowns(viewModel);
 
             return Task.FromResult<IActionResult>(this.View(viewModel));
         }
@@ -34,6 +36,7 @@ namespace CarAuction.Web.Controllers
                 return this.View(car);
             }
 
+            await this.carsService.CreateAsync(car, Guid.NewGuid().ToString(), "");
             return this.RedirectToAction(nameof(this.All));
         }
 

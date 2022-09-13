@@ -9,6 +9,6 @@ namespace CarAuction.Services.Data
         Task CreateAsync(CarInputModel input, string userId, string imagePath);
         Task<ICollection<CarInputModel>> ShowAll();
 
-        public CarInputModel PopulateDropdown(CarInputModel inputModel);
+        public CarInputModel PopulateDropdowns(CarInputModel inputModel);
     }
 }

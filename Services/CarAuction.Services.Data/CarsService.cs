@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.JsonPatch.Helpers;
-
 namespace CarAuction.Services.Data
 {
     using System;
@@ -16,18 +14,18 @@ namespace CarAuction.Services.Data
 
     public class CarsService : ICarsService
     {
-        private readonly IDeletableEntityRepository<Manufacturer> manufacturersRepository;
+        private readonly IDeletableEntityRepository<Car> carsRepository;
         private readonly IManufacturersService manufacturersService;
         private readonly IModelsService modelsService;
         private readonly IEnginesService enginesService;
 
         public CarsService(
-            IDeletableEntityRepository<Manufacturer> manufacturersRepository,
+            IDeletableEntityRepository<Car> carsRepository,
             IManufacturersService manufacturersService,
             IModelsService modelsService,
             IEnginesService enginesService)
         {
-            this.manufacturersRepository = manufacturersRepository;
+            this.carsRepository = carsRepository;
             this.manufacturersService = manufacturersService;
             this.modelsService = modelsService;
             this.enginesService = enginesService;
@@ -42,14 +40,23 @@ namespace CarAuction.Services.Data
                 IsRunning = input.IsRunning,
                 Milleage = input.Milleage,
                 BuyNowPrice = input.BuyNowPrice,
-                Color = input.ColorType
+                Color = input.ColorType,
             };
+            car.Model.ManufacturerId = input.ManufacturerId;
+            car.Model.EngineId = input.EngineId;
             car.Model.Engine.TransmissionType = input.TransmissionType;
+            car.Model.Drivetrain = input.DrivetrainType;
+            car.Model.Engine.FuelType = input.FuelType;
+            car.Model.Engine.HorsePower = input.HorsePower;
+            car.Model.VehicleType = input.VehicleType;
 
             if (car.Model.ManufacturerId != input.ManufacturerId)
             {
                 throw new InvalidExpressionException("There is no Make/Model car");
             }
+
+            await this.carsRepository.AddAsync(car);
+            await this.carsRepository.SaveChangesAsync();
         }
 
         public Task<ICollection<CarInputModel>> ShowAll()
@@ -57,14 +64,12 @@ namespace CarAuction.Services.Data
             throw new NotImplementedException();
         }
 
-        public CarInputModel PopulateDropdown(CarInputModel inputModel)
+        public CarInputModel PopulateDropdowns(CarInputModel inputModel)
         {
             inputModel.Manufacturers = this.manufacturersService.GetAllAsKeyValuePairs()
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 
-            var manufacturer = this.manufacturersRepository.All().FirstOrDefault(x => x.Name == "BMW")!.Id;
-
-            inputModel.Models = this.modelsService.GetAllAsKeyValuePairs(manufacturer)
+            inputModel.Models = this.modelsService.GetAllAsKeyValuePairs(1)
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 
             inputModel.Engines = this.enginesService.GetAllAsKeyValuePairs(2)
@@ -77,6 +82,8 @@ namespace CarAuction.Services.Data
             inputModel.Fuels = PopulateEnumValuesIntoDropdown<FuelType>();
 
             inputModel.Colors = PopulateEnumValuesIntoDropdown<Color>();
+
+            inputModel.Vehicles = PopulateEnumValuesIntoDropdown<VehicleType>();
 
             return inputModel;
         }
