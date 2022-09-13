@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.JsonPatch.Helpers;
+
 namespace CarAuction.Services.Data
 {
     using System;
@@ -40,7 +42,7 @@ namespace CarAuction.Services.Data
                 IsRunning = input.IsRunning,
                 Milleage = input.Milleage,
                 BuyNowPrice = input.BuyNowPrice,
-                Color = input.Color
+                Color = input.ColorType
             };
             car.Model.Engine.TransmissionType = input.TransmissionType;
 
@@ -68,34 +70,33 @@ namespace CarAuction.Services.Data
             inputModel.Engines = this.enginesService.GetAllAsKeyValuePairs(2)
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 
-            inputModel.Transmissions = Enum.GetValues<TransmissionType>().Select(x => new
-            {
-                Value = x.ToString(),
-                Text = x.ToString(),
-            }).ToList().Select(x => new SelectListItem(x.Value, x.Text));
+            inputModel.Transmissions = PopulateEnumValuesIntoDropdown<TransmissionType>();
 
-            inputModel.Drivetrains = Enum.GetValues<DrivetrainType>().Select(x => new
-            {
-                Value = x.ToString(),
-                Text = x.ToString(),
-            }).ToList().Select(x => new SelectListItem(x.Value, x.Text));
+            inputModel.Drivetrains = PopulateEnumValuesIntoDropdown<DrivetrainType>();
 
-            inputModel.Fuels = Enum.GetValues<FuelType>().Select(x => new
-            {
-                Value = x.ToString(),
-                Text = x.ToString(),
-            }).ToList().Select(x => new SelectListItem(x.Value, x.Text));
+            inputModel.Fuels = PopulateEnumValuesIntoDropdown<FuelType>();
+
+            inputModel.Colors = PopulateEnumValuesIntoDropdown<Color>();
 
             return inputModel;
         }
 
-        // private static SelectListItem PopulateEnumValuesIntoDropdown<TEnum>(string type) where TEnum : struct, IConvertible
-        // {
-        //     return Enum.GetValues(typeof(TEnum)).Select(x => new
-        //     {
-        //         Value = x.ToString(),
-        //         Text = x.ToString()
-        //     }).ToList().Select(x => new SelectListItem(x.Value, x.Text));
-        // }
+        private static List<SelectListItem> PopulateEnumValuesIntoDropdown<T>()
+        {
+            Type enumType = typeof(T);
+
+            var enumList = new List<SelectListItem>();
+
+            foreach (var enumValue in Enum.GetValues(enumType))
+            {
+                enumList.Add(new SelectListItem()
+                {
+                    Text = enumValue.ToString(),
+                    Value = enumValue.ToString(),
+                });
+            }
+
+            return enumList;
+        }
     }
 }
