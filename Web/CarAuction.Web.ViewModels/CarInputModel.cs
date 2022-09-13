@@ -38,6 +38,9 @@ namespace CarAuction.Web.ViewModels
         public Color ColorType { get; set; }
         public IEnumerable<SelectListItem> Colors { get; set; }
 
+        public VehicleType VehicleType { get; set; }
+        public IEnumerable<SelectListItem> Vehicles { get; set; }
+
         [Range(2, 5)]
         [DisplayName("Count of doors")]
         public int DoorsCount { get; set; } = 2;
