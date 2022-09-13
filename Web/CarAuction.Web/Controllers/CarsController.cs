@@ -34,8 +34,6 @@ namespace CarAuction.Web.Controllers
                 return this.View(car);
             }
 
-            await this.carsService.CreateAsync(car);
-
             return this.RedirectToAction(nameof(this.All));
         }
 

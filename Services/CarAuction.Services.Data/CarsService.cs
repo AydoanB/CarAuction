@@ -1,14 +1,14 @@
-using CarAuction.Data.Models.Enums;
-
 namespace CarAuction.Services.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Threading.Tasks;
 
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.CarModel;
+    using CarAuction.Data.Models.Enums;
     using CarAuction.Web.ViewModels;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -31,9 +31,23 @@ namespace CarAuction.Services.Data
             this.enginesService = enginesService;
         }
 
-        public async Task CreateAsync(CarInputModel car)
+        public async Task CreateAsync(CarInputModel input, string userId, string imagePath)
         {
+            var car = new Car()
+            {
+                ModelId = input.ModelId,
+                StartingPrice = input.StartPrice,
+                IsRunning = input.IsRunning,
+                Milleage = input.Milleage,
+                BuyNowPrice = input.BuyNowPrice,
+                Color = input.Color
+            };
+            car.Model.Engine.TransmissionType = input.TransmissionType;
 
+            if (car.Model.ManufacturerId != input.ManufacturerId)
+            {
+                throw new InvalidExpressionException("There is no Make/Model car");
+            }
         }
 
         public Task<ICollection<CarInputModel>> ShowAll()
@@ -57,10 +71,31 @@ namespace CarAuction.Services.Data
             inputModel.Transmissions = Enum.GetValues<TransmissionType>().Select(x => new
             {
                 Value = x.ToString(),
-                Text = x.ToString()
+                Text = x.ToString(),
+            }).ToList().Select(x => new SelectListItem(x.Value, x.Text));
+
+            inputModel.Drivetrains = Enum.GetValues<DrivetrainType>().Select(x => new
+            {
+                Value = x.ToString(),
+                Text = x.ToString(),
+            }).ToList().Select(x => new SelectListItem(x.Value, x.Text));
+
+            inputModel.Fuels = Enum.GetValues<FuelType>().Select(x => new
+            {
+                Value = x.ToString(),
+                Text = x.ToString(),
             }).ToList().Select(x => new SelectListItem(x.Value, x.Text));
 
             return inputModel;
         }
+
+        // private static SelectListItem PopulateEnumValuesIntoDropdown<TEnum>(string type) where TEnum : struct, IConvertible
+        // {
+        //     return Enum.GetValues(typeof(TEnum)).Select(x => new
+        //     {
+        //         Value = x.ToString(),
+        //         Text = x.ToString()
+        //     }).ToList().Select(x => new SelectListItem(x.Value, x.Text));
+        // }
     }
 }

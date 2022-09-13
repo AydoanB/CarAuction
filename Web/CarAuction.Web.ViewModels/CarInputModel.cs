@@ -1,10 +1,13 @@
-﻿namespace CarAuction.Web.ViewModels
+﻿using Microsoft.AspNetCore.Http;
+
+namespace CarAuction.Web.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    using CarAuction.Data.Models.Enums;
     using CarAuction.Web.Infrastructure.ValidationAttributes;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -26,8 +29,14 @@
         public IEnumerable<SelectListItem> Engines { get; set; }
 
         [DisplayName("Start price")]
-        [DefaultValue(1500)]
         public decimal StartPrice { get; set; }
+
+        [DisplayName("Buy now price")]
+        public decimal? BuyNowPrice { get; set; }
+
+        [Required]
+        [DefaultValue("Black")]
+        public string Color { get; set; }
 
         [Range(2, 5)]
         [DisplayName("Count of doors")]
@@ -35,11 +44,32 @@
 
         [Required]
         [DisplayName("Transmission")]
-        public string TransmissionId { get; set; }
+        public TransmissionType TransmissionType { get; set; }
         public IEnumerable<SelectListItem> Transmissions { get; set; }
+
+        [Required]
+        [DisplayName("Drivetrain")]
+        public DrivetrainType DrivetrainType { get; set; }
+        public IEnumerable<SelectListItem> Drivetrains { get; set; }
+
+        [Required]
+        [DisplayName("Fuel")]
+        public FuelType FuelType { get; set; }
+        public IEnumerable<SelectListItem> Fuels { get; set; }
+
+        [Required]
+        public int HorsePower { get; set; }
 
         [Required]
         [ValidDate]
         public int Year { get; set; } = DateTime.UtcNow.Year;
+
+        [Required]
+        public bool IsRunning { get; set; }
+
+        [Required]
+        public long Milleage { get; set; }
+
+        public IEnumerable<IFormFile> Images { get; set; }
     }
 }

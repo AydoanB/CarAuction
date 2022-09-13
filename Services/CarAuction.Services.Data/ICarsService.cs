@@ -2,14 +2,13 @@ namespace CarAuction.Services.Data
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
     using CarAuction.Web.ViewModels;
 
     public interface ICarsService
     {
-        Task CreateAsync(CarInputModel car);
+        Task CreateAsync(CarInputModel input, string userId, string imagePath);
         Task<ICollection<CarInputModel>> ShowAll();
 
-        CarInputModel PopulateDropdown(CarInputModel inputModel);
+        public CarInputModel PopulateDropdown(CarInputModel inputModel);
     }
 }
