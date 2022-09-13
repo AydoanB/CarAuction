@@ -4,8 +4,8 @@ namespace CarAuction.Data.Models.Enums
 
     public enum FuelType
     {
-        [Description("Gas")] gas,
-        [Description("Diesel")] diesel,
-        [Description("Electricity")] electricity,
+        [Description("Gas")] Gas,
+        [Description("Diesel")] Diesel,
+        [Description("Electricity")] Electricity,
     }
 }
