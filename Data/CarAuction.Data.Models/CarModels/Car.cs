@@ -38,10 +38,6 @@ public class Car : BaseDeletableModel<int>
     [Required]
     public long Milleage { get; set; }
 
-    [Required]
-    [StringLength(17)]
-    public string VIN { get; set; }
-
     public bool IsRunning { get; set; }
 
     public virtual ICollection<Image> Images { get; set; }

@@ -21,8 +21,8 @@ namespace CarAuction.Data.Seeding
             await dbContext.Engines.AddAsync(new Engine()
             {
                 Name = "335D",
-                Cylinders = 6,
-                FuelType = FuelType.diesel,
+                HorsePower = 6,
+                FuelType = FuelType.Diesel,
                 TransmissionType = TransmissionType.Automatic,
             });
         }

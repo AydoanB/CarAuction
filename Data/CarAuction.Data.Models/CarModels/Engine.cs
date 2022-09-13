@@ -20,7 +20,7 @@ public class Engine : BaseDeletableModel<int>
 
     public TransmissionType TransmissionType { get; set; }
 
-    public int Cylinders { get; set; }
+    public int HorsePower { get; set; }
 
     public FuelType FuelType { get; set; }
 
