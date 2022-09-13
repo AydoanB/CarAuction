@@ -34,9 +34,9 @@ namespace CarAuction.Web.ViewModels
         [DisplayName("Buy now price")]
         public decimal? BuyNowPrice { get; set; }
 
-        [Required]
-        [DefaultValue("Black")]
-        public string Color { get; set; }
+        [DefaultValue(Color.Black)]
+        public Color ColorType { get; set; }
+        public IEnumerable<SelectListItem> Colors { get; set; }
 
         [Range(2, 5)]
         [DisplayName("Count of doors")]

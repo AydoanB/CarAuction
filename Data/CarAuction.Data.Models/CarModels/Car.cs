@@ -1,4 +1,8 @@
-﻿namespace CarAuction.Data.Models.CarModel;
+﻿using System.Drawing;
+using CarAuction.Data.Models.Enums;
+using Color = CarAuction.Data.Models.Enums.Color;
+
+namespace CarAuction.Data.Models.CarModel;
 
 using System;
 using System.Collections.Generic;
@@ -33,7 +37,7 @@ public class Car : BaseDeletableModel<int>
 
     [Required]
     [Column(TypeName = "varchar(50)")]
-    public string Color { get; set; }
+    public Color Color { get; set; }
 
     [Required]
     public long Milleage { get; set; }
