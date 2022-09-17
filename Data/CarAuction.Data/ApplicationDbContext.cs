@@ -1,8 +1,4 @@
-﻿using CarAuction.Data.Models.AuctionModels;
-using CarAuction.Data.Models.CarModel;
-using CarAuction.Data.Models.CarModels;
-
-namespace CarAuction.Data
+﻿namespace CarAuction.Data
 {
     using System;
     using System.Linq;
@@ -12,7 +8,9 @@ namespace CarAuction.Data
 
     using CarAuction.Data.Common.Models;
     using CarAuction.Data.Models;
-
+    using CarAuction.Data.Models.AuctionModels;
+    using CarAuction.Data.Models.CarModel;
+    using CarAuction.Data.Models.CarModels;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 

@@ -21,7 +21,7 @@
             <label asp-for="EngineId"></label>
             <select asp-for="EngineId" class="form-control" asp-items="Model.Engines"></select>
         </div>
-        
+
         <div class="form-group">
             <label asp-for="VehicleType"></label>
             <select asp-for="VehicleType" class="form-control" asp-items="Model.Vehicles"></select>
@@ -82,6 +82,11 @@
         <input type="radio" value="true" asp-for="IsRunning" checked class="form-control"/>
         <input type="radio" value="false" asp-for="IsRunning" class="form-control"/>
         <span asp-validation-for="IsRunning" class="text-danger"></span>
+
+        <div class="form-group">
+            <label asp-for="AuctionId"></label>
+            <select asp-for="AuctionId" class="form-control" asp-items="Model.Auctions"></select>
+        </div>
     </div>
 
     <input type="submit" class="btn btn-primary"/>

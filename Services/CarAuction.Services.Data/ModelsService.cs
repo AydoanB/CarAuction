@@ -28,5 +28,10 @@ namespace CarAuction.Services.Data
                 .ToList()
                 .Select(x => new KeyValuePair<int, string>(x.Id, x.Name));
         }
+
+        public Model GetById(int id)
+        {
+            return this.models.All().FirstOrDefault(x => x.Id == id);
+        }
     }
 }
