@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace CarAuction.Web.ViewModels
+﻿namespace CarAuction.Web.ViewModels
 {
     using System;
     using System.Collections.Generic;
@@ -9,23 +7,24 @@ namespace CarAuction.Web.ViewModels
 
     using CarAuction.Data.Models.Enums;
     using CarAuction.Web.Infrastructure.ValidationAttributes;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class CarInputModel
     {
         [DisplayName("Manufacturer")]
-        public int ManufacturerId { get; set; }
         [Required]
+        public int ManufacturerId { get; set; }
         public IEnumerable<SelectListItem> Manufacturers { get; set; }
 
+        [Required]
         [DisplayName("Model")]
         public int ModelId { get; set; }
-        [Required]
         public IEnumerable<SelectListItem> Models { get; set; }
 
         [DisplayName("Engine")]
-        public int EngineId { get; set; }
         [Required]
+        public int EngineId { get; set; }
         public IEnumerable<SelectListItem> Engines { get; set; }
 
         [DisplayName("Start price")]
@@ -71,8 +70,14 @@ namespace CarAuction.Web.ViewModels
         public bool IsRunning { get; set; }
 
         [Required]
+        [DisplayName("Mileage")]
         public long Milleage { get; set; }
 
         public IEnumerable<IFormFile> Images { get; set; }
+
+        [DisplayName("Auction")]
+        public int AuctionId { get; set; }
+
+        public IEnumerable<SelectListItem> Auctions { get; set; }
     }
 }
