@@ -4,7 +4,7 @@
 
 namespace CarAuction.Data.Migrations
 {
-    public partial class ColorToEnum : Migration
+    public partial class AuctionId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

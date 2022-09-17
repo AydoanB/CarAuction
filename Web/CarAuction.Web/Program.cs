@@ -60,6 +60,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             services.AddTransient<IModelsService, ModelsService>();
+            services.AddTransient<IAuctionService,AuctionService>();
             services.AddTransient<IEnginesService, EnginesService>();
             services.AddTransient<ICarsService, CarsService>();
             services.AddTransient<IManufacturersService, ManufacturersesService>();

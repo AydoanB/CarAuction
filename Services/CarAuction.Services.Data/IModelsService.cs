@@ -8,5 +8,7 @@ namespace CarAuction.Services.Data
     public interface IModelsService
     {
         IEnumerable<KeyValuePair<int, string>> GetAllAsKeyValuePairs(int manufacturerId);
+
+        Model GetById(int id);
     }
 }

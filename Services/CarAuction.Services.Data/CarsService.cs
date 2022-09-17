@@ -18,37 +18,44 @@ namespace CarAuction.Services.Data
         private readonly IManufacturersService manufacturersService;
         private readonly IModelsService modelsService;
         private readonly IEnginesService enginesService;
+        private readonly IAuctionService auctionService;
 
         public CarsService(
             IDeletableEntityRepository<Car> carsRepository,
             IManufacturersService manufacturersService,
             IModelsService modelsService,
-            IEnginesService enginesService)
+            IEnginesService enginesService,
+            IAuctionService auctionService)
         {
             this.carsRepository = carsRepository;
             this.manufacturersService = manufacturersService;
             this.modelsService = modelsService;
             this.enginesService = enginesService;
+            this.auctionService = auctionService;
         }
 
         public async Task CreateAsync(CarInputModel input, string userId, string imagePath)
         {
+            var model = this.modelsService.GetById(input.ModelId);
+
+            model.Manufacturer = this.manufacturersService.GetById(input.ManufacturerId);
+            model.Engine = this.enginesService.GetById(input.EngineId);
+            model.Engine.TransmissionType = input.TransmissionType;
+            model.Engine.FuelType = input.FuelType;
+            model.Engine.HorsePower = input.HorsePower;
+            model.Drivetrain = input.DrivetrainType;
+            model.VehicleType = input.VehicleType;
+
             var car = new Car()
             {
-                ModelId = input.ModelId,
+                Model = model,
                 StartingPrice = input.StartPrice,
                 IsRunning = input.IsRunning,
                 Milleage = input.Milleage,
                 BuyNowPrice = input.BuyNowPrice,
                 Color = input.ColorType,
+                Auction = this.auctionService.GetById(input.AuctionId)
             };
-            car.Model.ManufacturerId = input.ManufacturerId;
-            car.Model.EngineId = input.EngineId;
-            car.Model.Engine.TransmissionType = input.TransmissionType;
-            car.Model.Drivetrain = input.DrivetrainType;
-            car.Model.Engine.FuelType = input.FuelType;
-            car.Model.Engine.HorsePower = input.HorsePower;
-            car.Model.VehicleType = input.VehicleType;
 
             if (car.Model.ManufacturerId != input.ManufacturerId)
             {
@@ -73,6 +80,9 @@ namespace CarAuction.Services.Data
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 
             inputModel.Engines = this.enginesService.GetAllAsKeyValuePairs(2)
+                .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
+
+            inputModel.Auctions = this.auctionService.GetAllAsKeyValuePairs()
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 
             inputModel.Transmissions = PopulateEnumValuesIntoDropdown<TransmissionType>();
