@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarAuction.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220913182653_ColorToEnum")]
-    partial class ColorToEnum
+    [Migration("20220917181408_AuctionId")]
+    partial class AuctionId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

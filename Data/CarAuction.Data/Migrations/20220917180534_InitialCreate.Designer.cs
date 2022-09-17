@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarAuction.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220912191121_InitialCreate")]
+    [Migration("20220917180534_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -298,11 +298,6 @@ namespace CarAuction.Data.Migrations
                     b.Property<decimal>("StartingPrice")
                         .HasColumnType("decimal(4,0)");
 
-                    b.Property<string>("VIN")
-                        .IsRequired()
-                        .HasMaxLength(17)
-                        .HasColumnType("nvarchar(17)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuctionId");
@@ -325,13 +320,13 @@ namespace CarAuction.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Cylinders")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FuelType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HorsePower")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
