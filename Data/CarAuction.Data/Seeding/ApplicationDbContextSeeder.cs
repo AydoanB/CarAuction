@@ -29,7 +29,8 @@
                               new SettingsSeeder(),
                               new EngineSeeder(),
                               new ManufacturersSeeder(),
-                              new ModelsSeeder()
+                              new ModelsSeeder(),
+                              new AuctionsSeeder(),
                           };
 
             foreach (var seeder in seeders)
