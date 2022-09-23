@@ -1,4 +1,6 @@
-﻿namespace CarAuction.Web
+﻿using CloudinaryDotNet;
+
+namespace CarAuction.Web
 {
     using System.Reflection;
     using CarAuction.Data;
@@ -24,6 +26,13 @@
     {
         public static void Main(string[] args)
         {
+            Account account = new Account(
+                "dlc3ozbde",
+                "368692166294634",
+                "qg2UlDzdvpEunJcasG7qjPWrOgY");
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
             var builder = WebApplication.CreateBuilder(args);
             ConfigureServices(builder.Services, builder.Configuration);
             var app = builder.Build();
@@ -59,13 +68,16 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-            services.AddTransient<IModelsService, ModelsService>();
-            services.AddTransient<IAuctionService,AuctionService>();
-            services.AddTransient<IEnginesService, EnginesService>();
-            services.AddTransient<ICarsService, CarsService>();
-            services.AddTransient<IManufacturersService, ManufacturersesService>();
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IModelsService, ModelsService>();
+            services.AddTransient<IManufacturersService, ManufacturersesService>();
+            services.AddTransient<IAuctionService, AuctionService>();
+            services.AddTransient<IEnginesService, EnginesService>();
+            services.AddTransient<ICarsService, CarsService>();
+            services.AddTransient<IAutoDataScraper, AutoDataScraper>();
         }
 
         private static void Configure(WebApplication app)
@@ -76,7 +88,7 @@
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
-                
+
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter()
                     .GetResult();
             }
