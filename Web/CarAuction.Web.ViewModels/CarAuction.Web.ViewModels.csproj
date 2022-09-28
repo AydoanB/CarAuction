@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CarAuction.Common\CarAuction.Common.csproj" />
     <ProjectReference Include="..\..\Data\CarAuction.Data.Models\CarAuction.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\CarAuction.Services.Mapping\CarAuction.Services.Mapping.csproj" />
     <ProjectReference Include="..\CarAuction.Web.Infrastructure\CarAuction.Web.Infrastructure.csproj" />

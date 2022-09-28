@@ -17,7 +17,8 @@ namespace CarAuction.Services.Data
 
         public IEnumerable<KeyValuePair<int, string>> GetAllAsKeyValuePairs()
         {
-           return this.manufacturers.AllAsNoTracking().Select(x => new
+           return this.manufacturers.All().Distinct()
+               .Select(x => new
             {
                 x.Id,
                 x.Name,

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using AngleSharp;
+using CarAuction.Data;
 using CarAuction.Data.Common.Repositories;
 using CarAuction.Data.Models.CarModel;
 using CarAuction.Services.Data.JsonImport;
@@ -18,15 +19,18 @@ namespace CarAuction.Services
     {
         private readonly IDeletableEntityRepository<Manufacturer> manufacturerRepository;
         private readonly IDeletableEntityRepository<Model> modelRepository;
+        private readonly ApplicationDbContext dbContext;
         private IConfiguration config;
         private readonly IBrowsingContext context;
 
         public AutoDataScraper(
-            IDeletableEntityRepository<Manufacturer> manufacturerRepository,
-            IDeletableEntityRepository<Model> modelRepository)
+           ApplicationDbContext dbContext,
+           IDeletableEntityRepository<Manufacturer> manufacturerRepository,
+           IDeletableEntityRepository<Model> modelRepository)
         {
             this.manufacturerRepository = manufacturerRepository;
             this.modelRepository = modelRepository;
+            this.dbContext = dbContext;
             this.config = Configuration.Default.WithDefaultLoader();
             this.context = BrowsingContext.New(config);
         }
@@ -35,10 +39,12 @@ namespace CarAuction.Services
         {
             var makeModels = new ConcurrentBag<CarsImportDto>();
 
-            Parallel.For(1, 100, (i) =>
+            Parallel.For(500, 1000, (i) =>
             {
                 try
                 {
+                    Thread.Sleep(2 * 60 * 60);
+
                     var makeModel = this.GetMakeModels(i);
 
                     if(makeModel.Make != null && makeModel.Models.Any())
@@ -46,7 +52,7 @@ namespace CarAuction.Services
                         makeModels.Add(makeModel);
                     }
 
-                    Thread.Sleep(2 * 60);
+                    Thread.Sleep(2 * 60 * 60);
                 }
                 catch (Exception e)
                 {
@@ -56,27 +62,32 @@ namespace CarAuction.Services
 
             foreach (var dto in makeModels)
             {
-                if (this.manufacturerRepository.AllAsNoTracking()
-                        .Any(x => x.Name.ToLower() == dto.Make.ToLower() == false ))
+                Manufacturer manufacturer = this.manufacturerRepository.AllAsNoTracking().FirstOrDefault(x => x.Name.ToLower() == dto.Make.ToLower());
+                if (manufacturer == null)
                 {
-                    var manufacturer = new Manufacturer()
+                    manufacturer = new Manufacturer()
                     {
                         Name = dto.Make,
                     };
-                    foreach (var modelName in dto.Models.Distinct(StringComparer.OrdinalIgnoreCase))
-                    {
-                        if (manufacturer.Models.Any(x => x.Name.ToLower() == modelName.ToLower()) == false)
-                        {
-                            manufacturer.Models.Add(new Model()
-                            {
-                                Name = modelName,
-                            });
-                        }
-                    }
-
-                    await this.manufacturerRepository.AddAsync(manufacturer);
-                    await this.manufacturerRepository.SaveChangesAsync();
                 }
+
+                foreach (var modelName in dto.Models.Distinct(StringComparer.OrdinalIgnoreCase))
+                {
+                    if (manufacturer.Models.Any(x => x.Name.ToLower() == modelName.ToLower()) == false)
+                    {
+                        var model = new Model()
+                        {
+                            Name = modelName,
+                        };
+                        await modelRepository.AddAsync(model);
+                        await modelRepository.SaveChangesAsync();
+
+                        manufacturer.Models.Add(model);
+                    }
+                }
+
+                await manufacturerRepository.AddAsync(manufacturer);
+                await this.manufacturerRepository.SaveChangesAsync();
             }
         }
 

@@ -3,10 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"/>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"/> 
 </head>
 <body>
 <header>
@@ -23,19 +25,19 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Settings" asp-action="Index">Settings</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Add">Add listing</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Add">Add Car</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Auctions" asp-action="Add">Add auction</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Auctions" asp-action="Add">Add Auction</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="All">All Cars</a>
                     </li>
                 </ul>
                 <partial name="_LoginPartial"/>
@@ -56,7 +58,6 @@
         &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
 </footer>
-
 <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
 <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>

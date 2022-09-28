@@ -1,6 +1,4 @@
-﻿using CloudinaryDotNet;
-
-namespace CarAuction.Web
+﻿namespace CarAuction.Web
 {
     using System.Reflection;
     using CarAuction.Data;
@@ -26,13 +24,6 @@ namespace CarAuction.Web
     {
         public static void Main(string[] args)
         {
-            Account account = new Account(
-                "dlc3ozbde",
-                "368692166294634",
-                "qg2UlDzdvpEunJcasG7qjPWrOgY");
-
-            Cloudinary cloudinary = new Cloudinary(account);
-
             var builder = WebApplication.CreateBuilder(args);
             ConfigureServices(builder.Services, builder.Configuration);
             var app = builder.Build();
@@ -86,7 +77,7 @@ namespace CarAuction.Web
             using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.EnsureDeleted();
+                // dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter()

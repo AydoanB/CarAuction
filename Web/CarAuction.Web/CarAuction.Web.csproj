@@ -52,31 +52,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\css\bootstrap-datepicker.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Update="wwwroot\css\bootstrap.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\css\bootstrap\bootstrap-grid.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\css\bootstrap\bootstrap-reboot.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\css\bootstrap\bootstrap.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\css\jquery-ui.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Update="wwwroot\css\jquery.fancybox.min.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\css\magnific-popup.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="wwwroot\css\mediaelementplayer.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\css\owl.carousel.min.css">
@@ -85,11 +64,25 @@
     <Content Update="wwwroot\css\owl.theme.default.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\css\site.css">
+    <Content Update="wwwroot\favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\css\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\js\main.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\bootstrap-select.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\custom.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-3.3.1.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\jquery-migrate-1.4.1.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\map-custom.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\popper.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\site.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\site.min.js" />
   </ItemGroup>
 </Project>
