@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using CarAuction.Data.Common.Models;
 
-public class Bid : BaseDeletableModel<string>
+public class  Bid : BaseDeletableModel<string>
 {
     public Bid()
     {

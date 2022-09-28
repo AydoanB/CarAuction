@@ -4,6 +4,7 @@ using CarAuction.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarAuction.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220923184226_NullableFieldsForModel")]
+    partial class NullableFieldsForModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -392,16 +394,16 @@ namespace CarAuction.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Drivetrain")
+                    b.Property<int>("Drivetrain")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EngineId")
+                    b.Property<int>("EngineId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ManufacturerId")
+                    b.Property<int>("ManufacturerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedOn")
@@ -411,10 +413,10 @@ namespace CarAuction.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int?>("VehicleType")
+                    b.Property<int>("VehicleType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("YearOfProduction")
+                    b.Property<int>("YearOfProduction")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -658,11 +660,15 @@ namespace CarAuction.Data.Migrations
                 {
                     b.HasOne("CarAuction.Data.Models.CarModel.Engine", "Engine")
                         .WithMany("Models")
-                        .HasForeignKey("EngineId");
+                        .HasForeignKey("EngineId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("CarAuction.Data.Models.CarModel.Manufacturer", "Manufacturer")
                         .WithMany("Models")
-                        .HasForeignKey("ManufacturerId");
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Engine");
 
