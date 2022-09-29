@@ -11,7 +11,6 @@ namespace CarAuction.Services.Data
     using System.Data;
     using System.Linq;
     using System.Threading.Tasks;
-
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.CarModel;
     using CarAuction.Data.Models.Enums;
@@ -98,23 +97,17 @@ namespace CarAuction.Services.Data
 
         public IEnumerable<T> GetAllForListingsPage<T>()
         {
-
-            // var list = this.carsRepository.AllAsNoTracking()
-            //     .Select(x=>new CarInListViewModel()
-            //     {
-            //         Title = $"{x.Model.Manufacturer.Name} - {x.Model.Name}",
-            //         ImageUrl = x.Images.FirstOrDefault().RemoteImageUrl
-            //     })
-           var list = this.carsRepository
-               .AllAsNoTracking()
-               .To<T>()
-               .OrderBy(x => Guid.NewGuid())
-               .Take(20)
-               .ToList();
-           return list;
+            var list = this.carsRepository
+                .AllAsNoTracking()
+                .To<T>()
+                .OrderBy(x => Guid.NewGuid())
+                .Take(20)
+                .ToList();
+            return list;
         }
 
-        public IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel, string order, out int carsCount)
+        public IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel,
+            string order, out int carsCount)
         {
             var query = this.carsRepository.All().AsQueryable();
 
@@ -155,7 +148,7 @@ namespace CarAuction.Services.Data
             {
                 if (order == "A-Z")
                 {
-                   query = query.OrderBy(x => $"{x.Model.Name}{x.Model.Manufacturer.Name}");
+                    query = query.OrderBy(x => $"{x.Model.Name}{x.Model.Manufacturer.Name}");
                 }
                 else if (order == "Z-A")
                 {
@@ -213,6 +206,16 @@ namespace CarAuction.Services.Data
             }
 
             return enumList;
+        }
+
+        public async Task<T> GetCarByIdAsync<T>(int id)
+        {
+            var c = await this.carsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+            return c;
         }
     }
 }

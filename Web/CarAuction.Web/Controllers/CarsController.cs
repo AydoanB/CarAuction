@@ -1,14 +1,13 @@
-using System;
-using System.Security.Claims;
-using CarAuction.Services;
-using Microsoft.AspNetCore.Hosting;
-
 namespace CarAuction.Web.Controllers
 {
-    using System.Linq;
+    using System;
+    using System.Security.Claims;
     using System.Threading.Tasks;
+
+    using CarAuction.Services;
     using CarAuction.Services.Data;
     using CarAuction.Web.ViewModels;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     public class CarsController : Controller
@@ -91,6 +90,24 @@ namespace CarAuction.Web.Controllers
             //viewModel.SearchModel = this.carsService.PopulateDropdowns();
 
             return this.View(viewModel);
+        }
+
+        [Route("[controller]/{id:int}")]
+        public async Task<IActionResult> ById(int id)
+        {
+            var model = await this.carsService.GetCarByIdAsync<SingleCarViewModel>(id);
+            if (model == null)
+            {
+                return this.NotFound();
+            }
+
+            string userId = null;
+            if (this.User.Identity.IsAuthenticated)
+            {
+                userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            }
+
+            return this.View(model);
         }
 
         public async Task<IActionResult> Scrape()

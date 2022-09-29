@@ -11,5 +11,7 @@ namespace CarAuction.Services.Data
         CarInputModel PopulateDropdowns(CarInputModel inputModel);
 
         IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel, string order, out int carsCount);
+        Task<T> GetCarByIdAsync<T>(int id);
+
     }
 }
