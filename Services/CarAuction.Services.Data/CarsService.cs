@@ -65,11 +65,6 @@ namespace CarAuction.Services.Data
                 Auction = this.auctionService.GetById(input.AuctionId)
             };
 
-            if (car.Model.ManufacturerId != input.ManufacturerId)
-            {
-                throw new InvalidExpressionException("There is no Make/Model car");
-            }
-
             Directory.CreateDirectory($"{imagePath}/{GlobalConstants.CarsImagesFolder}/");
 
             foreach (var image in input.Images)

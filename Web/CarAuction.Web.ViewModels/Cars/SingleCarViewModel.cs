@@ -28,6 +28,16 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
 
     public int ModelYearOfProduction { get; set; }
 
+    public TransmissionType ModelEngineTransmissionType { get; set; }
+
+    public int ModelEngineHorsePower { get; set; }
+
+    public FuelType ModelEngineFuelType { get; set; }
+
+    public DrivetrainType ModelDrivetrain { get; set; }
+
+    public string Color { get; set; }
+
     public void CreateMappings(IProfileExpression configuration)
     {
         configuration.CreateMap<Car, SingleCarViewModel>()
