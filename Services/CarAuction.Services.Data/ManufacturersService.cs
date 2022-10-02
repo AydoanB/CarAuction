@@ -8,16 +8,16 @@ namespace CarAuction.Services.Data
 
     public class ManufacturersesService : IManufacturersService
     {
-        private readonly IDeletableEntityRepository<Manufacturer> manufacturers;
+        private readonly IDeletableEntityRepository<Manufacturer> manufacturersRepository;
 
-        public ManufacturersesService(IDeletableEntityRepository<Manufacturer> manufacturers)
+        public ManufacturersesService(IDeletableEntityRepository<Manufacturer> manufacturersRepository)
         {
-            this.manufacturers = manufacturers;
+            this.manufacturersRepository = manufacturersRepository;
         }
 
         public IEnumerable<KeyValuePair<int, string>> GetAllAsKeyValuePairs()
         {
-           return this.manufacturers.All().Distinct()
+           return this.manufacturersRepository.All().Distinct()
                .Select(x => new
             {
                 x.Id,
@@ -30,7 +30,7 @@ namespace CarAuction.Services.Data
 
         public Manufacturer GetById(int id)
         {
-            return this.manufacturers.All().FirstOrDefault(x => x.Id == id);
+            return this.manufacturersRepository.All().FirstOrDefault(x => x.Id == id);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace CarAuction.Web.ViewModels;
+﻿using CarAuction.Data.Models.CarModel;
+using CarAuction.Services.Mapping;
+
+namespace CarAuction.Web.ViewModels;
 
 using System;
 using System.Collections.Generic;

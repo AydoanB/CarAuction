@@ -10,5 +10,6 @@ namespace CarAuction.Services.Data
         IEnumerable<KeyValuePair<int, string>> GetAllAsKeyValuePairs(int manufacturerId);
 
         Model GetById(int id);
+        ICollection<Model> GetModels(int manufacturerId);
     }
 }

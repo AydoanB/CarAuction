@@ -1,3 +1,6 @@
+using CarAuction.Data.Models.CarModel;
+using Newtonsoft.Json;
+
 namespace CarAuction.Web.Controllers
 {
     using System;
@@ -17,15 +20,28 @@ namespace CarAuction.Web.Controllers
         private readonly ICarsService carsService;
         private readonly IAutoDataScraper autoDataScraper;
         private readonly IWebHostEnvironment environment;
+        private readonly IModelsService modelsService;
 
         public CarsController(
             ICarsService carsService,
             IAutoDataScraper autoDataScraper,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            IModelsService modelsService)
         {
             this.carsService = carsService;
             this.autoDataScraper = autoDataScraper;
             this.environment = environment;
+            this.modelsService = modelsService;
+        }
+
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+
+        public Task<JsonResult> AjaxMethod(int manufacturerId)
+        {
+            var models = this.modelsService.GetModels(manufacturerId);
+
+            return Task.FromResult(this.Json(models));
         }
 
         [HttpGet]

@@ -9,16 +9,16 @@ namespace CarAuction.Services.Data
 
     public class ModelsService : IModelsService
     {
-        private readonly IDeletableEntityRepository<Model> models;
+        private readonly IDeletableEntityRepository<Model> modelsRepository;
 
-        public ModelsService(IDeletableEntityRepository<Model> models)
+        public ModelsService(IDeletableEntityRepository<Model> modelsRepository)
         {
-            this.models = models;
+            this.modelsRepository = modelsRepository;
         }
 
         public IEnumerable<KeyValuePair<int, string>> GetAllAsKeyValuePairs(int manufacturerId)
         {
-            return this.models.AllAsNoTracking()
+            return this.modelsRepository.AllAsNoTracking()
                 .Select(x => new
                 {
                     x.Id,
@@ -31,7 +31,15 @@ namespace CarAuction.Services.Data
 
         public Model GetById(int id)
         {
-            return this.models.All().FirstOrDefault(x => x.Id == id);
+            return this.modelsRepository.All().FirstOrDefault(x => x.Id == id);
+        }
+
+        public ICollection<Model> GetModels(int manufacturerId)
+        {
+            return this.modelsRepository
+                .All()
+                .Where(x => x.ManufacturerId == manufacturerId)
+                .ToList();
         }
     }
 }

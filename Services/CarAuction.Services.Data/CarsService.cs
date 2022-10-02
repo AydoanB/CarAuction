@@ -45,6 +45,10 @@ namespace CarAuction.Services.Data
         public async Task CreateAsync(CarInputModel input, string userId, string imagePath)
         {
             var model = this.modelsService.GetById(input.ModelId);
+            if (model == null)
+            {
+                model = new Model();
+            }
 
             model.Manufacturer = this.manufacturersService.GetById(input.ManufacturerId);
             model.Engine = this.enginesService.GetById(input.EngineId);
