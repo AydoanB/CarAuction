@@ -101,8 +101,7 @@ namespace CarAuction.Services.Data
             return list;
         }
 
-        public IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel,
-            string order, out int carsCount)
+        public IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel, string order, out int carsCount)
         {
             var query = this.carsRepository.All().AsQueryable();
 
@@ -158,7 +157,8 @@ namespace CarAuction.Services.Data
                 .ToList();
         }
 
-        public CarInputModel PopulateDropdowns(CarInputModel inputModel)
+        public T PopulateDropdowns<T>(T inputModel)
+        where T : CarInputModel
         {
             inputModel.Manufacturers = this.manufacturersService.GetAllAsKeyValuePairs()
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
@@ -205,12 +205,11 @@ namespace CarAuction.Services.Data
 
         public async Task<T> GetCarByIdAsync<T>(int id)
         {
-            var c = await this.carsRepository
+            return await this.carsRepository
                 .AllAsNoTracking()
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
-            return c;
         }
     }
 }
