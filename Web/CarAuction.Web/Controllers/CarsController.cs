@@ -64,12 +64,17 @@ namespace CarAuction.Web.Controllers
                 return this.View(input);
             }
 
-            return this.Redirect("/index");
+            return this.Redirect("/");
         }
 
         public async Task<IActionResult> All(string order, SearchCarInputModel searchModel, int id = 1)
         {
             int carsCount;
+
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
 
             var viewModel = new CarsListViewModel()
             {

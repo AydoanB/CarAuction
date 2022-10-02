@@ -3,6 +3,7 @@
 <head>
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
 </head>
 <!-- Search Start -->
 <div class="container-fluid bg-white pt-3 px-lg-5">
@@ -57,31 +58,31 @@
             @foreach (var car in Model.Cars)
             {
                 @* <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id"> *@
-                    <div class="col-lg-4 col-md-6 mb-2">
-                        <div class="rent-item mb-4">
-                            <img class="img-fluid mb-auto" src="@car.ImageUrl" alt="">
-                            <h4 class="text-uppercase mb-4 text-center">@car.Title</h4>
-                            <div class="d-flex justify-content-center mb-4">
-                                <div class="px-2">
-                                    <i class="fa-regular fa-calendar-days text-primary mr-1"></i>
-                                    <span>@car.ModelYearOfProduction</span>
-                                </div>
-                                <div class="px-2 border-left border-right">
-                                    <i class="fa fa-cogs text-primary mr-1"></i>
-                                    <span>@car.ModelVehicleType.ToString()</span>
-                                </div>
-                                <div class="px-2">
-                                    <i class="fa fa-road text-primary mr-1"></i>
-                                    <span>@car.Milleage</span>
-                                </div>
-                                <div class="px-2 border-left border-right">
-                                    <i class="fa-solid fa-dollar-sign text-primary mr-1"></i>
-                                    <span>@car.StartingPrice</span>
-                                </div>
+                <div class="col-lg-4 col-md-6 mb-2">
+                    <div class="rent-item mb-4">
+                        <img class="img-fluid mb-auto" src="@car.ImageUrl" alt="">
+                        <h4 class="text-uppercase mb-4 text-center">@car.Title</h4>
+                        <div class="d-flex justify-content-center mb-4">
+                            <div class="px-2">
+                                <i class="fa-regular fa-calendar-days text-primary mr-1"></i>
+                                <span>@car.ModelYearOfProduction</span>
                             </div>
-                            <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View</a>
+                            <div class="px-2 border-left border-right">
+                                <i class="fa fa-cogs text-primary mr-1"></i>
+                                <span>@car.ModelVehicleType.ToString()</span>
+                            </div>
+                            <div class="px-2">
+                                <i class="fa fa-road text-primary mr-1"></i>
+                                <span>@car.Milleage</span>
+                            </div>
+                            <div class="px-2 border-left border-right">
+                                <i class="fa-sharp fa-solid fa-dollar-sign text-primary mr-1"></i>
+                                <span>@car.StartingPrice</span>
+                            </div>
                         </div>
+                        <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View</a>
                     </div>
+                </div>
                 // </a>
             }
         </div>
@@ -91,14 +92,32 @@
 <!-- Pagination -->
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" asp- tabindex="-1">Previous</a>
-        </li>
         <li class="page-item">
-            <a class="page-link" href="#">3</a>
+            <a class="page-link btn @if (Model.HasPreviousPage == false) {<text>disabled</text>}" asp-action="All" asp-route-id="@Model.PreviousPageNumber">Previous</a>
         </li>
+        @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
+        {
+            if (i > 0)
+            {
+                <li class="page-item">
+                    <a class="page-link btn" asp-action="All" asp-route-id="@i">@i</a>
+                </li>
+            }
+        }
         <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+            <a class="page-link btn" asp-action="All" asp-route-id="@Model.PageNumber">@Model.PageNumber</a>
+        </li>
+        @for (int i = Model.PageNumber + 1; i < Model.PageNumber + 3; i++)
+        {
+            if (Model.PagesCount > i)
+            {
+                <li class="page-item">
+                    <a class="page-link btn" asp-action="All" asp-route-id="@i">@i</a>
+                </li>
+            }
+        }
+        <li class="page-item">
+            <a class="page-link btn @if (Model.HasNextPage == false) {<text>disabled</text>}" asp-action="All" asp-route-id="@Model.NextPageNumber">Next</a>
         </li>
     </ul>
 </nav>

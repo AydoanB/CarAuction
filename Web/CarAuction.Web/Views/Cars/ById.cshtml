@@ -1,7 +1,26 @@
+@using CarAuction.Common
 @model SingleCarViewModel
 
 <div class="container-fluid pt-5">
     <div class="container pt-5 pb-3">
+        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+        {
+            <div class="btn-transform transform-vertical red mt-3">
+                @* <form id="deleteForm" asp-controller="Movies" asp-action="Delete" asp-route-id="@Model.Id"> *@
+                <form>
+                    <div>
+                        <a data-toggle="modal" data-target="#exampleModal" class="item item-1 redbtn">
+                            <i class="bi bi-trash3-fill"></i> Delete
+                        </a>
+                    </div>
+                    <div>
+                        <a data-toggle="modal" data-target="#deleteModal" class="item item-2 redbtn">
+                            <i class="bi bi-trash3-fill"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        }
         <h1 class="display-4 text-uppercase mb-5 text-center">@Model.ModelManufacturerName @Model.ModelName</h1>
         <div class="row align-items-center pb-2">
             <div class="col-lg-6 mb-4">
@@ -21,27 +40,27 @@
                 </div>
                 <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt</p>
                 <h4 class="mb-2">Bid starting price: @Model.StartingPrice</h4>
-               @if (Model.BuyNowPrice != 0)
-               {
-                   <h4 class="mb-2">@Model.BuyNowPrice</h4>
-               }
-                <div class="d-flex pt-1">
-                    <h6>Share on:</h6>
-                    <div class="d-inline-flex">
-                        <a class="px-2" href="">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a class="px-2" href="">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a class="px-2" href="">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a class="px-2" href="">
-                            <i class="fab fa-pinterest"></i>
-                        </a>
-                    </div>
-                </div>
+                @if (Model.BuyNowPrice != 0)
+                {
+                    <h4 class="mb-2">@Model.BuyNowPrice</h4>
+                }
+                @* <div class="d-flex pt-1"> *@
+                @*     <h6>Share on:</h6> *@
+                @*     <div class="d-inline-flex"> *@
+                @*         <a class="px-2" href=""> *@
+                @*             <i class="fab fa-facebook-f"></i> *@
+                @*         </a> *@
+                @*         <a class="px-2" href=""> *@
+                @*             <i class="fab fa-twitter"></i> *@
+                @*         </a> *@
+                @*         <a class="px-2" href=""> *@
+                @*             <i class="fab fa-linkedin-in"></i> *@
+                @*         </a> *@
+                @*         <a class="px-2" href=""> *@
+                @*             <i class="fab fa-pinterest"></i> *@
+                @*         </a> *@
+                @*     </div> *@
+                @* </div> *@
             </div>
         </div>
         <div class="row mt-n3 mt-lg-0 pb-4">
@@ -62,8 +81,8 @@
                 <span>@Model.ModelEngineHorsePower hp</span>
             </div>
             <div class="col-md-3 col-3 mb-2">
-                <i class="fa fa-road text-primary mr-2"></i>
-                <span>Mileage: @Model.Milleage</span>
+                <i class="fa-solid fa-road text-primary mr-2"></i>
+                <span>@Model.Milleage</span>
             </div>
             <div class="col-md-3 col-3 mb-2">
                 <i class="fa fa-cogs text-primary mr-2"></i>
@@ -72,6 +91,26 @@
             <div class="col-md-3 col-3 mb-2">
                 <i class="fa-solid fa-gas-pump text-primary mr-2"></i>
                 <span>@Model.ModelEngineFuelType</span>
+            </div>
+        </div>
+    </div>
+    @* Add delete logic *@
+    <div class="modal pt-50" id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Movie</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to delete "@Model.ModelManufacturerName"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deleteForm.submit()">Yes</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                </div>
             </div>
         </div>
     </div>
