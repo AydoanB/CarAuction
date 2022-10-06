@@ -19,18 +19,15 @@ namespace CarAuction.Services
     {
         private readonly IDeletableEntityRepository<Manufacturer> manufacturerRepository;
         private readonly IDeletableEntityRepository<Model> modelRepository;
-        private readonly ApplicationDbContext dbContext;
         private IConfiguration config;
         private readonly IBrowsingContext context;
 
         public AutoDataScraper(
-           ApplicationDbContext dbContext,
            IDeletableEntityRepository<Manufacturer> manufacturerRepository,
            IDeletableEntityRepository<Model> modelRepository)
         {
             this.manufacturerRepository = manufacturerRepository;
             this.modelRepository = modelRepository;
-            this.dbContext = dbContext;
             this.config = Configuration.Default.WithDefaultLoader();
             this.context = BrowsingContext.New(config);
         }
@@ -39,7 +36,7 @@ namespace CarAuction.Services
         {
             var makeModels = new ConcurrentBag<CarsImportDto>();
 
-            Parallel.For(500, 1000, (i) =>
+            Parallel.For(1, 1000, (i) =>
             {
                 try
                 {
@@ -101,9 +98,7 @@ namespace CarAuction.Services
                     .GetResult();
 
                 var unexstingMessage = document.QuerySelector("h1").TextContent;
-                if (document.StatusCode == HttpStatusCode.NotFound || unexstingMessage == "Страницата не е намерена!")
-                {
-                }
+                if (document.StatusCode == HttpStatusCode.NotFound || unexstingMessage == "Страницата не е намерена!") ;
 
                 var divElement = document.QuerySelector("body").QuerySelector(".textinsite");
 

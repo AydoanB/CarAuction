@@ -37,7 +37,7 @@ namespace CarAuction.Web.Controllers
         [HttpPost]
         [IgnoreAntiforgeryToken]
 
-        public Task<JsonResult> AjaxMethod(int manufacturerId)
+        public Task<JsonResult> ModelsById(int manufacturerId)
         {
             var models = this.modelsService.GetModels(manufacturerId);
 
@@ -80,7 +80,7 @@ namespace CarAuction.Web.Controllers
                 return this.View(input);
             }
 
-            return this.Redirect("/");
+            return this.RedirectToAction(nameof(All));
         }
 
         public async Task<IActionResult> All(string order, SearchCarInputModel searchModel, int id = 1)
@@ -96,9 +96,7 @@ namespace CarAuction.Web.Controllers
             {
                 CarsPerPage = CarsPerPage,
                 PageNumber = id,
-                Cars = this.carsService
-                    .GetAllForListingsPage<
-                        CarInListViewModel>(), //(id, CarsPerPage, searchModel, order, out carsCount),
+                Cars = this.carsService.GetCarsToSearch<CarInListViewModel>(id, CarsPerPage, searchModel, order, out carsCount),
                 CarsCount = 2,
                 Order = order,
             };

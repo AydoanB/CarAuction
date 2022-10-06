@@ -1,21 +1,22 @@
-using System.IO;
-using CarAuction.Common;
-using CarAuction.Data.Models.CarModels;
-using CarAuction.Services.Mapping;
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace CarAuction.Services.Data
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using CarAuction.Common;
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.CarModel;
+    using CarAuction.Data.Models.CarModels;
     using CarAuction.Data.Models.Enums;
+    using CarAuction.Services.Mapping;
     using CarAuction.Web.ViewModels;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
 
     public class CarsService : ICarsService
     {
@@ -25,6 +26,8 @@ namespace CarAuction.Services.Data
         private readonly IEnginesService enginesService;
         private readonly IAuctionService auctionService;
         private readonly IImageService imagesService;
+        private readonly IDeletableEntityRepository<Engine> enginesRepository;
+        private readonly IMapper mapper;
 
         public CarsService(
             IDeletableEntityRepository<Car> carsRepository,
@@ -32,7 +35,8 @@ namespace CarAuction.Services.Data
             IModelsService modelsService,
             IEnginesService enginesService,
             IAuctionService auctionService,
-            IImageService imagesService)
+            IImageService imagesService,
+            IDeletableEntityRepository<Engine> enginesRepository)
         {
             this.carsRepository = carsRepository;
             this.manufacturersService = manufacturersService;
@@ -40,18 +44,15 @@ namespace CarAuction.Services.Data
             this.enginesService = enginesService;
             this.auctionService = auctionService;
             this.imagesService = imagesService;
+            this.enginesRepository = enginesRepository;
         }
 
         public async Task CreateAsync(CarInputModel input, string userId, string imagePath)
         {
             var model = this.modelsService.GetById(input.ModelId);
-            if (model == null)
-            {
-                model = new Model();
-            }
 
             model.Manufacturer = this.manufacturersService.GetById(input.ManufacturerId);
-            model.Engine = this.enginesService.GetById(input.EngineId);
+            model.Engine = await this.enginesRepository.AllAsNoTracking().FirstOrDefaultAsync();
             model.Engine.TransmissionType = input.TransmissionType;
             model.Engine.FuelType = input.FuelType;
             model.Engine.HorsePower = input.HorsePower;
@@ -189,6 +190,15 @@ namespace CarAuction.Services.Data
             return inputModel;
         }
 
+        public async Task<T> GetCarByIdAsync<T>(int id)
+        {
+            return await this.carsRepository
+                .AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+        }
+
         private static List<SelectListItem> PopulateEnumValuesIntoDropdown<T>()
         {
             Type enumType = typeof(T);
@@ -205,15 +215,6 @@ namespace CarAuction.Services.Data
             }
 
             return enumList;
-        }
-
-        public async Task<T> GetCarByIdAsync<T>(int id)
-        {
-            return await this.carsRepository
-                .AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .To<T>()
-                .FirstOrDefaultAsync();
         }
     }
 }
