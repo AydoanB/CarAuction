@@ -1,4 +1,4 @@
-﻿@model CarInputModel 
+@model EditCarInputModel 
 @{
     this.ViewData["Title"] = "Create new listing";
 }
@@ -8,6 +8,8 @@
     <div class="form-group">
         <div asp-validation-summary="All" class="text-danger"></div>
 
+        <input type="hidden" asp-for="Id"/>
+        
         <div class="form-group">
             <label asp-for="ModelManufacturerId"></label>
             <select id="manufacturers" asp-for="ModelManufacturerId" class="form-control" asp-items="Model.Manufacturers" data-live-search="true"></select>
@@ -75,21 +77,21 @@
     <input asp-for="BuyNowPrice" class="form-control" value="1500"/>
     <span asp-validation-for="BuyNowPrice" class="text-danger"></span>
 
-    <div class="form-group">
-        <label asp-for="Images" class="form-label"></label>
-        <input asp-for="Images" class="form-control form-control-lg input transparent-input" multiple/>
-        <span asp-validation-for="Images" class="text-danger"></span>
-    </div>
-
-    <label asp-for="IsRunning"></label>
-    <input type="radio" value="true" asp-for="IsRunning" checked class="form-control"/>
-    <input type="radio" value="false" asp-for="IsRunning" class="form-control"/>
-    <span asp-validation-for="IsRunning" class="text-danger"></span>
-
-    <div class="form-group">
-        <label asp-for="AuctionId"></label>
-        <select asp-for="AuctionId" class="form-control" asp-items="Model.Auctions"></select>
-    </div>
+    @* <div class="form-group"> *@
+    @*     <label asp-for="Images" class="form-label"></label> *@
+    @*     <input asp-for="Images" class="form-control form-control-lg input transparent-input" multiple/> *@
+    @*     <span asp-validation-for="Images" class="text-danger"></span> *@
+    @* </div> *@
+    @* *@
+    @* <label asp-for="IsRunning"></label> *@
+    @* <input type="radio" value="true" asp-for="IsRunning" checked class="form-control"/> *@
+    @* <input type="radio" value="false" asp-for="IsRunning" class="form-control"/> *@
+    @* <span asp-validation-for="IsRunning" class="text-danger"></span> *@
+    @* *@
+    @* <div class="form-group"> *@
+    @*     <label asp-for="AuctionId"></label> *@
+    @*     <select asp-for="AuctionId" class="form-control" asp-items="Model.Auctions"></select> *@
+    @* </div> *@
 
     <input type="submit" class="btn btn-primary"/>
 </form>

@@ -29,7 +29,7 @@ public class CarInListViewModel : IMapFrom<Car>, IHaveCustomMappings
             .ForMember(
                 x => x.Title,
                 opt =>
-                    opt.MapFrom(x => $"{x.Model.Manufacturer.Name} - {x.Model.Name} - {x.Model.Engine.Name}"))
+                    opt.MapFrom(x => $"{x.Model.Manufacturer.Name} - {x.Model.Name}"))
             .ForMember(x => x.ImageUrl, opt =>
                 opt.MapFrom(x => $"/images/{GlobalConstants.CarsImagesFolder}/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
     }
