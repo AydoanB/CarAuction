@@ -1,15 +1,14 @@
-using CarAuction.Common;
-using Microsoft.AspNetCore.Authorization;
-
 namespace CarAuction.Web.Controllers
 {
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using CarAuction.Common;
     using CarAuction.Services;
     using CarAuction.Services.Data;
     using CarAuction.Web.ViewModels;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +34,7 @@ namespace CarAuction.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public Task<IActionResult> Add()
         {
             var viewModel = new CarInputModel();
@@ -45,6 +45,7 @@ namespace CarAuction.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(CarInputModel input)
         {
             string userId = null;
@@ -126,7 +127,7 @@ namespace CarAuction.Web.Controllers
             return this.View(model);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var input = await this.carsService.GetCarByIdAsync<EditCarInputModel>(id);
@@ -135,12 +136,17 @@ namespace CarAuction.Web.Controllers
                 return this.NotFound();
             }
 
+            if (input.UserId != this.User.FindFirst(ClaimTypes.NameIdentifier).Value || !this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                return this.Unauthorized();
+            }
+
             input = this.carsService.PopulateDropdowns(input);
             return this.View(input);
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, EditCarInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -155,7 +161,7 @@ namespace CarAuction.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             await this.carsService.DeleteAsync(id);

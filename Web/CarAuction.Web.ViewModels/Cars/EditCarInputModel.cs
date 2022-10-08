@@ -6,5 +6,7 @@ namespace CarAuction.Web.ViewModels
     public class EditCarInputModel : BaseCarInputModel, IMapFrom<Car>
     {
         public int Id { get; set; }
+
+        public string UserId { get; set; }
     }
 }
