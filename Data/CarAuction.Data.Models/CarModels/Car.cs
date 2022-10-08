@@ -1,16 +1,13 @@
-﻿using System.Drawing;
-using CarAuction.Data.Models.Enums;
-using Color = CarAuction.Data.Models.Enums.Color;
+﻿namespace CarAuction.Data.Models.CarModel;
 
-namespace CarAuction.Data.Models.CarModel;
-
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using CarAuction.Data.Common.Models;
 using CarAuction.Data.Models.AuctionModels;
 using CarAuction.Data.Models.CarModels;
+
+using Color = CarAuction.Data.Models.Enums.Color;
 
 public class Car : BaseDeletableModel<int>
 {
@@ -29,10 +26,12 @@ public class Car : BaseDeletableModel<int>
     public virtual Auction Auction { get; set; }
 
     [Required]
-    [Column(TypeName = "decimal(4,0)")]
+    public int UserId { get; set; }
+    public virtual ApplicationUser User { get; set; }
+
+    [Required]
     public decimal StartingPrice { get; set; }
 
-    [Column(TypeName = "decimal(4,0)")]
     public decimal? BuyNowPrice { get; set; }
 
     [Required]

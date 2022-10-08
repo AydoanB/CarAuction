@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarAuction.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220924165247_ImagesProperties")]
-    partial class ImagesProperties
+    [Migration("20221008050804_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -268,7 +268,7 @@ namespace CarAuction.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal?>("BuyNowPrice")
-                        .HasColumnType("decimal(4,0)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -296,7 +296,13 @@ namespace CarAuction.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("StartingPrice")
-                        .HasColumnType("decimal(4,0)");
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -305,6 +311,8 @@ namespace CarAuction.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("ModelId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Cars");
                 });
@@ -629,7 +637,7 @@ namespace CarAuction.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CarAuction.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Bids")
                         .HasForeignKey("UserId1");
 
                     b.Navigation("Car");
@@ -651,9 +659,15 @@ namespace CarAuction.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CarAuction.Data.Models.ApplicationUser", "User")
+                        .WithMany("Cars")
+                        .HasForeignKey("UserId1");
+
                     b.Navigation("Auction");
 
                     b.Navigation("Model");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CarAuction.Data.Models.CarModel.Model", b =>
@@ -741,6 +755,10 @@ namespace CarAuction.Data.Migrations
 
             modelBuilder.Entity("CarAuction.Data.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Bids");
+
+                    b.Navigation("Cars");
+
                     b.Navigation("Claims");
 
                     b.Navigation("Logins");

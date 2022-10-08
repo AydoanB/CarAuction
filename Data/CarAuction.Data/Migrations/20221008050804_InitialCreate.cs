@@ -265,12 +265,12 @@ namespace CarAuction.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar(30)", nullable: false),
-                    YearOfProduction = table.Column<int>(type: "int", nullable: false),
-                    VehicleType = table.Column<int>(type: "int", nullable: false),
-                    Drivetrain = table.Column<int>(type: "int", nullable: false),
-                    ManufacturerId = table.Column<int>(type: "int", nullable: false),
-                    EngineId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false),
+                    YearOfProduction = table.Column<int>(type: "int", nullable: true),
+                    VehicleType = table.Column<int>(type: "int", nullable: true),
+                    Drivetrain = table.Column<int>(type: "int", nullable: true),
+                    ManufacturerId = table.Column<int>(type: "int", nullable: true),
+                    EngineId = table.Column<int>(type: "int", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -283,14 +283,12 @@ namespace CarAuction.Data.Migrations
                         name: "FK_Models_Engines_EngineId",
                         column: x => x.EngineId,
                         principalTable: "Engines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Models_Manufacturers_ManufacturerId",
                         column: x => x.ManufacturerId,
                         principalTable: "Manufacturers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -301,8 +299,10 @@ namespace CarAuction.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ModelId = table.Column<int>(type: "int", nullable: false),
                     AuctionId = table.Column<int>(type: "int", nullable: false),
-                    StartingPrice = table.Column<decimal>(type: "decimal(4,0)", nullable: false),
-                    BuyNowPrice = table.Column<decimal>(type: "decimal(4,0)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    StartingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    BuyNowPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Color = table.Column<string>(type: "varchar(50)", nullable: false),
                     Milleage = table.Column<long>(type: "bigint", nullable: false),
                     IsRunning = table.Column<bool>(type: "bit", nullable: false),
@@ -314,6 +314,11 @@ namespace CarAuction.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cars_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Cars_Auctions_AuctionId",
                         column: x => x.AuctionId,
@@ -364,17 +369,23 @@ namespace CarAuction.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Bytes = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FileExtension = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Size = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CarId = table.Column<int>(type: "int", nullable: false),
+                    RemoteImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddedByUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_AspNetUsers_AddedByUserId",
+                        column: x => x.AddedByUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Images_Cars_CarId",
                         column: x => x.CarId,
@@ -473,14 +484,29 @@ namespace CarAuction.Data.Migrations
                 column: "ModelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cars_UserId1",
+                table: "Cars",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Engines_IsDeleted",
                 table: "Engines",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Images_AddedByUserId",
+                table: "Images",
+                column: "AddedByUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Images_CarId",
                 table: "Images",
                 column: "CarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_IsDeleted",
+                table: "Images",
+                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Locations_IsDeleted",
@@ -543,10 +569,10 @@ namespace CarAuction.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Cars");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Auctions");
