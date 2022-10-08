@@ -10,6 +10,9 @@ using CarAuction.Services.Mapping;
 
 public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
 {
+    public string UserId { get; set; }
+
+    public bool IsAbleToEditAndDelete { get; set; }
     public int Id { get; set; }
 
     public string ModelManufacturerName { get; set; }

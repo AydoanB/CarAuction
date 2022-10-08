@@ -62,6 +62,11 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
 
+            services.AddAntiforgery(opt =>
+            {
+                opt.HeaderName = "X-CSRF-TOKEN";
+            });
+
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IModelsService, ModelsService>();
             services.AddTransient<IManufacturersService, ManufacturersesService>();
@@ -77,7 +82,6 @@
             using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                // dbContext.Database.EnsureDeleted();
                 dbContext.Database.Migrate();
 
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter()

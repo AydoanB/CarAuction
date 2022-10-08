@@ -12,5 +12,6 @@ namespace CarAuction.Services.Data
         IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel, string order, out int carsCount);
         Task<T> GetCarByIdAsync<T>(int id);
         Task UpdateAsync(int id, EditCarInputModel input);
+        Task DeleteAsync(int id);
     }
 }

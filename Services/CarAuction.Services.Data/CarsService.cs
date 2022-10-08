@@ -26,7 +26,6 @@ namespace CarAuction.Services.Data
         private readonly IEnginesService enginesService;
         private readonly IAuctionService auctionService;
         private readonly IImageService imagesService;
-        private readonly IDeletableEntityRepository<Engine> enginesRepository;
 
         public CarsService(
             IDeletableEntityRepository<Car> carsRepository,
@@ -42,7 +41,6 @@ namespace CarAuction.Services.Data
             this.enginesService = enginesService;
             this.auctionService = auctionService;
             this.imagesService = imagesService;
-            this.enginesRepository = enginesRepository;
         }
 
         public async Task CreateAsync(CarInputModel input, string userId, string imagePath)
@@ -55,7 +53,7 @@ namespace CarAuction.Services.Data
 
             model.Manufacturer = this.manufacturersService.GetById(input.ModelManufacturerId);
 
-            engine.Name = "Smth";
+            engine.Name = "No Engine specified";
             model.Engine = engine;
             model.Engine.TransmissionType = input.ModelEngineTransmissionType;
             model.Engine.FuelType = input.ModelEngineFuelType;
@@ -63,6 +61,7 @@ namespace CarAuction.Services.Data
 
             model.Drivetrain = input.ModelDrivetrainType;
             model.VehicleType = input.ModelVehicleType;
+            model.YearOfProduction = input.ModelYearOfProduction;
 
             var car = new Car()
             {
@@ -73,6 +72,7 @@ namespace CarAuction.Services.Data
                 BuyNowPrice = input.BuyNowPrice,
                 Color = input.Color,
                 Auction = this.auctionService.GetById(input.AuctionId),
+                UserId = userId
             };
 
             Directory.CreateDirectory($"{imagePath}/{GlobalConstants.CarsImagesFolder}/");

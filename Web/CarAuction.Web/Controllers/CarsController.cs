@@ -87,7 +87,7 @@ namespace CarAuction.Web.Controllers
                 CarsPerPage = CarsPerPage,
                 PageNumber = id,
                 Cars = this.carsService.GetCarsToSearch<CarInListViewModel>(id, CarsPerPage, searchModel, order, out carsCount),
-                CarsCount = 2,
+                CarsCount = carsCount,
                 Order = order,
             };
 
@@ -104,16 +104,23 @@ namespace CarAuction.Web.Controllers
         [Route("[controller]/{id:int}")]
         public async Task<IActionResult> ById(int id)
         {
+            string userId = null;
+
             var model = await this.carsService.GetCarByIdAsync<SingleCarViewModel>(id);
+
             if (model == null)
             {
                 return this.NotFound();
             }
 
-            string userId = null;
             if (this.User.Identity.IsAuthenticated)
             {
                 userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            }
+
+            if (userId == model.UserId)
+            {
+                model.IsAbleToEditAndDelete = true;
             }
 
             return this.View(model);
@@ -148,7 +155,14 @@ namespace CarAuction.Web.Controllers
         }
 
         [HttpPost]
-        [IgnoreAntiforgeryToken]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.carsService.DeleteAsync(id);
+            return this.RedirectToAction(nameof(All));
+        }
+
+        [HttpPost]
         public Task<JsonResult> ModelsById(int manufacturerId)
         {
             var models = this.modelsService.GetModels(manufacturerId);
