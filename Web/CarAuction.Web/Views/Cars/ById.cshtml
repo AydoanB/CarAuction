@@ -1,6 +1,12 @@
 @using CarAuction.Common
 @model SingleCarViewModel
 
+@section Styles
+{
+    <link rel="stylesheet" href="~/lib/slick-carousel/slick.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/lib/fancyapps/ui/dist/fancybox.min.css" asp-append-version="true">
+}
+
 <div class="container-fluid pt-5">
     <div class="container pt-5 pb-3">
         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || @Model.IsAbleToEditAndDelete)
@@ -25,7 +31,18 @@
         <h1 class="display-4 text-uppercase mb-5 text-center">@Model.ModelManufacturerName @Model.ModelName</h1>
         <div class="row align-items-center pb-2">
             <div class="col-lg-6 mb-4">
-                <img class="img-fluid mb-auto lazyload" src="@Model.ImageUrl" alt="">
+                <img data-fancybox="gallery" class="img-fluid mb-auto lazyload" src="@Model.ImageUrl" alt="">
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                @if (Model.Images.Count() != 0)
+                {
+                    <div class="mvsingle-item ov-item">
+                        @foreach (var image in Model.Images.ToList().Skip(1).Take(4))
+                        {
+                            <a data-fancybox="gallery" href="@image.PhotoUrl"><img data-src="@image.PhotoUrl" alt="" class="img-fluid photo-item lazyload"></a>
+                        }
+                    </div>
+                }
             </div>
             <div class="col-lg-6 mb-4">
                 <div class="d-flex mb-3">
@@ -116,9 +133,11 @@
         </div>
     </div>
 </div>
+
 @section Scripts
 {
-<script>
+    <script src="~/lib/fancyapps/ui/dist/fancybox.umd.js" asp-append-version="true"></script>
+    <script>
 var form = document.getElementById("deleteForm");
 document.getElementById("deleteBtn").addEventListener("click", function () {
   form.submit();

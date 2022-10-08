@@ -42,6 +42,28 @@
         "lazysizes.min.js",
         "lazysizes.js"
       ]
+    },
+    {
+      "library": "@fancyapps/ui@4.0.30",
+      "destination": "wwwroot/lib/fancyapps/ui/",
+      "files": [
+        "dist/fancybox.umd.min.js",
+        "dist/fancybox.umd.js",
+        "dist/fancybox.min.css",
+        "dist/fancybox.css"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "slick-carousel@1.8.1",
+      "destination": "wwwroot/lib/slick-carousel/",
+      "files": [
+        "slick.min.js",
+        "slick.min.css.map",
+        "slick.min.css",
+        "slick.js",
+        "slick.css"
+      ]
     }
   ]
 }

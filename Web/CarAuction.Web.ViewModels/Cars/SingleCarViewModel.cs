@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using CarAuction.Data.Models.Enums;
+using CarAuction.Web.ViewModels.Images;
 
 namespace CarAuction.Web.ViewModels;
 
@@ -40,6 +42,8 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
     public DrivetrainType ModelDrivetrain { get; set; }
 
     public string Color { get; set; }
+
+    public IEnumerable<CarImageViewModel> Images { get; set; }
 
     public void CreateMappings(IProfileExpression configuration)
     {
