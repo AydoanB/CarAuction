@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using CarAuction.Data.Common.Models;
 
-public class  Bid : BaseDeletableModel<string>
+public class Bid : BaseDeletableModel<string>
 {
     public Bid()
     {
@@ -17,7 +17,7 @@ public class  Bid : BaseDeletableModel<string>
     public Car Car { get; set; }
 
     [Required]
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     public virtual ApplicationUser User { get; set; }
 
     [Column(TypeName = "decimal(4,0)")]
