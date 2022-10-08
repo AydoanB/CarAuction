@@ -4,8 +4,12 @@
 @using CarAuction.Common
 @using CarAuction.Data.Models
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-
+<head>
+    @section Scripts
+    {
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    }
+</head>
 <ul class="navbar-nav">
     @if (this.SignInManager.IsSignedIn(this.User))
     {
