@@ -1,5 +1,5 @@
-using CarAuction.Data.Models.CarModel;
-using Newtonsoft.Json;
+using CarAuction.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarAuction.Web.Controllers
 {
@@ -32,16 +32,6 @@ namespace CarAuction.Web.Controllers
             this.autoDataScraper = autoDataScraper;
             this.environment = environment;
             this.modelsService = modelsService;
-        }
-
-        [HttpPost]
-        [IgnoreAntiforgeryToken]
-
-        public Task<JsonResult> ModelsById(int manufacturerId)
-        {
-            var models = this.modelsService.GetModels(manufacturerId);
-
-            return Task.FromResult(this.Json(models));
         }
 
         [HttpGet]
@@ -127,6 +117,43 @@ namespace CarAuction.Web.Controllers
             }
 
             return this.View(model);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var input = await this.carsService.GetCarByIdAsync<EditCarInputModel>(id);
+            if (input == null)
+            {
+                return this.NotFound();
+            }
+
+            input = this.carsService.PopulateDropdowns(input);
+            return this.View(input);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(int id, EditCarInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                input = this.carsService.PopulateDropdowns(input);
+                return this.View(input);
+            }
+
+            await this.carsService.UpdateAsync(id, input);
+
+            return this.RedirectToAction(nameof(this.ById), new { id });
+        }
+
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public Task<JsonResult> ModelsById(int manufacturerId)
+        {
+            var models = this.modelsService.GetModels(manufacturerId);
+
+            return Task.FromResult(this.Json(models));
         }
 
         public async Task<IActionResult> Scrape()

@@ -27,7 +27,6 @@ namespace CarAuction.Services.Data
         private readonly IAuctionService auctionService;
         private readonly IImageService imagesService;
         private readonly IDeletableEntityRepository<Engine> enginesRepository;
-        private readonly IMapper mapper;
 
         public CarsService(
             IDeletableEntityRepository<Car> carsRepository,
@@ -35,8 +34,7 @@ namespace CarAuction.Services.Data
             IModelsService modelsService,
             IEnginesService enginesService,
             IAuctionService auctionService,
-            IImageService imagesService,
-            IDeletableEntityRepository<Engine> enginesRepository)
+            IImageService imagesService)
         {
             this.carsRepository = carsRepository;
             this.manufacturersService = manufacturersService;
@@ -49,15 +47,22 @@ namespace CarAuction.Services.Data
 
         public async Task CreateAsync(CarInputModel input, string userId, string imagePath)
         {
-            var model = this.modelsService.GetById(input.ModelId);
+            var model = this.modelsService.GetById(input.ModelModelId);
 
-            model.Manufacturer = this.manufacturersService.GetById(input.ManufacturerId);
-            model.Engine = await this.enginesRepository.AllAsNoTracking().FirstOrDefaultAsync();
-            model.Engine.TransmissionType = input.TransmissionType;
-            model.Engine.FuelType = input.FuelType;
-            model.Engine.HorsePower = input.HorsePower;
-            model.Drivetrain = input.DrivetrainType;
-            model.VehicleType = input.VehicleType;
+            Engine engine = this.enginesService.GetById(input.EngineId) == null
+                ? new Engine()
+                : this.enginesService.GetById(input.EngineId);
+
+            model.Manufacturer = this.manufacturersService.GetById(input.ModelManufacturerId);
+
+            engine.Name = "Smth";
+            model.Engine = engine;
+            model.Engine.TransmissionType = input.ModelEngineTransmissionType;
+            model.Engine.FuelType = input.ModelEngineFuelType;
+            model.Engine.HorsePower = input.ModelEngineHorsePower;
+
+            model.Drivetrain = input.ModelDrivetrainType;
+            model.VehicleType = input.ModelVehicleType;
 
             var car = new Car()
             {
@@ -66,8 +71,8 @@ namespace CarAuction.Services.Data
                 IsRunning = input.IsRunning,
                 Milleage = input.Milleage,
                 BuyNowPrice = input.BuyNowPrice,
-                Color = input.ColorType,
-                Auction = this.auctionService.GetById(input.AuctionId)
+                Color = input.Color,
+                Auction = this.auctionService.GetById(input.AuctionId),
             };
 
             Directory.CreateDirectory($"{imagePath}/{GlobalConstants.CarsImagesFolder}/");
@@ -95,15 +100,29 @@ namespace CarAuction.Services.Data
             await this.carsRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAllForListingsPage<T>()
+        public async Task UpdateAsync(int id, EditCarInputModel input)
         {
-            var list = this.carsRepository
-                .AllAsNoTracking()
-                .To<T>()
-                .OrderBy(x => Guid.NewGuid())
-                .Take(20)
-                .ToList();
-            return list;
+            var car = await this.carsRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            var model = this.modelsService.GetById(input.ModelModelId);
+
+            Engine engine = this.enginesService.GetById(input.EngineId) == null
+                ? new Engine()
+                : this.enginesService.GetById(input.EngineId);
+
+            model.Manufacturer = this.manufacturersService.GetById(input.ModelManufacturerId);
+
+            model.Engine = engine;
+            model.Engine.TransmissionType = input.ModelEngineTransmissionType;
+            model.Engine.FuelType = input.ModelEngineFuelType;
+            model.Engine.HorsePower = input.ModelEngineHorsePower;
+
+            model.Drivetrain = input.ModelDrivetrainType;
+            model.VehicleType = input.ModelVehicleType;
+
+            car.Model = model;
+
+            carsRepository.Update(car);
+            await carsRepository.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel, string order, out int carsCount)
@@ -163,7 +182,7 @@ namespace CarAuction.Services.Data
         }
 
         public T PopulateDropdowns<T>(T inputModel)
-        where T : CarInputModel
+        where T : CarInputModelDropdownItems
         {
             inputModel.Manufacturers = this.manufacturersService.GetAllAsKeyValuePairs()
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));

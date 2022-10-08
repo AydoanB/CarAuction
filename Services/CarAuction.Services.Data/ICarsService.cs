@@ -7,12 +7,10 @@ namespace CarAuction.Services.Data
     public interface ICarsService
     {
         Task CreateAsync(CarInputModel input, string userId, string imagePath);
-        IEnumerable<T> GetAllForListingsPage<T>();
         T PopulateDropdowns<T>(T inputModel)
-            where T : CarInputModel;
-
+            where T : CarInputModelDropdownItems;
         IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel, string order, out int carsCount);
         Task<T> GetCarByIdAsync<T>(int id);
-
+        Task UpdateAsync(int id, EditCarInputModel input);
     }
 }
