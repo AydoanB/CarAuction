@@ -3,7 +3,7 @@
     this.ViewData["Title"] = "Create new listing";
 }
 
-<form method="post" class="col-lg-6 offset-lg-3" enctype="multipart/form-data">
+<form method="post" id="antiForgeryForm" class="col-lg-6 offset-lg-3" enctype="multipart/form-data">
     <h1>@this.ViewData["Title"]</h1>
     <div class="form-group">
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -96,6 +96,9 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
  $(function () {
+     
+      var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+      
              $("#models").each(function () {
                  if ($(this).find("option").length <= 1) {
                      $(this).attr("disabled", "disabled");
@@ -110,15 +113,18 @@
                      type: "POST",
                      url: "/Cars/ModelsById",
                      data: { manufacturerId: manufacturerId },
+                      headers: {
+                          'X-CSRF-TOKEN': antiForgeryToken
+                     },
                      success: function (response) {
                          DisableDropDown("#models")
                          PopulateDropDown("#models",response)
                      },
                      failure: function (response) {
-                         alert(response.responseText);
+                         alert("Error occured" + response);
                      },
                      error: function (response) {
-                         alert(response.responseText);
+                         alert("Error occured" + response);
                      }
                  });
              });
