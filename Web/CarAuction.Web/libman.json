@@ -33,6 +33,15 @@
         "dist/jquery.validate.unobtrusive.js",
         "dist/jquery.validate.unobtrusive.min.js"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "lazysizes@5.3.2",
+      "destination": "wwwroot/lib/lazysizes/",
+      "files": [
+        "lazysizes.min.js",
+        "lazysizes.js"
+      ]
     }
   ]
 }
