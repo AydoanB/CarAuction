@@ -5,6 +5,7 @@
 {
     <link rel="stylesheet" href="~/lib/slick-carousel/slick.min.css" asp-append-version="true">
     <link rel="stylesheet" href="~/lib/fancyapps/ui/dist/fancybox.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/slider.css" asp-append-version="true">
 }
 
 <div class="container-fluid pt-5">
@@ -29,106 +30,97 @@
             </div>
         }
         <h1 class="display-4 text-uppercase mb-5 text-center">@Model.ModelManufacturerName @Model.ModelName</h1>
-        <div class="row align-items-center pb-2">
-            <div class="col-lg-6 mb-4">
-                <img data-fancybox="gallery" class="img-fluid mb-auto lazyload" src="@Model.ImageUrl" alt="">
-            </div>
-            <div class="col-md-8 col-sm-12 col-xs-12">
-                @if (Model.Images.Count() != 0)
+        @* <div class="row align-items-center pb-2"> *@
+            @* <div class="col-lg-6 mb-4"> *@
+            @*     <img data-fancybox="gallery" class="img-fluid mb-auto lazyload" src="@Model.ImageUrl" alt=""> *@
+            @* </div> *@
+            <!-- Start -->
+            <div id="mainCarousel" class="carousel w-10/12 max-w-5xl mx-auto">
+                @foreach (var image in Model.Images)
                 {
-                    <div class="mvsingle-item ov-item">
-                        @foreach (var image in Model.Images.ToList().Skip(1).Take(4))
-                        {
-                            <a data-fancybox="gallery" href="@image.PhotoUrl"><img data-src="@image.PhotoUrl" alt="" class="img-fluid photo-item lazyload"></a>
-                        }
+                    <div class="carousel__slide" data-src="@image.PhotoUrl" data-fancybox="gallery">
+                        <img src="@image.PhotoUrl"/>
                     </div>
                 }
             </div>
-            <div class="col-lg-6 mb-4">
-                <div class="d-flex mb-3">
-                    <h6 class="mr-2">Rating:</h6>
-                    <div class="d-flex align-items-center justify-content-center mb-1">
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                        <small>(250)</small>
+
+            <div id="thumbCarousel" class="carousel max-w-xl mx-auto">
+                @foreach (var image in Model.Images)
+                {
+                    <div class="carousel__slide">
+                        <img class="panzoom__content" src="@image.PhotoUrl"/>
                     </div>
+                }
+            </div>
+            <!-- End-->
+        @* </div> *@
+        <div class="col-lg-6 mb-4">
+            <div class="d-flex mb-3">
+                <h6 class="mr-2">Rating:</h6>
+                <div class="d-flex align-items-center justify-content-center mb-1">
+                    <small class="fa fa-star text-primary mr-1"></small>
+                    <small class="fa fa-star text-primary mr-1"></small>
+                    <small class="fa fa-star text-primary mr-1"></small>
+                    <small class="fa fa-star text-primary mr-1"></small>
+                    <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                    <small>(250)</small>
                 </div>
-                <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt</p>
-                <h4 class="mb-2">Bid starting price: @Model.StartingPrice</h4>
-                @if (Model.BuyNowPrice != 0)
-                {
-                    <h4 class="mb-2">@Model.BuyNowPrice</h4>
-                }
-                @* <div class="d-flex pt-1"> *@
-                @*     <h6>Share on:</h6> *@
-                @*     <div class="d-inline-flex"> *@
-                @*         <a class="px-2" href=""> *@
-                @*             <i class="fab fa-facebook-f"></i> *@
-                @*         </a> *@
-                @*         <a class="px-2" href=""> *@
-                @*             <i class="fab fa-twitter"></i> *@
-                @*         </a> *@
-                @*         <a class="px-2" href=""> *@
-                @*             <i class="fab fa-linkedin-in"></i> *@
-                @*         </a> *@
-                @*         <a class="px-2" href=""> *@
-                @*             <i class="fab fa-pinterest"></i> *@
-                @*         </a> *@
-                @*     </div> *@
-                @* </div> *@
             </div>
-        </div>
-        <div class="row mt-n3 mt-lg-0 pb-4">
-            <div class="col-md-3 col-6 mb-2">
-                <i class="fa-regular fa-calendar-days text-primary mr-2"></i>
-                <span>@Model.ModelYearOfProduction</span>
-            </div>
-            <div class="col-md-3 col-6 mb-2">
-                <i class="fa fa-cogs text-primary mr-2"></i>
-                <span>@Model.ModelEngineTransmissionType</span>
-            </div>
-            <div class="col-md-3 col-6 mb-2">
-                <i class="fa-solid fa-droplet text-primary mr-2"></i>
-                <span>@Model.Color</span>
-            </div>
-            <div class="col-md-3 col-6 mb-2">
-                <i class="fa-solid fa-horse text-primary mr-2"></i>
-                <span>@Model.ModelEngineHorsePower hp</span>
-            </div>
-            <div class="col-md-3 col-3 mb-2">
-                <i class="fa-solid fa-road text-primary mr-2"></i>
-                <span>@Model.Milleage</span>
-            </div>
-            <div class="col-md-3 col-3 mb-2">
-                <i class="fa fa-cogs text-primary mr-2"></i>
-                <span>@Model.ModelDrivetrain</span>
-            </div>
-            <div class="col-md-3 col-3 mb-2">
-                <i class="fa-solid fa-gas-pump text-primary mr-2"></i>
-                <span>@Model.ModelEngineFuelType</span>
-            </div>
+            <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt</p>
+            <h4 class="mb-2">Bid starting price: @Model.StartingPrice</h4>
+            @if (Model.BuyNowPrice != 0)
+            {
+                <h4 class="mb-2">@Model.BuyNowPrice</h4>
+            }
         </div>
     </div>
-    @* Add delete logic *@
-    <div class="modal pt-50" id="deleteModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete Car</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Do you want to delete "@Model.ModelManufacturerName"?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="#deleteForm.submit()">Yes</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-                </div>
+    <div class="row mt-n3 mt-lg-0 pb-4">
+        <div class="col-md-3 col-6 mb-2">
+            <i class="fa-regular fa-calendar-days text-primary mr-2"></i>
+            <span>@Model.ModelYearOfProduction</span>
+        </div>
+        <div class="col-md-3 col-6 mb-2">
+            <i class="fa fa-cogs text-primary mr-2"></i>
+            <span>@Model.ModelEngineTransmissionType</span>
+        </div>
+        <div class="col-md-3 col-6 mb-2">
+            <i class="fa-solid fa-droplet text-primary mr-2"></i>
+            <span>@Model.Color</span>
+        </div>
+        <div class="col-md-3 col-6 mb-2">
+            <i class="fa-solid fa-horse text-primary mr-2"></i>
+            <span>@Model.ModelEngineHorsePower hp</span>
+        </div>
+        <div class="col-md-3 col-3 mb-2">
+            <i class="fa-solid fa-road text-primary mr-2"></i>
+            <span>@Model.Milleage</span>
+        </div>
+        <div class="col-md-3 col-3 mb-2">
+            <i class="fa fa-cogs text-primary mr-2"></i>
+            <span>@Model.ModelDrivetrain</span>
+        </div>
+        <div class="col-md-3 col-3 mb-2">
+            <i class="fa-solid fa-gas-pump text-primary mr-2"></i>
+            <span>@Model.ModelEngineFuelType</span>
+        </div>
+    </div>
+</div>
+@* Add delete logic *@
+<div class="modal pt-50" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Car</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to delete "@Model.ModelManufacturerName"?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="#deleteForm.submit()">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>
@@ -143,4 +135,36 @@ document.getElementById("deleteBtn").addEventListener("click", function () {
   form.submit();
 });
 </script>
+    <script>
+    // Initialise Carousel
+    const mainCarousel = new Carousel(document.querySelector("#mainCarousel"), {
+      Dots: false,
+    });
+    
+    // Thumbnails
+    const thumbCarousel = new Carousel(document.querySelector("#thumbCarousel"), {
+      Sync: {
+        target: mainCarousel,
+        friction: 0,
+      },
+      Dots: false,
+      Navigation: false,
+      center: true,
+      slidesPerPage: 1,
+      infinite: false,
+    });
+    
+    // Customize Fancybox
+    Fancybox.bind('[data-fancybox="gallery"]', {
+      Carousel: {
+        on: {
+          change: (that) => {
+            mainCarousel.slideTo(mainCarousel.findPageForSlide(that.page), {
+              friction: 0,
+            });
+          },
+        },
+      },
+    });
+    </script>
 }
