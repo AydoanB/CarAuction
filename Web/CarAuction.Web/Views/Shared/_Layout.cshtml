@@ -13,38 +13,81 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Add">Add Car</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Auctions" asp-action="Add">Add Auction</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="All">All Cars</a>
-                    </li>
-                </ul>
-                <partial name="_LoginPartial"/>
-            </div>
+    @* <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3"> *@
+    @*     <div class="container"> *@
+    @*         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a> *@
+    @*         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" *@
+    @*                 aria-expanded="false" aria-label="Toggle navigation"> *@
+    @*             <span class="navbar-toggler-icon"></span> *@
+    @*         </button> *@
+    @*         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> *@
+    @*             <ul class="navbar-nav flex-grow-1"> *@
+    @*                 <li class="nav-item"> *@
+    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
+    @*                 </li> *@
+    @*                 <li class="nav-item"> *@
+    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+    @*                 </li> *@
+    @*                 <li class="nav-item"> *@
+    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a> *@
+    @*                 </li> *@
+    @*                 <li class="nav-item"> *@
+    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Add">Add Car</a> *@
+    @*                 </li> *@
+    @*                 <li class="nav-item"> *@
+    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Auctions" asp-action="Add">Add Auction</a> *@
+    @*                 </li> *@
+    @*                 <li class="nav-item"> *@
+    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="All">All Cars</a> *@
+    @*                 </li> *@
+    @*             </ul> *@
+    @*             <partial name="_LoginPartial"/> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </nav> *@
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative nav-bar p-0">
+        <div class="position-relative px-lg-5" style="z-index: 9;">
+            <nav class="navbar navbar-expand-lg bg-secondary navbar-dark py-3 py-lg-0 pl-3 pl-lg-5">
+                <a href="" class="navbar-brand">
+                    <h1 class="text-uppercase text-primary mb-1">Car Auction</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto py-0">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-item nav-link">Home</a>
+                        <a asp-area="" asp-controller="Home" asp-action="About" class="nav-item nav-link active">About</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Privacy" class="nav-item nav-link">Service</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cars</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                @if (this.User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-area="" asp-controller="Cars" asp-action="Add" class="dropdown-item">Add car</a>
+                                }
+                                <a asp-area="" asp-controller="Cars" asp-action="All" class="dropdown-item">All cars</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown border-right border-danger">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Auctions</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                {
+                                    <a asp-area="" asp-controller="Auctions" asp-action="Add" class="dropdown-item">Add auction</a>
+                                }
+                                <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="dropdown-item">All auctions</a>
+                            </div>
+                        </div>
+                    </div>
+                    <partial name="_LoginPartial"/> 
+                </div>
+            </nav>
         </div>
-    </nav>
+    </div>
+    <!-- Navbar End -->
     @if (this.User.Identity.IsAuthenticated == false)
     {
         <div class="alert-container">
@@ -89,6 +132,7 @@
 <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
 <script src="~/lib/lazysizes/lazysizes.min.js" asp-append-version="true"></script>
+<script src="~/lib/easing/easing.min.js" asp-append-version="true"></script>
 @* <script src="~/js/site.min.js" asp-append-version="true"></script> *@
 <script src="https://kit.fontawesome.com/2baf1cf001.js" crossorigin="anonymous"></script>
 @await this.RenderSectionAsync("Scripts", required: false)
