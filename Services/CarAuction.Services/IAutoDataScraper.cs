@@ -1,9 +1,11 @@
-using System.Threading.Tasks;
-
 namespace CarAuction.Services
 {
+    using System.Threading.Tasks;
+
     public interface IAutoDataScraper
     {
-        Task PopulateDbWithData();
+        Task PopulateDbWithDataWithScraping();
+        Task PopulateDbWithDataFromApi();
+
     }
 }

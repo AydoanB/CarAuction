@@ -178,9 +178,16 @@ namespace CarAuction.Web.Controllers
 
         public async Task<IActionResult> Scrape()
         {
-            await this.autoDataScraper.PopulateDbWithData();
+            await this.autoDataScraper.PopulateDbWithDataWithScraping();
 
-            return this.View();
+            return this.Redirect(nameof(Add));
+        }
+
+        public async Task<IActionResult> ApiData()
+        {
+            await this.autoDataScraper.PopulateDbWithDataFromApi();
+
+            return this.Redirect(nameof(Add));
         }
     }
 }

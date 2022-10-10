@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
-
-namespace CarAuction.Data.Models.CarModels;
+﻿namespace CarAuction.Data.Models.CarModels;
 
 using System;
 

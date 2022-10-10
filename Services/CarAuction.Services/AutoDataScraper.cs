@@ -1,38 +1,38 @@
-using System;
-using System.Linq;
-using System.Net;
-using System.Threading;
-using AngleSharp;
-using CarAuction.Data;
-using CarAuction.Data.Common.Repositories;
-using CarAuction.Data.Models.CarModel;
-using CarAuction.Services.Data.JsonImport;
-using CarAuction.Web.ViewModels;
-
 namespace CarAuction.Services
 {
+    using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Threading;
     using System.Threading.Tasks;
+
+    using AngleSharp;
+    using CarAuction.Data.Common.Repositories;
+    using CarAuction.Data.Models.CarModel;
+    using CarAuction.Services.Data.JsonImport;
+    using Newtonsoft.Json;
+    using RestSharp;
 
     public class AutoDataScraper : IAutoDataScraper
     {
-        private readonly IDeletableEntityRepository<Manufacturer> manufacturerRepository;
-        private readonly IDeletableEntityRepository<Model> modelRepository;
-        private IConfiguration config;
+        private readonly IDeletableEntityRepository<Manufacturer> manufacturersRepository;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration appConfiguration;
+        private readonly IConfiguration config;
         private readonly IBrowsingContext context;
 
         public AutoDataScraper(
-           IDeletableEntityRepository<Manufacturer> manufacturerRepository,
-           IDeletableEntityRepository<Model> modelRepository)
+            IDeletableEntityRepository<Manufacturer> manufacturersRepository,
+            Microsoft.Extensions.Configuration.IConfiguration appConfiguration)
         {
-            this.manufacturerRepository = manufacturerRepository;
-            this.modelRepository = modelRepository;
+            this.manufacturersRepository = manufacturersRepository;
+            this.appConfiguration = appConfiguration;
             this.config = Configuration.Default.WithDefaultLoader();
             this.context = BrowsingContext.New(config);
         }
 
-        public async Task PopulateDbWithData()
+        public async Task PopulateDbWithDataWithScraping()
         {
             var makeModels = new ConcurrentBag<CarsImportDto>();
 
@@ -44,7 +44,7 @@ namespace CarAuction.Services
 
                     var makeModel = this.GetMakeModels(i);
 
-                    if(makeModel.Make != null && makeModel.Models.Any())
+                    if (makeModel.Make != null && makeModel.Models.Any())
                     {
                         makeModels.Add(makeModel);
                     }
@@ -59,7 +59,8 @@ namespace CarAuction.Services
 
             foreach (var dto in makeModels)
             {
-                Manufacturer manufacturer = this.manufacturerRepository.AllAsNoTracking().FirstOrDefault(x => x.Name.ToLower() == dto.Make.ToLower());
+                Manufacturer manufacturer = this.manufacturersRepository.AllAsNoTracking()
+                    .FirstOrDefault(x => x.Name.ToLower() == dto.Make.ToLower());
                 if (manufacturer == null)
                 {
                     manufacturer = new Manufacturer()
@@ -76,15 +77,13 @@ namespace CarAuction.Services
                         {
                             Name = modelName,
                         };
-                        await modelRepository.AddAsync(model);
-                        await modelRepository.SaveChangesAsync();
 
                         manufacturer.Models.Add(model);
                     }
                 }
 
-                await manufacturerRepository.AddAsync(manufacturer);
-                await this.manufacturerRepository.SaveChangesAsync();
+                await manufacturersRepository.AddAsync(manufacturer);
+                await this.manufacturersRepository.SaveChangesAsync();
             }
         }
 
@@ -131,6 +130,45 @@ namespace CarAuction.Services
             }
 
             return importModel;
+        }
+
+        public async Task PopulateDbWithDataFromApi()
+        {
+            var dbManufacturer = this.manufacturersRepository.All().ToList();
+
+            foreach (var manufacturer in dbManufacturer)
+            {
+                var client = new RestClient($"https://api.api-ninjas.com/v1/cars?limit=25&make={manufacturer.Name}");
+
+                var request = new RestRequest();
+                request.AddHeader("X-Api-Key", appConfiguration.GetSection("ApiKey").Value);
+
+                var response = client.Execute(request);
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    continue;
+                }
+
+                var makeModelPair = JsonConvert.DeserializeObject<IList<ApiNinjasCarImportModel>>(response.Content);
+                IList<Model> models = new List<Model>();
+                foreach (var dto in makeModelPair)
+                {
+                    Console.WriteLine(dto.Make);
+                    Console.WriteLine(dto.Model[0].ToString().ToUpper() + dto.Model.Substring(1));
+
+                    var model = new Model()
+                    {
+                        Name = dto.Model[0].ToString().ToUpper() + dto.Model.Substring(1),
+                    };
+                    models.Add(model);
+                }
+
+                manufacturer.Models = models
+                    .Distinct()
+                    .ToList();
+
+                await manufacturersRepository.SaveChangesAsync();
+            }
         }
     }
 }

@@ -73,6 +73,7 @@
             services.AddTransient<IAuctionService, AuctionService>();
             services.AddTransient<IEnginesService, EnginesService>();
             services.AddTransient<ICarsService, CarsService>();
+
             services.AddTransient<IAutoDataScraper, AutoDataScraper>();
         }
 
