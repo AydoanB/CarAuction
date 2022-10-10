@@ -19,6 +19,7 @@ namespace CarAuction.Services
     {
         private readonly IDeletableEntityRepository<Manufacturer> manufacturersRepository;
         private readonly Microsoft.Extensions.Configuration.IConfiguration appConfiguration;
+        private readonly IDeletableEntityRepository<Model> _modelsRepo;
         private readonly IConfiguration config;
         private readonly IBrowsingContext context;
 
@@ -132,13 +133,13 @@ namespace CarAuction.Services
             return importModel;
         }
 
-        public async Task PopulateDbWithDataFromApi()
+        public async Task PopulateDbWithDataFromApi(int limit)
         {
             var dbManufacturer = this.manufacturersRepository.All().ToList();
 
             foreach (var manufacturer in dbManufacturer)
             {
-                var client = new RestClient($"https://api.api-ninjas.com/v1/cars?limit=25&make={manufacturer.Name}");
+                var client = new RestClient($"https://api.api-ninjas.com/v1/cars?limit={limit}&make={manufacturer.Name}");
 
                 var request = new RestRequest();
                 request.AddHeader("X-Api-Key", appConfiguration.GetSection("ApiKey").Value);
@@ -164,7 +165,7 @@ namespace CarAuction.Services
                 }
 
                 manufacturer.Models = models
-                    .Distinct()
+                    .DistinctBy(x=>x.Name)
                     .ToList();
 
                 await manufacturersRepository.SaveChangesAsync();

@@ -5,7 +5,7 @@ namespace CarAuction.Services
     public interface IAutoDataScraper
     {
         Task PopulateDbWithDataWithScraping();
-        Task PopulateDbWithDataFromApi();
+        Task PopulateDbWithDataFromApi(int limit);
 
     }
 }

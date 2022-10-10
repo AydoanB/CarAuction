@@ -183,9 +183,9 @@ namespace CarAuction.Web.Controllers
             return this.Redirect(nameof(Add));
         }
 
-        public async Task<IActionResult> ApiData()
+        public async Task<IActionResult> ApiData([FromQuery] int limit)
         {
-            await this.autoDataScraper.PopulateDbWithDataFromApi();
+            await this.autoDataScraper.PopulateDbWithDataFromApi(limit);
 
             return this.Redirect(nameof(Add));
         }
