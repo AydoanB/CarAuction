@@ -67,10 +67,10 @@
                 opt.HeaderName = "X-CSRF-TOKEN";
             });
 
-            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IImagesService, ImagesService>();
             services.AddTransient<IModelsService, ModelsService>();
             services.AddTransient<IManufacturersService, ManufacturersesService>();
-            services.AddTransient<IAuctionService, AuctionService>();
+            services.AddTransient<IAuctionsService, AuctionsService>();
             services.AddTransient<IEnginesService, EnginesService>();
             services.AddTransient<ICarsService, CarsService>();
 

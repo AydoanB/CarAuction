@@ -7,12 +7,11 @@ namespace CarAuction.Services.Data
     using CarAuction.Data.Models.CarModels;
     using Microsoft.AspNetCore.Http;
 
-    public class ImageService : IImageService
+    public class ImagesService : IImagesService
     {
         private readonly string[] allowedExtensions = { "jpg", "jpeg", "png", "gif" };
 
-        public async Task SaveImageToWebRootAsync(string imagePath, Image dbImage, IFormFile image,
-            string folderPath)
+        public async Task SaveImageToWebRootAsync(string imagePath, Image dbImage, IFormFile image, string folderPath)
         {
             var posterPhysicalPath = $"{imagePath}/{folderPath}/{dbImage.Id}.{dbImage.Extension}";
             using Stream fileStream = new FileStream(posterPhysicalPath, FileMode.Create);

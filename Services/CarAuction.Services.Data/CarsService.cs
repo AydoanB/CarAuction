@@ -1,4 +1,4 @@
-using AutoMapper;
+using System.Drawing;
 
 namespace CarAuction.Services.Data
 {
@@ -24,22 +24,22 @@ namespace CarAuction.Services.Data
         private readonly IManufacturersService manufacturersService;
         private readonly IModelsService modelsService;
         private readonly IEnginesService enginesService;
-        private readonly IAuctionService auctionService;
-        private readonly IImageService imagesService;
+        private readonly IAuctionsService auctionsService;
+        private readonly IImagesService imagesService;
 
         public CarsService(
             IDeletableEntityRepository<Car> carsRepository,
             IManufacturersService manufacturersService,
             IModelsService modelsService,
             IEnginesService enginesService,
-            IAuctionService auctionService,
-            IImageService imagesService)
+            IAuctionsService auctionsService,
+            IImagesService imagesService)
         {
             this.carsRepository = carsRepository;
             this.manufacturersService = manufacturersService;
             this.modelsService = modelsService;
             this.enginesService = enginesService;
-            this.auctionService = auctionService;
+            this.auctionsService = auctionsService;
             this.imagesService = imagesService;
         }
 
@@ -71,7 +71,7 @@ namespace CarAuction.Services.Data
                 Milleage = input.Milleage,
                 BuyNowPrice = input.BuyNowPrice,
                 Color = input.Color,
-                Auction = this.auctionService.GetById(input.AuctionId),
+                Auction = this.auctionsService.GetById(input.AuctionId),
                 UserId = userId
             };
 
@@ -193,7 +193,7 @@ namespace CarAuction.Services.Data
             inputModel.Engines = this.enginesService.GetAllAsKeyValuePairs(2)
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 
-            inputModel.Auctions = this.auctionService.GetAllAsKeyValuePairs()
+            inputModel.Auctions = this.auctionsService.GetAllAsKeyValuePairs()
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 
             inputModel.Transmissions = PopulateEnumValuesIntoDropdown<TransmissionType>();

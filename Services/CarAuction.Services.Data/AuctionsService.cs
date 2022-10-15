@@ -9,12 +9,12 @@ namespace CarAuction.Services.Data
     using CarAuction.Data.Models.AuctionModels;
     using CarAuction.Web.ViewModels;
 
-    public class AuctionService : IAuctionService
+    public class AuctionsService : IAuctionsService
     {
         private readonly IDeletableEntityRepository<Auction> auctionRepository;
         private readonly IDeletableEntityRepository<Location> locationRepository;
 
-        public AuctionService(
+        public AuctionsService(
             IDeletableEntityRepository<Auction> auctionRepository,
             IDeletableEntityRepository<Location> locationRepository)
         {

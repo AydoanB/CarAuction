@@ -10,12 +10,13 @@ namespace CarAuction.Web.Controllers
 
     public class AuctionsController : Controller
     {
-        private readonly IAuctionService auctionService;
+        private readonly IAuctionsService _auctionsService;
 
-        public AuctionsController(IAuctionService auctionService)
+        public AuctionsController(IAuctionsService auctionsService)
         {
-            this.auctionService = auctionService;
+            this._auctionsService = auctionsService;
         }
+
         [HttpGet]
         public IActionResult Add()
         {
@@ -30,7 +31,7 @@ namespace CarAuction.Web.Controllers
                 return this.View(inputModel);
             }
 
-            await this.auctionService.CreateAsync(inputModel, Guid.NewGuid().ToString(), "");
+            await this._auctionsService.CreateAsync(inputModel, Guid.NewGuid().ToString(), "");
             return this.View("/");
         }
     }
