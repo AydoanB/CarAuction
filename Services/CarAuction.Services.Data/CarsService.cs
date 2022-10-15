@@ -218,6 +218,16 @@ namespace CarAuction.Services.Data
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<T>> GetRandomCars<T>(int count)
+        {
+            return await this.carsRepository
+                .AllAsNoTracking()
+                .To<T>()
+                .OrderBy(x => Guid.NewGuid())
+                .Take(count)
+                .ToListAsync();
+        }
+
         private static List<SelectListItem> PopulateEnumValuesIntoDropdown<T>()
         {
             Type enumType = typeof(T);

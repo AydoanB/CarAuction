@@ -81,5 +81,11 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\popper.min.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\site.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\site.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel\assets\owl.carousel.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel\assets\owl.carousel.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel\assets\owl.theme.default.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel\assets\owl.theme.default.min.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel\owl.carousel.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel\owl.carousel.min.js" />
   </ItemGroup>
 </Project>

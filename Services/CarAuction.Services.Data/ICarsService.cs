@@ -13,5 +13,7 @@ namespace CarAuction.Services.Data
         Task<T> GetCarByIdAsync<T>(int id);
         Task UpdateAsync(int id, EditCarInputModel input);
         Task DeleteAsync(int id);
+        Task<IEnumerable<T>> GetRandomCars<T>(int count);
+
     }
 }
