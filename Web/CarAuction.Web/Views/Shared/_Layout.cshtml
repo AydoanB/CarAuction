@@ -7,45 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link href="~/css/customized.bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="~/lib/OwlCarousel2/assets/owl.theme.default.min.css" type="text/css" asp-append-version="true"/> 
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
-    
+
     @await this.RenderSectionAsync("Styles", required: false)
 </head>
 <body>
 <header>
-    @* <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3"> *@
-    @*     <div class="container"> *@
-    @*         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a> *@
-    @*         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" *@
-    @*                 aria-expanded="false" aria-label="Toggle navigation"> *@
-    @*             <span class="navbar-toggler-icon"></span> *@
-    @*         </button> *@
-    @*         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> *@
-    @*             <ul class="navbar-nav flex-grow-1"> *@
-    @*                 <li class="nav-item"> *@
-    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
-    @*                 </li> *@
-    @*                 <li class="nav-item"> *@
-    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
-    @*                 </li> *@
-    @*                 <li class="nav-item"> *@
-    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a> *@
-    @*                 </li> *@
-    @*                 <li class="nav-item"> *@
-    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="Add">Add Car</a> *@
-    @*                 </li> *@
-    @*                 <li class="nav-item"> *@
-    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Auctions" asp-action="Add">Add Auction</a> *@
-    @*                 </li> *@
-    @*                 <li class="nav-item"> *@
-    @*                     <a class="nav-link text-dark" asp-area="" asp-controller="Cars" asp-action="All">All Cars</a> *@
-    @*                 </li> *@
-    @*             </ul> *@
-    @*             <partial name="_LoginPartial"/> *@
-    @*         </div> *@
-    @*     </div> *@
-    @* </nav> *@
-<!-- Topbar Start -->
+    <!-- Topbar Start -->
     <div class="container-fluid bg-dark py-3 px-lg-5 d-none d-lg-block">
         <div class="row">
             <div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
@@ -146,14 +116,14 @@
     }
 </header>
 
-<div class="container">
+<div class="container-fluid">
     <partial name="_CookieConsentPartial"/>
     <main role="main" class="pb-3">
         @this.RenderBody()
+        <!-- Back to Top -->
+            <a href="#" id="btn-back-to-top" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
     </main>
 </div>
-    @await Component.InvokeAsync("Cars")
-
 <footer class="border-top footer text-muted">
     <div class="container">
         &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -165,9 +135,52 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
 <script src="~/lib/lazysizes/lazysizes.min.js" asp-append-version="true"></script>
 <script src="~/lib/easing/easing.min.js" asp-append-version="true"></script>
-<script src="lib/OwlCarousel/owl.carousel.min.js"></script>
-@* <script src="~/js/site.min.js" asp-append-version="true"></script> *@
+<script src="~/lib/OwlCarousel2/owl.carousel.min.js" asp-append-version="true"></script>
 <script src="https://kit.fontawesome.com/2baf1cf001.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      slidesPerGroup: 3,
+      loop: true,
+      loopFillGroupWithBlank: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  </script>
+<script>
+let mybutton = document.getElementById("btn-back-to-top");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (
+    document.body.scrollTop > 20 ||
+    document.documentElement.scrollTop > 20
+  ) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+// When the user clicks on the button, scroll to the top of the document
+mybutton.addEventListener("click", backToTop);
+
+function backToTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
 @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -64,6 +64,19 @@
         "slick.js",
         "slick.css"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "OwlCarousel2@2.3.4",
+      "destination": "wwwroot/lib/OwlCarousel2/",
+      "files": [
+        "owl.carousel.min.js",
+        "owl.carousel.js",
+        "assets/owl.carousel.css",
+        "assets/owl.carousel.min.css",
+        "assets/owl.theme.default.css",
+        "assets/owl.theme.default.min.css"
+      ]
     }
   ]
 }

@@ -20,7 +20,7 @@ namespace CarAuction.Web.ViewComponents
             var viewModel = new RandomCarsViewModel();
             viewModel.Cars = await this.carsService.GetRandomCars<CarInListViewModel>(10);
 
-            return this.View("Cars",viewModel);
+            return this.View("FeaturedCars", viewModel);
         }
     }
 }
