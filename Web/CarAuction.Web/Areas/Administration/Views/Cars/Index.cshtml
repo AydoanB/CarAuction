@@ -1,0 +1,106 @@
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<CarAuction.Data.Models.CarModel.Car>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Model.Manufacturer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Auction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartingPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BuyNowPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Milleage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsRunning)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var car in Model)
+    {
+        <tr>
+            <td>
+                @car.Model.Manufacturer.Name
+            </td>
+            <td>
+                @car.Model.Name
+            </td>
+            <td>
+                @car.Auction.Location.Name
+            </td>
+            <td>
+                @car.User.UserName
+            </td>
+            <td>
+                @car.StartingPrice
+            </td>
+            <td>
+            @(car.BuyNowPrice != null ? car.BuyNowPrice : "None")
+            </td>
+            <td>
+                @car.Color
+            </td>
+            <td>
+                @car.Milleage
+            </td>
+            <td>
+                @car.IsRunning
+            </td>
+            <td>
+                @car.IsDeleted
+                @(car.IsDeleted == true ? car.DeletedOn.Value.ToShortDateString() : String.Empty)
+            </td>
+            <td>
+                @car.CreatedOn
+            </td>
+            <td>
+                @(car.ModifiedOn.HasValue ? car.ModifiedOn.Value.ToShortDateString() : "Not modified yet")
+            </td>
+            @* <td> *@
+            @*     <a asp-action="Edit" asp-route-id="@car.Id">Edit</a> | *@
+            @*     <a asp-controller="Cars" asp-action="Delete" asp-route-id="@car.Id">Delete</a> | *@
+            @*     <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id">View listing</a> *@
+            @* </td> *@
+        </tr>
+    }
+    </tbody>
+</table>
