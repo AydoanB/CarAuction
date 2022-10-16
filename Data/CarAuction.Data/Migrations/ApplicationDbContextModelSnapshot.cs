@@ -171,11 +171,17 @@ namespace CarAuction.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Auctions");
                 });
@@ -619,7 +625,15 @@ namespace CarAuction.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CarAuction.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Location");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CarAuction.Data.Models.AuctionModels.Bid", b =>

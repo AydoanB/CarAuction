@@ -8,8 +8,9 @@ namespace CarAuction.Services.Data
 
     public interface IAuctionsService
     {
-        Task CreateAsync(AuctionInputModel input, string userId, string imagePath);
+        Task CreateAsync(AuctionInputModel input, string userId);
         public IEnumerable<KeyValuePair<int, string>> GetAllAsKeyValuePairs();
+        IEnumerable<T> GetAllAuctions<T>(int page, int auctionsPerPage, string order, out int auctionsCount);
         Auction GetById(int id);
     }
 }

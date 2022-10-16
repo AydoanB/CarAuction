@@ -1,3 +1,6 @@
+using CarAuction.Services.Mapping;
+using Microsoft.EntityFrameworkCore;
+
 namespace CarAuction.Services.Data
 {
     using System;
@@ -22,7 +25,7 @@ namespace CarAuction.Services.Data
             this.locationRepository = locationRepository;
         }
 
-        public async Task CreateAsync(AuctionInputModel input, string userId, string imagePath)
+        public async Task CreateAsync(AuctionInputModel input, string userId)
         {
             var location = this.locationRepository
                 .All()
@@ -41,6 +44,7 @@ namespace CarAuction.Services.Data
                 },
                 StartDate = input.StartDate,
                 EndDate = input.EndDate,
+                UserId = userId,
             };
 
             await this.auctionRepository.AddAsync(auction);
@@ -57,6 +61,21 @@ namespace CarAuction.Services.Data
                 .OrderBy(x => x.Name)
                 .ToList()
                 .Select(x => new KeyValuePair<int, string>(x.Id, x.Name));
+        }
+
+        public IEnumerable<T> GetAllAuctions<T>(int page, int auctionsPerPage, string order, out int auctionsCount)
+        {
+            var query = this.auctionRepository
+                .AllAsNoTracking()
+                .AsQueryable();
+
+            auctionsCount = query.Count();
+
+            return query
+                .Skip((page - 1) * auctionsPerPage)
+                .Take(auctionsPerPage)
+                .To<T>()
+                .ToList();
         }
 
         public Auction GetById(int id)

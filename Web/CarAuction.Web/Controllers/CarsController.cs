@@ -85,10 +85,10 @@ namespace CarAuction.Web.Controllers
 
             var viewModel = new CarsListViewModel()
             {
-                CarsPerPage = CarsPerPage,
+                ItemsPerPage = CarsPerPage,
                 PageNumber = id,
                 Cars = this.carsService.GetCarsToSearch<CarInListViewModel>(id, CarsPerPage, searchModel, order, out carsCount),
-                CarsCount = carsCount,
+                ItemsCount = carsCount,
                 Order = order,
             };
 

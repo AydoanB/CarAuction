@@ -1,7 +1,8 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
 namespace CarAuction.Web.ViewModels;
+
+using System.Collections.Generic;
+
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class CarsListViewModel : PagingViewModel
 {

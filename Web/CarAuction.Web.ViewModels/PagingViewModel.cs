@@ -14,9 +14,9 @@ namespace CarAuction.Web.ViewModels
 
         public int NextPageNumber => this.PageNumber + 1;
 
-        public int CarsCount { get; set; }
+        public int ItemsCount { get; set; }
 
-        public int CarsPerPage { get; set; }
-        public int PagesCount => (int)Math.Ceiling((double)this.CarsCount / this.CarsPerPage);
+        public int ItemsPerPage { get; set; }
+        public int PagesCount => (int)Math.Ceiling((double)this.ItemsCount / this.ItemsPerPage);
     }
 }

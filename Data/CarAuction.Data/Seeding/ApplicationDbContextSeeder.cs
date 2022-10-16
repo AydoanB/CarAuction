@@ -27,7 +27,7 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
-                              new EngineSeeder(),
+                              new UsersSeeder(),
                               new ManufacturersSeeder(),
                               new ModelsSeeder(),
                               new AuctionsSeeder(),

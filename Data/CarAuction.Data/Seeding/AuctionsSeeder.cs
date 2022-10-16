@@ -21,6 +21,7 @@ namespace CarAuction.Data.Seeding
                     Name = "Sofia",
                 },
                 StartDate = DateTime.UtcNow.Date,
+                User = dbContext.Users.FirstOrDefault(),
             });
         }
     }

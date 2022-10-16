@@ -22,5 +22,9 @@ public class Auction : BaseDeletableModel<int>
     [Required]
     public DateTime EndDate { get; set; }
 
+    [Required]
+    public string UserId { get; set; }
+    public virtual ApplicationUser User { get; set; }
+
     public virtual ICollection<Car> CarsInAuction { get; set; }
 }
