@@ -1,0 +1,189 @@
+﻿@using CarAuction.Common
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+    <link href="~/css/customized.bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="~/lib/OwlCarousel2/assets/owl.theme.default.min.css" type="text/css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
+
+    @await this.RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+<header>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark py-3 px-lg-5 d-none d-lg-block">
+        <div class="row">
+            <div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-body pr-3" href=""><i class="fa fa-phone-alt mr-2"></i>+359888888888</a>
+                    <span class="text-body">|</span>
+                    <a class="text-body px-3" href=""><i class="fa fa-envelope mr-2"></i>work@mail.com</a>
+                </div>
+            </div>
+            <div class="col-md-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-body px-3" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-body px-3" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-body px-3" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-body px-3" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-body pl-3" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative nav-bar p-0">
+        <div class="position-relative px-lg-5" style="z-index: 9;">
+            <nav class="navbar navbar-expand-lg bg-secondary navbar-dark py-3 py-lg-0 pl-3 pl-lg-5">
+                <a href="" class="navbar-brand">
+                    <h1 class="text-uppercase text-primary mb-1">Car Auction</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto py-0">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-item nav-link">Home</a>
+                        <a asp-area="" asp-controller="Home" asp-action="About" class="nav-item nav-link">About</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Privacy" class="nav-item nav-link">Privacy</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cars</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                @if (this.User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-area="" asp-controller="Cars" asp-action="Add" class="dropdown-item">Add car</a>
+                                }
+                                <a asp-area="" asp-controller="Cars" asp-action="All" class="dropdown-item">All cars</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown border-right border-danger">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Auctions</a>
+                            <div class="dropdown-menu rounded-0 m-0">
+                                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                {
+                                    <a asp-area="" asp-controller="Auctions" asp-action="Add" class="dropdown-item">Add auction</a>
+                                }
+                                <a asp-area="" asp-controller="Auctions" asp-action="All" class="dropdown-item">All auctions</a>
+                            </div>
+                        </div>
+                    </div>
+                    <partial name="_LoginPartial"/>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+    @if (this.User.Identity.IsAuthenticated == false)
+    {
+        <div class="alert-container">
+            <div class="u-border-width-1 u-border-style-solid u-border-color-warn u-p-m  d-flex justify-content-center" role="alert">
+                <div class="u-flex u-flex--none">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="u-color-warn u-icon-m u-m-t-xxs">
+                        <path d="M12 5.99L19.53 19H4.47L12 5.99zM12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z" fill="currentColor"></path>
+                    </svg>
+                </div>
+                <div class="u-flex u-flex--justify-content-space-between u-flex--wrap u-flex--auto u-g-xxs u-m-l-xs">
+                    <div class="u-typography-body-s u-flex u-flex--align-items-center c-banner__items">
+                        <div>
+                            You'll need to
+                            <a class="c-link" href="/Identity/Account/Login" data-action="sign-in">
+                                Sign in
+                            </a> or
+                            <a class="c-link" href="/Identity/Account/Register" data-action="create-account">
+                                Create a free account
+                            </a> before bidding.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</header>
+
+<div class="container-fluid">
+    <partial name="_CookieConsentPartial"/>
+    <main role="main" class="pb-3">
+        @this.RenderBody()
+        <!-- Back to Top -->
+        <a href="#" id="btn-back-to-top" class="btn btn-lg btn-primary btn-lg-square back-to-top">
+            <i class="fa fa-angle-double-up"></i>
+        </a>
+    </main>
+</div>
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+<script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+<script src="~/lib/lazysizes/lazysizes.min.js" asp-append-version="true"></script>
+<script src="~/lib/easing/easing.min.js" asp-append-version="true"></script>
+<script src="~/lib/OwlCarousel2/owl.carousel.min.js" asp-append-version="true"></script>
+<script src="https://kit.fontawesome.com/2baf1cf001.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      slidesPerGroup: 3,
+      loop: true,
+      loopFillGroupWithBlank: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  </script>
+<script>
+let mybutton = document.getElementById("btn-back-to-top");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (
+    document.body.scrollTop > 20 ||
+    document.documentElement.scrollTop > 20
+  ) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+// When the user clicks on the button, scroll to the top of the document
+mybutton.addEventListener("click", backToTop);
+
+function backToTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+@await this.RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
