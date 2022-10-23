@@ -359,3 +359,4 @@ MigrationBackup/
 .idea/.idea.CarAuction/.idea/projectSettingsUpdater.xml
 .idea/.idea.CarAuction/.idea/workspace.xml
 .idea/
+*src/Web/CarAuction.Web/wwwroot
