@@ -14,45 +14,28 @@
         {
             <div class="btn-transform transform-vertical">
                 <div>
-                    <a asp-controller="Cars" asp-action="Edit" asp-route-id="@Model.Id" class="item item-1 yellowbtn">
+                    <a asp-controller="Cars" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-light">
                         <i class="bi bi-pen-fill"></i> Edit
                     </a>
                 </div>
             </div>
             <div class="btn-transform transform-vertical red mt-12">
-                <form id="deleteForm" asp-controller="Cars" asp-action="Delete" asp-route-id="@Model.Id">
-                    <div>
-                        <a id="deleteBtn" data-toggle="modal" data-target="#exampleModal" class="item item-1 redbtn">
-                            <i class="bi bi-trash3-fill"></i> Delete
-                        </a>
-                    </div>
-                </form>
+                <button id="deleteBtn" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger">
+                    <i class="bi bi-trash3-fill"></i> Delete
+                </button>
             </div>
         }
         <h1 class="display-4 text-uppercase mb-5 text-center">@Model.ModelManufacturerName @Model.ModelName</h1>
-        @* <div class="row align-items-center pb-2"> *@
-            @* <div class="col-lg-6 mb-4"> *@
-            @*     <img data-fancybox="gallery" class="img-fluid mb-auto lazyload" src="@Model.ImageUrl" alt=""> *@
-            @* </div> *@
-            <!-- Start -->
-            <div id="mainCarousel" class="carousel w-10/12 max-w-5xl mx-auto">
-                @foreach (var image in Model.Images)
-                {
-                    <div class="carousel__slide" data-src="@image.PhotoUrl" data-fancybox="gallery">
-                        <img src="@image.PhotoUrl"/>
-                    </div>
-                }
-            </div>
-
-            <div id="thumbCarousel" class="carousel max-w-xl mx-auto">
-                @foreach (var image in Model.Images)
-                {
-                    <div class="carousel__slide">
-                        <img class="panzoom__content" src="@image.PhotoUrl"/>
-                    </div>
-                }
-            </div>
-            <!-- End-->
+        <!-- Start -->
+        <div id="mainCarousel" class="carousel w-10/12 max-w-5xl mx-auto">
+            @foreach (var image in Model.Images)
+            {
+                <div class="carousel__slide" data-src="@image.PhotoUrl" data-fancybox="gallery">
+                    <img class="img-fluid carousel__img" src="@image.PhotoUrl"/>
+                </div>
+            }
+        </div>
+        <!-- End-->
         @* </div> *@
         <div class="col-lg-6 mb-4">
             <div class="d-flex mb-3">
@@ -66,12 +49,20 @@
                     <small>(250)</small>
                 </div>
             </div>
+            <div>
+                <div>Bid now:</div>
+                <div class="number">
+                    <span class="minus">-</span>
+                    <input type="text" value="@Model.StartingPrice"/>
+                    <span class="plus">+</span>
+                </div>
+                @if (Model.BuyNowPrice != null)
+                {
+                    <a class="btn btn-success">Buy it now!</a>
+                }
+            </div>
             <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt</p>
             <h4 class="mb-2">Bid starting price: @Model.StartingPrice</h4>
-            @if (Model.BuyNowPrice != 0)
-            {
-                <h4 class="mb-2">@Model.BuyNowPrice</h4>
-            }
         </div>
     </div>
     <div class="row mt-n3 mt-lg-0 pb-4">
@@ -106,21 +97,23 @@
     </div>
 </div>
 @* Add delete logic *@
-<div class="modal pt-50" id="deleteModal" tabindex="-1" role="dialog">
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Delete Car</h5>
+                <h5 class="modal-title">Listing delete</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Do you want to delete "@Model.ModelManufacturerName"?</p>
+                <p>Do you want to delete @Model.ModelManufacturerName?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="#deleteForm.submit()">Yes</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <form method="post">
+                    <button asp-action="Delete" asp-route-id="@Model.Id" type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     </div>
@@ -129,12 +122,6 @@
 @section Scripts
 {
     <script src="~/lib/fancyapps/ui/dist/fancybox.umd.js" asp-append-version="true"></script>
-    <script>
-var form = document.getElementById("deleteForm");
-document.getElementById("deleteBtn").addEventListener("click", function () {
-  form.submit();
-});
-</script>
     <script>
     // Initialise Carousel
     const mainCarousel = new Carousel(document.querySelector("#mainCarousel"), {
@@ -166,5 +153,26 @@ document.getElementById("deleteBtn").addEventListener("click", function () {
         },
       },
     });
+    </script>
+    <script>
+    	$(document).ready(function() {
+    			 $('.minus').click(function () {
+    				var $input = $(this).parent().find('input');
+                    if (parseInt($input.val()) > @Model.StartingPrice){
+                       $('.minus').css({ pointerEvents: "none" });
+                    }
+    				var count = parseInt($input.val()) - 300;
+    				count = count < 1 ? 1 : count;
+    				$input.val(count);
+    				$input.change();
+    				return false;
+    			});
+    			$('.plus').click(function () {
+    				var $input = $(this).parent().find('input');
+    				$input.val(parseInt($input.val()) + 300);
+    				$input.change();
+    				return false;
+    			});
+    		});
     </script>
 }
