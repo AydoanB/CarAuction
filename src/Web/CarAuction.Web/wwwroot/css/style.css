@@ -313,15 +313,8 @@ h6,
     background: linear-gradient(rgba(28, 30, 50, .9), rgba(28, 30, 50, .9)), url(../images/bg-banner.jpg);
     background-attachment: fixed;
 }
-img {
+.img--cover {
     width: 100%;
     height: 245px;
-}
-
-.img--cover {
     object-fit: cover;
-}
-
-.img--contain {
-    object-fit: contain;
 }
