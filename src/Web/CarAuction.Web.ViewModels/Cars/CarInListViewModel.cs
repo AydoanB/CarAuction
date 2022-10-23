@@ -1,12 +1,11 @@
-using CarAuction.Data.Models.Enums;
-
-namespace CarAuction.Web.ViewModels;
+namespace CarAuction.Web.ViewModels.Cars;
 
 using System.Linq;
 
 using AutoMapper;
 using CarAuction.Common;
 using CarAuction.Data.Models.CarModel;
+using CarAuction.Data.Models.Enums;
 using CarAuction.Services.Mapping;
 
 public class CarInListViewModel : IMapFrom<Car>, IHaveCustomMappings

@@ -144,9 +144,10 @@ namespace CarAuction.Services.Data
                     query = query.Where(x => x.Model.ManufacturerId == searchModel.ModelId);
             }
 
-            if (searchModel?.VehicleType != null)
+            if (searchModel?.StartPriceFrom != null && searchModel?.StartPriceTo != null)
             {
-                    query = query.Where(x => x.Model.VehicleType == searchModel.VehicleType);
+                query = query.Where(x =>
+                        x.StartingPrice >= searchModel.StartPriceFrom && x.StartingPrice <= searchModel.StartPriceTo);
             }
 
             carsCount = query.Count();
@@ -160,6 +161,14 @@ namespace CarAuction.Services.Data
                 else if (order == "Z-A")
                 {
                     query = query.OrderByDescending(x => $"{x.Model.Name}{x.Model.Manufacturer.Name}");
+                }
+                else if (order == "Price-descending")
+                {
+                    query = query.OrderByDescending(x => x.StartingPrice);
+                }
+                else if (order == "Price-ascending")
+                {
+                    query = query.OrderBy(x => x.StartingPrice);
                 }
             }
 

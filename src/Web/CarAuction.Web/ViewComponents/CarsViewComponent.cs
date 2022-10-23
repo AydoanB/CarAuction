@@ -1,3 +1,5 @@
+using CarAuction.Web.ViewModels.Cars;
+
 namespace CarAuction.Web.ViewComponents
 {
     using System.Threading.Tasks;

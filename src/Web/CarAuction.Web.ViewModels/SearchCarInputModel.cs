@@ -14,14 +14,6 @@ namespace CarAuction.Web.ViewModels
         public int ModelId { get; set; }
         public IEnumerable<SelectListItem> ModelsItems { get; set; }
 
-        public VehicleType VehicleType { get; set; }
-        public IEnumerable<SelectListItem> VehicleTypesItems { get; set; }
-
-        public bool ConditionId { get; set; }
-
-        public TransmissionType[] TransmissionTypes { get; set; }
-        public IEnumerable<SelectListItem> TransmissionTypeItems { get; set; }
-
         public decimal? StartPriceFrom { get; set; }
 
         public decimal? StartPriceTo { get; set; }

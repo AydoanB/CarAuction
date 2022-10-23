@@ -77,6 +77,15 @@
         "assets/owl.theme.default.css",
         "assets/owl.theme.default.min.css"
       ]
+    },
+    {
+      "library": "nouislider@8.5.1",
+      "destination": "wwwroot/lib/nouislider",
+      "files": [
+        "distribute/nouislider.min.css",
+        "distribute/nouislider.js",
+        "distribute/nouislider.min.js"
+      ]
     }
   ]
 }

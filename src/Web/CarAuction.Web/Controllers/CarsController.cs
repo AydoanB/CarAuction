@@ -8,6 +8,7 @@ namespace CarAuction.Web.Controllers
     using CarAuction.Services;
     using CarAuction.Services.Data;
     using CarAuction.Web.ViewModels;
+    using CarAuction.Web.ViewModels.Cars;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
