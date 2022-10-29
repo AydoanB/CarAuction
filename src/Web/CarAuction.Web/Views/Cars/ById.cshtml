@@ -5,7 +5,6 @@
 {
     <link rel="stylesheet" href="~/lib/slick-carousel/slick.min.css" asp-append-version="true">
     <link rel="stylesheet" href="~/lib/fancyapps/ui/dist/fancybox.min.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/slider.css" asp-append-version="true">
 }
 
 <div class="container-fluid pt-5">
@@ -50,11 +49,26 @@
                 </div>
             </div>
             <div>
-                <div>Bid now:</div>
-                <div class="number">
-                    <span class="minus">-</span>
-                    <input type="text" value="@Model.StartingPrice"/>
-                    <span class="plus">+</span>
+                <div class="container">
+                    <div class="number">
+                        <span class="minus">-</span>
+                        <input id="bidAmount" type="text" value="@Model.StartingPrice"/>
+                        <span class="plus">+</span>
+                        <button id="bidBtn" class="btn btn-success">Place bid</button>
+                        
+                        <table id="bidsTable" class=" col-12 table table-striped">
+                            <span>Bids:</span>
+                            <thead>
+                            <tr>
+                                <th scope="col">UserName</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Bidded on</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableBodyBids">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 @if (Model.BuyNowPrice != null)
                 {
@@ -127,34 +141,8 @@
     const mainCarousel = new Carousel(document.querySelector("#mainCarousel"), {
       Dots: false,
     });
-    
-    // Thumbnails
-    const thumbCarousel = new Carousel(document.querySelector("#thumbCarousel"), {
-      Sync: {
-        target: mainCarousel,
-        friction: 0,
-      },
-      Dots: false,
-      Navigation: false,
-      center: true,
-      slidesPerPage: 1,
-      infinite: false,
-    });
-    
-    // Customize Fancybox
-    Fancybox.bind('[data-fancybox="gallery"]', {
-      Carousel: {
-        on: {
-          change: (that) => {
-            mainCarousel.slideTo(mainCarousel.findPageForSlide(that.page), {
-              friction: 0,
-            });
-          },
-        },
-      },
-    });
     </script>
-    <script>
+    <script asp-append-version="true">
     	$(document).ready(function() {
     			 $('.minus').click(function () {
     				var $input = $(this).parent().find('input');
@@ -174,5 +162,35 @@
     				return false;
     			});
     		});
+    </script>
+    
+    <script asp-append-version="true">
+        const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/bid")
+        .build();
+    
+        connection.on("NewBid",
+        function (bidAmount){
+        $("#bidAmount").val(bidAmount);
+    });
+    
+        connection.on("GetAll",
+        function (bids){
+        for (const bid of bids) {
+        $("#tableBodyBids").append(`<tr><th scope="row">${bid.userName}</th><td>${bid.amountOfBid}</td><td>${bid.createdOn}</td></tr>`);
+    }
+    });
+    
+        $("#bidBtn").click(function (e){
+        e.preventDefault();
+        var amount = $("#bidAmount").val();
+        connection.invoke("Send",parseFloat(amount), @Model.Id);
+        connection.invoke("Receive", @Model.Id);
+    
+    });
+    
+        connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
     </script>
 }
