@@ -1,4 +1,6 @@
-﻿namespace CarAuction.Web
+﻿using CarAuction.Web.Hubs;
+
+namespace CarAuction.Web
 {
     using System.Reflection;
     using CarAuction.Data;
@@ -49,6 +51,10 @@
             services.AddControllersWithViews(
                     options => { options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()); })
                 .AddRazorRuntimeCompilation();
+            services.AddSignalR(opt =>
+            {
+                opt.EnableDetailedErrors = true;
+            });
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -73,6 +79,7 @@
             services.AddTransient<IAuctionsService, AuctionsService>();
             services.AddTransient<IEnginesService, EnginesService>();
             services.AddTransient<ICarsService, CarsService>();
+            services.AddTransient<IBidsService, BidsService>();
 
             services.AddTransient<IAutoDataScraper, AutoDataScraper>();
         }
@@ -114,6 +121,7 @@
 
             app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            app.MapHub<CarBiddingHub>("/bid");
             app.MapRazorPages();
         }
     }

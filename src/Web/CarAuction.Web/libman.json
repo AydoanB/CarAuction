@@ -86,6 +86,13 @@
         "distribute/nouislider.js",
         "distribute/nouislider.min.js"
       ]
+    },
+    {
+      "library": "@microsoft/signalr@6.0.10",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/browser/signalr.min.js"
+      ]
     }
   ]
 }
