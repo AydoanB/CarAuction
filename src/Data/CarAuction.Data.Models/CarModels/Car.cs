@@ -15,6 +15,7 @@ public class Car : BaseDeletableModel<int>
     {
         this.Bids = new HashSet<Bid>();
         this.Images = new HashSet<Image>();
+        this.CurrentPrice = this.StartingPrice;
     }
 
     [Required]
@@ -33,6 +34,8 @@ public class Car : BaseDeletableModel<int>
     public decimal StartingPrice { get; set; }
 
     public decimal? BuyNowPrice { get; set; }
+
+    public decimal CurrentPrice { get; set; }
 
     [Required]
     [Column(TypeName = "varchar(50)")]

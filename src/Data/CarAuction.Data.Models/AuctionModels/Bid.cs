@@ -20,7 +20,6 @@ public class Bid : BaseDeletableModel<string>
     public string UserId { get; set; }
     public virtual ApplicationUser User { get; set; }
 
-    [Column(TypeName = "decimal(4,0)")]
     public decimal AmountOfBid { get; set; }
 
     public bool IsBuyNow { get; set; }
