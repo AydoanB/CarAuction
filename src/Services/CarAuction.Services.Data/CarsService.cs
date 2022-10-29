@@ -1,3 +1,6 @@
+using CarAuction.Data;
+using static CarAuction.Common.GlobalConstants;
+
 namespace CarAuction.Services.Data
 {
     using System;
@@ -5,8 +8,6 @@ namespace CarAuction.Services.Data
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using CarAuction.Common;
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.CarModel;
     using CarAuction.Data.Models.CarModels;
@@ -24,6 +25,7 @@ namespace CarAuction.Services.Data
         private readonly IEnginesService enginesService;
         private readonly IAuctionsService auctionsService;
         private readonly IImagesService imagesService;
+        private readonly ApplicationDbContext db;
 
         public CarsService(
             IDeletableEntityRepository<Car> carsRepository,
@@ -31,7 +33,8 @@ namespace CarAuction.Services.Data
             IModelsService modelsService,
             IEnginesService enginesService,
             IAuctionsService auctionsService,
-            IImagesService imagesService)
+            IImagesService imagesService,
+            ApplicationDbContext db)
         {
             this.carsRepository = carsRepository;
             this.manufacturersService = manufacturersService;
@@ -39,6 +42,7 @@ namespace CarAuction.Services.Data
             this.enginesService = enginesService;
             this.auctionsService = auctionsService;
             this.imagesService = imagesService;
+            this.db = db;
         }
 
         public async Task CreateAsync(CarInputModel input, string userId, string imagePath)
@@ -73,7 +77,7 @@ namespace CarAuction.Services.Data
                 UserId = userId
             };
 
-            Directory.CreateDirectory($"{imagePath}/{GlobalConstants.CarsImagesFolder}/");
+            Directory.CreateDirectory($"{imagePath}/{CarsImagesFolder}/");
 
             foreach (var image in input.Images)
             {
@@ -82,7 +86,7 @@ namespace CarAuction.Services.Data
                 car.Images.Add(carImage);
 
                 await this.imagesService
-                    .SaveImageToWebRootAsync(imagePath, carImage, image, GlobalConstants.CarsImagesFolder);
+                    .SaveImageToWebRootAsync(imagePath, carImage, image, CarsImagesFolder);
             }
 
             await this.carsRepository.AddAsync(car);
@@ -256,6 +260,26 @@ namespace CarAuction.Services.Data
                 .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 
             return viewModel;
+        }
+
+        public void UpdateCarPrice(decimal bidAmount, int carId)
+        {
+           var car = this.db
+               .Cars
+               .FirstOrDefault(x => x.Id == carId);
+
+           if (car == null)
+           {
+               throw new ArgumentNullException(UnexistingListing);
+           }
+
+           if (car.CurrentPrice >= bidAmount)
+           {
+               throw new InvalidOperationException(string.Format(InvalidBid, car.CurrentPrice));
+           }
+
+           car.CurrentPrice = bidAmount;
+           this.db.SaveChanges();
         }
     }
 }
