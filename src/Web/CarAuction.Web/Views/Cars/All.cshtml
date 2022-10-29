@@ -36,206 +36,206 @@
 <h1 class="display-4 text-uppercase text-center mb-5">Find Your Next Car</h1>
 <div class="row">
 @* Car search 2 *@
-@* <div class="col-lg-3"> *@
-@*     <aside class="l-sidebar"> *@
-@*         <div class="widget section-sidebar bg-light"> *@
-@*     <h3 class="widget-title bg-dark"><i class="ic flaticon-car-4"></i>Search for a car</h3> *@
-@*     <div class="widget-content"> *@
-@*         <div class="widget-inner"> *@
-@*             <form class="b-filter bg-light"> *@
-@*                 <div class="b-filter__main"> *@
-@*                     <div class="b-filter__row"> *@
-@*                         <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
-@*                             <select id="manufacturers" asp-for="SearchModel.ManufacturerId" class="form-control mb-4" asp-items="Model.SearchModel.ManufacturerItems" data-live-search="true"> *@
-@*                                 <option value="0">Select Make:</option> *@
-@*                             </select> *@
-@*                             <div class="dropdown-menu " role="combobox"> *@
-@*                                 <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
-@*                                     <ul class="dropdown-menu inner show"></ul> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                     <div class="b-filter__row"> *@
-@*                         <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
-@*                             <select id="models" asp-for="SearchModel.ModelId" class="form-control" data-live-search="true"> *@
-@*                                 <option value="0">Select Model:</option> *@
-@*                             </select> *@
-@*                             <div class="dropdown-menu " role="combobox"> *@
-@*                                 <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
-@*                                     <ul class="dropdown-menu inner show"></ul> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                     <div class="b-filter__row"> *@
-@*                         <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
-@*                             <select asp-for="SearchModel.VehicleType" asp-items="@Model.SearchModel.VehicleTypesItems" class="form-control mt-4" data-live-search="true"> *@
-@*                                 <option value="0">Vehicle Type:</option> *@
-@*                             </select> *@
-@*                             <div class="dropdown-menu " role="combobox"> *@
-@*                                 <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
-@*                                     <ul class="dropdown-menu inner show"></ul> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                     $1$ <div class="b-filter__row"> #1# *@
-@*                     $1$     <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> #1# *@
-@*                     $1$         <select class="selectpicker" data-width="100%" title="Vehicle Type" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98"> #1# *@
-@*                     $1$         </select> #1# *@
-@*                     $1$         <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Vehicle Type"> #1# *@
-@*                     $1$             <div class="filter-option"> #1# *@
-@*                     $1$                 <div class="filter-option-inner"> #1# *@
-@*                     $1$                     <div class="filter-option-inner-inner">Vehicle Type</div> #1# *@
-@*                     $1$                 </div> #1# *@
-@*                     $1$             </div> #1# *@
-@*                     $1$         </button> #1# *@
-@*                     $1$         <div class="dropdown-menu " role="combobox"> #1# *@
-@*                     $1$             <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> #1# *@
-@*                     $1$                 <ul class="dropdown-menu inner show"></ul> #1# *@
-@*                     $1$             </div> #1# *@
-@*                     $1$         </div> #1# *@
-@*                     $1$     </div> #1# *@
-@*                     $1$ </div> #1# *@
-@*                     <div class="b-filter__row row"> *@
-@*                         <div class="b-filter__item col-md-6 col-lg-12 col-xl-6"> *@
-@*                             <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
-@*                                 <select class="selectpicker" data-width="100%" title="From" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98"> *@
-@*                                     <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option> *@
-@*                                 </select> *@
-@*                                 <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="From"> *@
-@*                                     <div class="filter-option"> *@
-@*                                         <div class="filter-option-inner"> *@
-@*                                             <div class="filter-option-inner-inner">From</div> *@
-@*                                         </div> *@
-@*                                     </div> *@
-@*                                 </button> *@
-@*                                 <div class="dropdown-menu " role="combobox"> *@
-@*                                     <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
-@*                                         <ul class="dropdown-menu inner show"></ul> *@
-@*                                     </div> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                         <div class="b-filter__item col-md-6 col-lg-12 col-xl-6"> *@
-@*                             <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
-@*                                 <select class="selectpicker" data-width="100%" title="To" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98"> *@
-@*                                     <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option> *@
-@*                                 </select> *@
-@*                                 <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="To"> *@
-@*                                     <div class="filter-option"> *@
-@*                                         <div class="filter-option-inner"> *@
-@*                                             <div class="filter-option-inner-inner">To</div> *@
-@*                                         </div> *@
-@*                                     </div> *@
-@*                                 </button> *@
-@*                                 <div class="dropdown-menu " role="combobox"> *@
-@*                                     <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
-@*                                         <ul class="dropdown-menu inner show"></ul> *@
-@*                                     </div> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                     <div class="b-filter__row"> *@
-@*                         <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
-@*                             <select class="selectpicker" data-width="100%" title="Transmission" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98"> *@
-@*                                 <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option> *@
-@*                             </select> *@
-@*                             <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Transmission"> *@
-@*                                 <div class="filter-option"> *@
-@*                                     <div class="filter-option-inner"> *@
-@*                                         <div class="filter-option-inner-inner">Transmission</div> *@
-@*                                     </div> *@
-@*                                 </div> *@
-@*                             </button> *@
-@*                             <div class="dropdown-menu " role="combobox"> *@
-@*                                 <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
-@*                                     <ul class="dropdown-menu inner show"></ul> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                     <div class="b-filter__row"> *@
-@*                         <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
-@*                             <select class="selectpicker" data-width="100%" title="Fuel Type" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98"> *@
-@*                                 <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option> *@
-@*                             </select> *@
-@*                             <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Fuel Type"> *@
-@*                                 <div class="filter-option"> *@
-@*                                     <div class="filter-option-inner"> *@
-@*                                         <div class="filter-option-inner-inner">Fuel Type</div> *@
-@*                                     </div> *@
-@*                                 </div> *@
-@*                             </button> *@
-@*                             <div class="dropdown-menu " role="combobox"> *@
-@*                                 <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
-@*                                     <ul class="dropdown-menu inner show"></ul> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                 </div> *@
-@*                 <div class="b-filter-slider ui-filter-slider"> *@
-@*                     <div class="b-filter-slider__title">Price</div> *@
-@*                     <div class="b-filter-slider__main"> *@
-@*                         <div id="filterPrice" class="noUi-target noUi-ltr noUi-horizontal"> *@
-@*                             <div class="noUi-base"> *@
-@*                                 <div class="noUi-connects"> *@
-@*                                     <div class="noUi-connect" style="transform: translate(2.04082%, 0px) scale(0.877551, 1);"></div> *@
-@*                                 </div> *@
-@*                                 <div class="noUi-origin" style="transform: translate(-97.9592%, 0px); z-index: 5;"> *@
-@*                                     <div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="1000.0" aria-valuemax="45000.0" aria-valuenow="2000.0" aria-valuetext="$ 2,000"></div> *@
-@*                                 </div> *@
-@*                                 <div class="noUi-origin" style="transform: translate(-10.2041%, 0px); z-index: 4;"> *@
-@*                                     <div class="noUi-handle noUi-handle-upper" data-handle="1" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="2000.0" aria-valuemax="50000.0" aria-valuenow="45000.0" aria-valuetext="$ 45,000"></div> *@
-@*                                 </div> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                         <div class="b-filter__row row"> *@
-@*                             <div class="b-filter__item col-md-6 col-lg-12 col-xl-6"> *@
-@*                                 <input class="ui-select" id="input-with-keypress-0"> *@
-@*                             </div> *@
-@*                             <div class="b-filter__item col-md-6 col-lg-12 col-xl-6"> *@
-@*                                 <input class="ui-select" id="input-with-keypress-1"> *@
-@*                             </div> *@
-@*                         </div> *@
-@*                     </div> *@
-@*                 </div> *@
-@*                 <button class="b-filter__reset btn btn-default w-100" type="button">Reset Filters</button> *@
-@*                 <button class="btn btn-primary w-100">Show results</button> *@
-@*             </form> *@
-@*         </div> *@
-@*     </div> *@
-@* </div><!-- end .b-filter--> *@
-@* <section class="widget b-brands section-sidebar"> *@
-@*     <h3 class="widget-title bg-dark"><i class="ic flaticon-car-4"></i>Popular brands</h3> *@
-@*     <div class="widget-content"> *@
-@*         <div class="b-brands__main d-flex flex-wrap"> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/1.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/2.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/3.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/4.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/5.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/6.png" alt="foto"> *@
-@*             </a> *@
-@*         </div> *@
-@*     </div> *@
-@* </section><!-- end .b-brands--> *@
-@* </aside> *@
-@* </div> *@
+<div class="col-lg-3">
+    <aside class="l-sidebar">
+        <div class="widget section-sidebar bg-light">
+    <h3 class="widget-title bg-dark"><i class="ic flaticon-car-4"></i>Search for a car</h3>
+    <div class="widget-content">
+        <div class="widget-inner">
+            <form class="b-filter bg-light">
+                <div class="b-filter__main">
+                    <div class="b-filter__row">
+                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
+                            <select id="manufacturers" asp-for="SearchModel.ManufacturerId" class="form-control mb-4" asp-items="Model.SearchModel.ManufacturerItems" data-live-search="true">
+                                <option value="0">Select Make:</option>
+                            </select>
+                            <div class="dropdown-menu " role="combobox">
+                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
+                                    <ul class="dropdown-menu inner show"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b-filter__row">
+                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
+                            <select id="models" asp-for="SearchModel.ModelId" class="form-control" data-live-search="true">
+                                <option value="0">Select Model:</option>
+                            </select>
+                            <div class="dropdown-menu " role="combobox">
+                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
+                                    <ul class="dropdown-menu inner show"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b-filter__row">
+                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
+                            <select asp-for="SearchModel.AuctionId" asp-items="@Model.SearchModel.AuctionItems" class="form-control mt-4" data-live-search="true">
+                                <option value="0">Vehicle Type:</option>
+                            </select>
+                            <div class="dropdown-menu " role="combobox">
+                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
+                                    <ul class="dropdown-menu inner show"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="b-filter__row"> *@
+                    @*     <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
+                    @*         <select class="selectpicker" data-width="100%" title="Vehicle Type" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98"> *@
+                    @*         </select> *@
+                    @*         <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Vehicle Type"> *@
+                    @*             <div class="filter-option"> *@
+                    @*                 <div class="filter-option-inner"> *@
+                    @*                     <div class="filter-option-inner-inner">Vehicle Type</div> *@
+                    @*                 </div> *@
+                    @*             </div> *@
+                    @*         </button> *@
+                    @*         <div class="dropdown-menu " role="combobox"> *@
+                    @*             <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
+                    @*                 <ul class="dropdown-menu inner show"></ul> *@
+                    @*             </div> *@
+                    @*         </div> *@
+                    @*     </div> *@
+                    @* </div> *@
+                    <div class="b-filter__row row">
+                        <div class="b-filter__item col-md-6 col-lg-12 col-xl-6">
+                            <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
+                                <select class="selectpicker" data-width="100%" title="From" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98">
+                                    <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option>
+                                </select>
+                                <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="From">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-inner-inner">From</div>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class="dropdown-menu " role="combobox">
+                                    <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
+                                        <ul class="dropdown-menu inner show"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b-filter__item col-md-6 col-lg-12 col-xl-6">
+                            <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
+                                <select class="selectpicker" data-width="100%" title="To" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98">
+                                    <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option>
+                                </select>
+                                <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="To">
+                                    <div class="filter-option">
+                                        <div class="filter-option-inner">
+                                            <div class="filter-option-inner-inner">To</div>
+                                        </div>
+                                    </div>
+                                </button>
+                                <div class="dropdown-menu " role="combobox">
+                                    <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
+                                        <ul class="dropdown-menu inner show"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b-filter__row">
+                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
+                            <select class="selectpicker" data-width="100%" title="Transmission" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98">
+                                <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option>
+                            </select>
+                            <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Transmission">
+                                <div class="filter-option">
+                                    <div class="filter-option-inner">
+                                        <div class="filter-option-inner-inner">Transmission</div>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown-menu " role="combobox">
+                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
+                                    <ul class="dropdown-menu inner show"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="b-filter__row">
+                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
+                            <select class="selectpicker" data-width="100%" title="Fuel Type" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98">
+                                <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option>
+                            </select>
+                            <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Fuel Type">
+                                <div class="filter-option">
+                                    <div class="filter-option-inner">
+                                        <div class="filter-option-inner-inner">Fuel Type</div>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="dropdown-menu " role="combobox">
+                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
+                                    <ul class="dropdown-menu inner show"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="b-filter-slider ui-filter-slider">
+                    <div class="b-filter-slider__title">Price</div>
+                    <div class="b-filter-slider__main">
+                        <div id="filterPrice" class="noUi-target noUi-ltr noUi-horizontal">
+                            <div class="noUi-base">
+                                <div class="noUi-connects">
+                                    <div class="noUi-connect" style="transform: translate(2.04082%, 0px) scale(0.877551, 1);"></div>
+                                </div>
+                                <div class="noUi-origin" style="transform: translate(-97.9592%, 0px); z-index: 5;">
+                                    <div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="1000.0" aria-valuemax="45000.0" aria-valuenow="2000.0" aria-valuetext="$ 2,000"></div>
+                                </div>
+                                <div class="noUi-origin" style="transform: translate(-10.2041%, 0px); z-index: 4;">
+                                    <div class="noUi-handle noUi-handle-upper" data-handle="1" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="2000.0" aria-valuemax="50000.0" aria-valuenow="45000.0" aria-valuetext="$ 45,000"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b-filter__row row">
+                            <div class="b-filter__item col-md-6 col-lg-12 col-xl-6">
+                                <input class="ui-select" id="input-with-keypress-0">
+                            </div>
+                            <div class="b-filter__item col-md-6 col-lg-12 col-xl-6">
+                                <input class="ui-select" id="input-with-keypress-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="b-filter__reset btn btn-default w-100" type="button">Reset Filters</button>
+                <button class="btn btn-primary w-100">Show results</button>
+            </form>
+        </div>
+    </div>
+</div><!-- end .b-filter-->
+<section class="widget b-brands section-sidebar">
+    <h3 class="widget-title bg-dark"><i class="ic flaticon-car-4"></i>Popular brands</h3>
+    <div class="widget-content">
+        <div class="b-brands__main d-flex flex-wrap">
+            <a class="b-brands__item" href="index.html">
+                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/1.png" alt="foto">
+            </a>
+            <a class="b-brands__item" href="index.html">
+                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/2.png" alt="foto">
+            </a>
+            <a class="b-brands__item" href="index.html">
+                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/3.png" alt="foto">
+            </a>
+            <a class="b-brands__item" href="index.html">
+                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/4.png" alt="foto">
+            </a>
+            <a class="b-brands__item" href="index.html">
+                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/5.png" alt="foto">
+            </a>
+            <a class="b-brands__item" href="index.html">
+                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/6.png" alt="foto">
+            </a>
+        </div>
+    </div>
+</section><!-- end .b-brands-->
+</aside>
+</div>
 @* Car search 2 end *@
 @foreach (var car in Model.Cars)
 {
