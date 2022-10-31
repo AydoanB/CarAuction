@@ -105,10 +105,12 @@
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithRedirects("/Error/PageNotFound?errorCode=404");
+            // app.UseStatusCodePages();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
