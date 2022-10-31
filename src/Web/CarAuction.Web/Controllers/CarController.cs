@@ -161,7 +161,7 @@ namespace CarAuction.Web.Controllers
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
