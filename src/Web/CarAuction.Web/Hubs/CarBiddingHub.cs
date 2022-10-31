@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Security.Claims;
 
 namespace CarAuction.Web.Hubs
 {
@@ -19,18 +19,20 @@ namespace CarAuction.Web.Hubs
 
         public async Task Send(decimal amountOfBid, int carId)
         {
-            var userId = this.Context.UserIdentifier;
+            var user = this.Context.User;
 
-            await this.bidsService.MakeBid(amountOfBid, carId, userId);
+            var model = await this.bidsService.MakeBid(amountOfBid, carId, user.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            await this.Clients.All.SendAsync("NewBid", amountOfBid);
-        }
+            var viewModel = new BidViewModel
+            {
+                UserName = user.Identity.Name,
+                CreatedOn = model.CreatedOn.ToString("g"),
+                AmountOfBid = model.AmountOfBid,
+            };
 
-        public async Task Receive(int carId)
-        {
-            var bidsForCar = await this.bidsService.GetAllBidsForCarAsync<BidViewModel>(carId);
+            await this.Groups.AddToGroupAsync(this.Context.ConnectionId, carId.ToString());
 
-            await this.Clients.All.SendAsync("GetAll", bidsForCar);
+            await this.Clients.Group(carId.ToString()).SendAsync("NewBid", viewModel);
         }
     }
 }

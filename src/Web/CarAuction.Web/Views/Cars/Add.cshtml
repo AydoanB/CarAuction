@@ -98,7 +98,7 @@
     <script type="text/javascript">
      $(function () {
          
-          var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+          const antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
           
                  $("#models").each(function () {
                      if ($(this).find("option").length <= 1) {
@@ -108,7 +108,7 @@
       
                  $("#manufacturers").change(function () {
                      
-                     var manufacturerId = $(this).find(":selected").val();
+                     const manufacturerId = $(this).find(":selected").val();
                      $("#models").empty();
                      $.ajax({
                          type: "POST",

@@ -15,6 +15,5 @@ namespace CarAuction.Services.Data
         Task DeleteAsync(int id);
         Task<IEnumerable<T>> GetRandomCars<T>(int count);
         SearchCarInputModel PopulateSearchInputModelDropdowns(SearchCarInputModel viewModel);
-        void UpdateCarPrice(decimal bidAmount, int carId);
     }
 }

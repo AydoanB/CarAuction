@@ -1,12 +1,13 @@
 namespace CarAuction.Services.Data
 {
-    using System.Collections;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using CarAuction.Data.Models.AuctionModels;
+
     public interface IBidsService
     {
-        Task MakeBid(decimal amountOfBid, int carId, string userId);
-        Task<ICollection<T>> GetAllBidsForCarAsync<T>(int carId);
+        Task<Bid> MakeBid(decimal amountOfBid, int carId, string userId);
+        Task DeleteAllRelatedBids(int carId);
     }
 }

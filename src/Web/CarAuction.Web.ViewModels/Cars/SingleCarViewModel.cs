@@ -1,14 +1,16 @@
-using System.Collections.Generic;
-using CarAuction.Data.Models.Enums;
-using CarAuction.Web.ViewModels.Images;
+using CarAuction.Web.ViewModels.Bids;
 
 namespace CarAuction.Web.ViewModels;
 
+using System.Collections.Generic;
 using System.Linq;
+
 using AutoMapper;
 using CarAuction.Common;
 using CarAuction.Data.Models.CarModel;
+using CarAuction.Data.Models.Enums;
 using CarAuction.Services.Mapping;
+using CarAuction.Web.ViewModels.Images;
 
 public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
 {
@@ -44,6 +46,8 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
     public string Color { get; set; }
 
     public IEnumerable<CarImageViewModel> Images { get; set; }
+
+    public IEnumerable<BidViewModel> Bids { get; set; }
 
     public void CreateMappings(IProfileExpression configuration)
     {

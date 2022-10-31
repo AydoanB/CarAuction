@@ -55,19 +55,29 @@
                         <input id="bidAmount" type="text" value="@Model.StartingPrice"/>
                         <span class="plus">+</span>
                         <button id="bidBtn" class="btn btn-success">Place bid</button>
-                        
-                        <table id="bidsTable" class=" col-12 table table-striped">
-                            <span>Bids:</span>
-                            <thead>
-                            <tr>
-                                <th scope="col">UserName</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Bidded on</th>
-                            </tr>
-                            </thead>
-                            <tbody id="tableBodyBids">
-                            </tbody>
-                        </table>
+                        @if (Model.Bids.Any())
+                        {
+                            <table id="bidsTable" class=" col-12 table table-striped">
+                                <span>Bids:</span>
+                                <thead>
+                                <tr>
+                                    <th scope="col">UserName</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Bidded on</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tableBodyBids">
+                                @foreach (var bid in Model.Bids.OrderByDescending(x=>x.CreatedOn))
+                                {
+                                    <tr>
+                                        <th scope="row">@bid.UserName</th>
+                                        <td>@bid.AmountOfBid</td>
+                                        <td>@bid.CreatedOn</td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        }
                     </div>
                 </div>
                 @if (Model.BuyNowPrice != null)
@@ -110,7 +120,6 @@
         </div>
     </div>
 </div>
-@* Add delete logic *@
 <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -165,32 +174,27 @@
     </script>
     
     <script asp-append-version="true">
-        const connection = new signalR.HubConnectionBuilder()
+        
+        const connection = new signalR
+        .HubConnectionBuilder()
         .withUrl("/bid")
         .build();
     
         connection.on("NewBid",
-        function (bidAmount){
-        $("#bidAmount").val(bidAmount);
-    });
-    
-        connection.on("GetAll",
-        function (bids){
-        for (const bid of bids) {
-        $("#tableBodyBids").append(`<tr><th scope="row">${bid.userName}</th><td>${bid.amountOfBid}</td><td>${bid.createdOn}</td></tr>`);
-    }
+        function (bid){
+        $("#bidAmount").val(bid.amountOfBid);
+        $("#tableBodyBids").prepend(`<tr><th scope="row">${bid.userName}</th><td>${bid.amountOfBid}</td><td>${bid.createdOn}</td></tr>`);
     });
     
         $("#bidBtn").click(function (e){
         e.preventDefault();
         var amount = $("#bidAmount").val();
-        connection.invoke("Send",parseFloat(amount), @Model.Id);
-        connection.invoke("Receive", @Model.Id);
-    
+        connection.invoke("Send",parseFloat(amount), @Model.Id);    
     });
     
         connection.start().catch(function (err) {
         return console.error(err.toString());
     });
+        
     </script>
 }

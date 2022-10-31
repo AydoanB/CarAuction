@@ -1,8 +1,7 @@
-﻿using CarAuction.Web.Hubs;
-
-namespace CarAuction.Web
+﻿namespace CarAuction.Web
 {
     using System.Reflection;
+
     using CarAuction.Data;
     using CarAuction.Data.Common;
     using CarAuction.Data.Common.Repositories;
@@ -13,6 +12,7 @@ namespace CarAuction.Web
     using CarAuction.Services.Data;
     using CarAuction.Services.Mapping;
     using CarAuction.Services.Messaging;
+    using CarAuction.Web.Hubs;
     using CarAuction.Web.ViewModels;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;

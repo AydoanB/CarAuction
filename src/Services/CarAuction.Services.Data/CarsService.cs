@@ -1,5 +1,4 @@
-using CarAuction.Data;
-using static CarAuction.Common.GlobalConstants;
+using CarAuction.Common;
 
 namespace CarAuction.Services.Data
 {
@@ -8,6 +7,8 @@ namespace CarAuction.Services.Data
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using CarAuction.Data;
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.CarModel;
     using CarAuction.Data.Models.CarModels;
@@ -17,6 +18,8 @@ namespace CarAuction.Services.Data
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
+    using static CarAuction.Common.GlobalConstants;
+
     public class CarsService : ICarsService
     {
         private readonly IDeletableEntityRepository<Car> carsRepository;
@@ -25,6 +28,7 @@ namespace CarAuction.Services.Data
         private readonly IEnginesService enginesService;
         private readonly IAuctionsService auctionsService;
         private readonly IImagesService imagesService;
+        private readonly IBidsService bidsService;
         private readonly ApplicationDbContext db;
 
         public CarsService(
@@ -34,6 +38,7 @@ namespace CarAuction.Services.Data
             IEnginesService enginesService,
             IAuctionsService auctionsService,
             IImagesService imagesService,
+            IBidsService bidsService,
             ApplicationDbContext db)
         {
             this.carsRepository = carsRepository;
@@ -42,6 +47,7 @@ namespace CarAuction.Services.Data
             this.enginesService = enginesService;
             this.auctionsService = auctionsService;
             this.imagesService = imagesService;
+            this.bidsService = bidsService;
             this.db = db;
         }
 
@@ -95,9 +101,17 @@ namespace CarAuction.Services.Data
 
         public async Task DeleteAsync(int id)
         {
-            var car = await this.carsRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            var car = await this.carsRepository.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (car == null)
+            {
+                throw new NullReferenceException(UnexistingListing);
+            }
 
             this.carsRepository.Delete(car);
+
+            await this.bidsService.DeleteAllRelatedBids(car.Id);
 
             await this.carsRepository.SaveChangesAsync();
         }
@@ -262,24 +276,6 @@ namespace CarAuction.Services.Data
             return viewModel;
         }
 
-        public void UpdateCarPrice(decimal bidAmount, int carId)
-        {
-           var car = this.db
-               .Cars
-               .FirstOrDefault(x => x.Id == carId);
-
-           if (car == null)
-           {
-               throw new ArgumentNullException(UnexistingListing);
-           }
-
-           if (car.CurrentPrice >= bidAmount)
-           {
-               throw new InvalidOperationException(string.Format(InvalidBid, car.CurrentPrice));
-           }
-
-           car.CurrentPrice = bidAmount;
-           this.db.SaveChanges();
-        }
+        
     }
 }

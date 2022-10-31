@@ -1,37 +1,33 @@
-using System;
-using CarAuction.Common;
-using CarAuction.Data.Models.CarModel;
-
 namespace CarAuction.Services.Data
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using CarAuction.Data;
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.AuctionModels;
-    using CarAuction.Services.Mapping;
     using Microsoft.EntityFrameworkCore;
+
+    using static CarAuction.Common.GlobalConstants;
 
     public class BidsService : IBidsService
     {
         private readonly IDeletableEntityRepository<Bid> bidsRepository;
-        private readonly ICarsService carsService;
         private readonly ApplicationDbContext db;
 
-        public BidsService(IDeletableEntityRepository<Bid> bidsRepository,
-            ICarsService carsService,
+        public BidsService(
+            IDeletableEntityRepository<Bid> bidsRepository,
             ApplicationDbContext db)
         {
             this.bidsRepository = bidsRepository;
-            this.carsService = carsService;
             this.db = db;
         }
 
-        public async Task MakeBid(decimal amountOfBid, int carId, string userId)
+        public Task<Bid> MakeBid(decimal amountOfBid, int carId, string userId)
         {
-            this.carsService.UpdateCarPrice(amountOfBid, carId);
+            // SignalR problem with async methods
+            this.UpdateCarPrice(amountOfBid, carId);
 
             var bid = new Bid
             {
@@ -41,17 +37,41 @@ namespace CarAuction.Services.Data
                 IsBuyNow = false,
             };
             this.db.Bids.Add(bid);
+            this.db.SaveChanges();
+
+            return Task.FromResult(bid);
         }
 
-        public async Task<ICollection<T>> GetAllBidsForCarAsync<T>(int carId)
+        public async Task DeleteAllRelatedBids(int carId)
         {
-            return await this.bidsRepository
+            var queryable = this.bidsRepository
                 .All()
-                .Where(x => x.CarId == carId)
-                .OrderByDescending(x => x.CreatedOn)
-                .Take(5)
-                .To<T>()
-                .ToListAsync();
+                .Where(x => x.CarId == carId);
+
+            await queryable
+                .ForEachAsync(x => this.bidsRepository.Delete(x));
+
+            await this.bidsRepository.SaveChangesAsync();
+        }
+
+        private void UpdateCarPrice(decimal bidAmount, int carId)
+        {
+            var car = this.db
+                .Cars
+                .FirstOrDefault(x => x.Id == carId);
+
+            if (car == null)
+            {
+                throw new NullReferenceException(UnexistingListing);
+            }
+
+            if (car.CurrentPrice >= bidAmount)
+            {
+                throw new InvalidOperationException(string.Format(InvalidBid, car.CurrentPrice));
+            }
+
+            car.CurrentPrice = bidAmount;
+            this.db.SaveChanges();
         }
     }
 }
