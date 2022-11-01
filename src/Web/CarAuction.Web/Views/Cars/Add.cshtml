@@ -50,7 +50,10 @@
     <span asp-validation-for="ModelEngineHorsePower" class="text-danger"></span>
 
     <label asp-for="ModelDoorsCount"></label>
-    <input asp-for="ModelDoorsCount" class="form-control"/>
+    <select class="form-control" asp-for="ModelDoorsCount">
+        <option>3</option>
+        <option>5</option>
+    </select>
     <span asp-validation-for="ModelDoorsCount" class="text-danger"></span>
 
     <div class="form-group">
