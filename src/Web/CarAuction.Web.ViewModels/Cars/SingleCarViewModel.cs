@@ -45,6 +45,8 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
 
     public string Color { get; set; }
 
+    public AuctionViewModel Auction { get; set; }
+
     public IEnumerable<CarImageViewModel> Images { get; set; }
 
     public IEnumerable<BidViewModel> Bids { get; set; }

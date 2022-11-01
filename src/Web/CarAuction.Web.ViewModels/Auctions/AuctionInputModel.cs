@@ -5,11 +5,12 @@ namespace CarAuction.Web.ViewModels
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    using CarAuction.Web.ViewModels.Locations;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class AuctionInputModel
     {
-        public LocationInputPage Location { get; set; }
+        public LocationInputModel Location { get; set; }
 
         public DateTime StartDate { get; set; }
 

@@ -50,6 +50,14 @@
             </div>
             <div>
                 <div class="container">
+                    <div class="mapouter">
+                         <span>Start date: @Model.Auction.StartDate.ToString("g")</span>
+                        <span>End date: @Model.Auction.EndDate.ToString("g")</span>
+                        <div class="gmap_canvas">
+
+                            <iframe width="350" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q=@Model.Auction.LocationName%20rich%20str&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><br><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>
+                        </div>
+                    </div>
                     <div class="number">
                         <span class="minus">-</span>
                         <input id="bidAmount" type="text" value="@Model.StartingPrice"/>
@@ -67,7 +75,7 @@
                                 </tr>
                                 </thead>
                                 <tbody id="tableBodyBids">
-                                @foreach (var bid in Model.Bids.OrderByDescending(x=>x.CreatedOn))
+                                @foreach (var bid in Model.Bids.OrderByDescending(x => x.CreatedOn))
                                 {
                                     <tr>
                                         <th scope="row">@bid.UserName</th>
