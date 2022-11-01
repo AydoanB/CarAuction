@@ -261,6 +261,10 @@
                     <i class="fa-sharp fa-solid fa-dollar-sign text-primary mr-1"></i>
                     <span>@car.StartingPrice</span>
                 </div>
+                <div class="px-2">
+                    <i class="fa-sharp fa-solid fa-location-dot text-primary mr-1"></i>
+                    <span>@car.AuctionLocationName</span>
+                </div>
             </div>
             <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View</a>
         </div>
