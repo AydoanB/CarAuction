@@ -109,8 +109,8 @@
                 app.UseHsts();
             }
 
+            app.UseStatusCodePages();
             app.UseStatusCodePagesWithRedirects("/Error/PageNotFound?errorCode=404");
-            // app.UseStatusCodePages();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
