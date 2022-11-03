@@ -21,6 +21,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Stripe;
 
     public class Program
     {
@@ -51,12 +52,15 @@
             services.AddControllersWithViews(
                     options => { options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()); })
                 .AddRazorRuntimeCompilation();
+
             services.AddSignalR(opt =>
             {
                 opt.EnableDetailedErrors = true;
             });
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.Configure<StripeSettings>(configuration.GetSection("Stripe"));
 
             services.AddSingleton(configuration);
 
@@ -80,6 +84,7 @@
             services.AddTransient<IEnginesService, EnginesService>();
             services.AddTransient<ICarsService, CarsService>();
             services.AddTransient<IBidsService, BidsService>();
+            services.AddTransient<IWatchlistService, WatchlistService>();
 
             services.AddTransient<IAutoDataScraper, AutoDataScraper>();
         }
@@ -98,6 +103,7 @@
 
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
+            StripeConfiguration.ApiKey = "sk_test_51LzOm1FJJMRKuV7qZH1eDFQUmLbGaApzqf7zjvZueylZN6YwOTAozLqWWqLLfZ3srGO0eb15sUGjTzUVcNSqhLQp00AmzzvukX";
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

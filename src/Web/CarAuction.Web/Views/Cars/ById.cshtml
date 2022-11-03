@@ -24,6 +24,13 @@
                 </button>
             </div>
         }
+        <div class="btn-transform transform-vertical">
+            <div>
+                <a asp-controller="Cars" asp-action="AddToWatchlist" asp-route-id="@Model.Id" class="btn btn-light">
+                    <i class="bi bi-pen-fill"></i> <span class="fa-regular fa-star"></span> Watch
+                </a>
+            </div>
+        </div>
         <h1 class="display-4 text-uppercase mb-5 text-center">@Model.ModelManufacturerName @Model.ModelName</h1>
         <!-- Start -->
         <div id="mainCarousel" class="carousel w-10/12 max-w-5xl mx-auto">
@@ -183,7 +190,7 @@
     			});
     		});
     </script>
-    
+
     <script asp-append-version="true">
         
         const connection = new signalR
@@ -201,7 +208,7 @@
         e.preventDefault();
         var amount = $("#bidAmount").val();
         connection.invoke("Send",parseFloat(amount), @Model.Id);    
-    });
+        });
     
         connection.start().catch(function (err) {
         return console.error(err.toString());

@@ -4,6 +4,7 @@ using CarAuction.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarAuction.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221103100113_AddCarWatchlistToUser")]
+    partial class AddCarWatchlistToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,7 +309,7 @@ namespace CarAuction.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserWatchedCarsId")
+                    b.Property<string>("WatchedCarId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -320,7 +322,7 @@ namespace CarAuction.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("UserWatchedCarsId");
+                    b.HasIndex("WatchedCarId");
 
                     b.ToTable("Cars");
                 });
@@ -519,7 +521,7 @@ namespace CarAuction.Data.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("CarAuction.Data.Models.UserWatchedCars", b =>
+            modelBuilder.Entity("CarAuction.Data.Models.WatchedCar", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -712,9 +714,9 @@ namespace CarAuction.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CarAuction.Data.Models.UserWatchedCars", null)
+                    b.HasOne("CarAuction.Data.Models.WatchedCar", null)
                         .WithMany("WatchedCars")
-                        .HasForeignKey("UserWatchedCarsId");
+                        .HasForeignKey("WatchedCarId");
 
                     b.Navigation("Auction");
 
@@ -755,7 +757,7 @@ namespace CarAuction.Data.Migrations
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("CarAuction.Data.Models.UserWatchedCars", b =>
+            modelBuilder.Entity("CarAuction.Data.Models.WatchedCar", b =>
                 {
                     b.HasOne("CarAuction.Data.Models.ApplicationUser", "User")
                         .WithMany()
@@ -855,7 +857,7 @@ namespace CarAuction.Data.Migrations
                     b.Navigation("Models");
                 });
 
-            modelBuilder.Entity("CarAuction.Data.Models.UserWatchedCars", b =>
+            modelBuilder.Entity("CarAuction.Data.Models.WatchedCar", b =>
                 {
                     b.Navigation("WatchedCars");
                 });

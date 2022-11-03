@@ -114,7 +114,8 @@
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Bid> Bids { get; set; }
         public DbSet<Auction> Auctions { get; set; }
-        public DbSet<Location> Locations{ get; set; }
-        public DbSet<Image> Images{ get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<UserWatchedCars> WatchedCars { get; set; }
     }
 }
