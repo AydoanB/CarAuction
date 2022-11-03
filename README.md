@@ -5,7 +5,8 @@
 -->
 ## Project Info
 
-Mainly developed for learning and to serve as my first own project
+Mainly developed for learning purposes as my first own web project
+
 CarAuction is Copart like application based on ASP.NET MVC architecture. There you can see car listings, can modify, delete or bid for them, in addition you can add them to your watchlist and search by criteria. There are auctions as well, they can be added, modified and seen as map point.
 
 ## 🛠 Built with:
