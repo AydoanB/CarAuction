@@ -35,6 +35,7 @@
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.8" />
+    <PackageReference Include="Stripe.net" Version="40.14.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -294,5 +295,9 @@
     <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel2-2.2.1\test\index.html" />
     <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel2-2.2.1\test\unit\core.js" />
     <_ContentIncludedByDefault Remove="wwwroot\lib\OwlCarousel2-2.2.1\_config.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\resized" />
   </ItemGroup>
 </Project>

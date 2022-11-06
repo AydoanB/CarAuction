@@ -22,6 +22,8 @@ public class CarInListViewModel : IMapFrom<Car>, IHaveCustomMappings
     public VehicleType ModelVehicleType { get; set; }
 
     public int ModelYearOfProduction { get; set; }
+
+    public string AuctionLocationName { get; set; }
     public void CreateMappings(IProfileExpression configuration)
     {
         configuration.CreateMap<Car, CarInListViewModel>()
@@ -30,6 +32,6 @@ public class CarInListViewModel : IMapFrom<Car>, IHaveCustomMappings
                 opt =>
                     opt.MapFrom(x => $"{x.Model.Manufacturer.Name} - {x.Model.Name}"))
             .ForMember(x => x.ImageUrl, opt =>
-                opt.MapFrom(x => $"/images/{GlobalConstants.CarsImagesFolder}/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
+                opt.MapFrom(x => $"/images/{GlobalConstants.CarsResizedImagesFolder}/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
     }
 }

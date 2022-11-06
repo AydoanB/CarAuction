@@ -1,16 +1,16 @@
-using CarAuction.Web.ViewModels.Bids;
-
 namespace CarAuction.Web.ViewModels;
 
 using System.Collections.Generic;
 using System.Linq;
 
 using AutoMapper;
-using CarAuction.Common;
 using CarAuction.Data.Models.CarModel;
 using CarAuction.Data.Models.Enums;
 using CarAuction.Services.Mapping;
+using CarAuction.Web.ViewModels.Bids;
 using CarAuction.Web.ViewModels.Images;
+
+using static CarAuction.Common.GlobalConstants;
 
 public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
 {
@@ -50,13 +50,14 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
     public IEnumerable<CarImageViewModel> Images { get; set; }
 
     public IEnumerable<BidViewModel> Bids { get; set; }
+    public bool IsInUsersWatchlist { get; set; }
 
     public void CreateMappings(IProfileExpression configuration)
     {
         configuration.CreateMap<Car, SingleCarViewModel>()
             .ForMember(x => x.ImageUrl, opt =>
                 opt.MapFrom(x =>
-                    $"/images/{GlobalConstants.CarsImagesFolder}/" + x.Images.FirstOrDefault().Id + "." +
+                    $"/images/{CarsResizedImagesFolder}/" + x.Images.FirstOrDefault().Id + "." +
                     x.Images.FirstOrDefault().Extension));
     }
 }
