@@ -98,54 +98,5 @@
 </form>
 @section Scripts
 {
-    <script type="text/javascript">
-     $(function () {
-         
-          const antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
-          
-                 $("#models").each(function () {
-                     if ($(this).find("option").length <= 1) {
-                         $(this).attr("disabled", "disabled");
-                     }
-                 });
-      
-                 $("#manufacturers").change(function () {
-                     
-                     const manufacturerId = $(this).find(":selected").val();
-                     $("#models").empty();
-                     $.ajax({
-                         type: "POST",
-                         url: "/Cars/ModelsById",
-                         data: { manufacturerId: manufacturerId },
-                          headers: {
-                              'X-CSRF-TOKEN': antiForgeryToken
-                         },
-                         success: function (response) {
-                             DisableDropDown("#models")
-                             PopulateDropDown("#models",response)
-                         },
-                         failure: function (response) {
-                             alert("Error occured" + response);
-                         },
-                         error: function (response) {
-                             alert("Error occured" + response);
-                         }
-                     });
-                 });
-             });
-      
-             function DisableDropDown(dropDownId) {
-                 $(dropDownId).attr("disabled", "disabled");
-                 $(dropDownId).empty().append('<option selected="selected" value="0">Please choose</option>');
-             }
-      
-             function PopulateDropDown(dropDownId, list) {
-                 if (list != null && list.length > 0) {
-                     $(dropDownId).removeAttr("disabled");
-                     $.each(list, function () {
-                         $(dropDownId).append($("<option></option>").val(this['id']).html(this['name']));
-                     });
-                 }
-             }
-    </script>
+   <script src="~/js/dynamicModelLoader.js" asp-append-version="true"></script>
 }

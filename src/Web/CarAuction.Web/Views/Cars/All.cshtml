@@ -1,4 +1,4 @@
-﻿@model CarsListViewModel
+﻿@model CarAuction.Web.ViewModels.Cars.CarsListViewModel
 
 @section Styles
 {
@@ -6,28 +6,28 @@
 }
 
 <!-- Search Start -->
-<div class="container-fluid bg-white pt-3 px-lg-5">
-    <div class="row mx-n2 justify-content-center">
-        <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-            <select asp-for="SearchModel.AuctionId" class="form-control" asp-items="Model.SearchModel.AuctionItems" data-live-search="true"></select>
-        </div>
-        <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-            <select id="manufacturers" asp-for="SearchModel.ManufacturerId" class="form-control" asp-items="Model.SearchModel.ManufacturerItems" data-live-search="true"></select>
-        </div>
-        <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-            <select id="models" asp-for="SearchModel.ModelId" class="form-control mb-3" data-live-search="true"></select>
-        </div>
-        <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-            <div class="date mb-3" id="date" data-target-input="nearest">
-                <input type="date" class="form-control p-4" placeholder="Auction Start date"
-                       data-target="#date" data-toggle="datetimepicker"/>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-            @* <a class="btn btn-primary btn-block mb-3 text-lg-center submit" type="submit" style="height: 50px;">Search</a> *@
-        </div>
-    </div>
-</div>
+@* <div class="container-fluid bg-white pt-3 px-lg-5"> *@
+@*     <div class="row mx-n2 justify-content-center"> *@
+@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
+@*             <select asp-for="SearchModel.AuctionId" class="form-control" asp-items="Model.SearchModel.AuctionItems" data-live-search="true"></select> *@
+@*         </div> *@
+@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
+@*             <select id="manufacturers" asp-for="SearchModel.ManufacturerId" class="form-control" asp-items="Model.SearchModel.ManufacturerItems" data-live-search="true"></select> *@
+@*         </div> *@
+@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
+@*             <select id="models" asp-for="SearchModel.ModelId" class="form-control mb-3" data-live-search="true"></select> *@
+@*         </div> *@
+@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
+@*             <div class="date mb-3" id="date" data-target-input="nearest"> *@
+@*                 <input type="date" class="form-control p-4" placeholder="Auction Start date" *@
+@*                        data-target="#date" data-toggle="datetimepicker"/> *@
+@*             </div> *@
+@*         </div> *@
+@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
+@*             $1$ <a class="btn btn-primary btn-block mb-3 text-lg-center submit" type="submit" style="height: 50px;">Search</a> #1# *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
 <!-- Search End -->
 
 <!--Cars Start -->
@@ -36,6 +36,7 @@
 <h1 class="display-4 text-uppercase text-center mb-5">Find Your Next Car</h1>
 <div class="row">
 @* Car search 2 *@
+<form id="antiForgeryForm"></form>
 <div class="col-lg-3">
     <aside class="l-sidebar">
         <div class="widget section-sidebar bg-light">
@@ -71,7 +72,7 @@
                     <div class="b-filter__row">
                         <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
                             <select asp-for="SearchModel.AuctionId" asp-items="@Model.SearchModel.AuctionItems" class="form-control mt-4" data-live-search="true">
-                                <option value="0">Vehicle Type:</option>
+                                <option value="0">Auction:</option>
                             </select>
                             <div class="dropdown-menu " role="combobox">
                                 <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
@@ -203,37 +204,37 @@
                         </div>
                     </div>
                 </div>
-                <button class="b-filter__reset btn btn-default w-100" type="button">Reset Filters</button>
+                <a asp-action="All" class="b-filter__reset btn btn-default w-100" type="button">Reset Filters</a>
                 <button class="btn btn-primary w-100">Show results</button>
             </form>
         </div>
     </div>
 </div><!-- end .b-filter-->
-<section class="widget b-brands section-sidebar">
-    <h3 class="widget-title bg-dark"><i class="ic flaticon-car-4"></i>Popular brands</h3>
-    <div class="widget-content">
-        <div class="b-brands__main d-flex flex-wrap">
-            <a class="b-brands__item" href="index.html">
-                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/1.png" alt="foto">
-            </a>
-            <a class="b-brands__item" href="index.html">
-                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/2.png" alt="foto">
-            </a>
-            <a class="b-brands__item" href="index.html">
-                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/3.png" alt="foto">
-            </a>
-            <a class="b-brands__item" href="index.html">
-                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/4.png" alt="foto">
-            </a>
-            <a class="b-brands__item" href="index.html">
-                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/5.png" alt="foto">
-            </a>
-            <a class="b-brands__item" href="index.html">
-                <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/6.png" alt="foto">
-            </a>
-        </div>
-    </div>
-</section><!-- end .b-brands-->
+@* <section class="widget b-brands section-sidebar"> *@
+@*     <h3 class="widget-title bg-dark"><i class="ic flaticon-car-4"></i>Popular brands</h3> *@
+@*     <div class="widget-content"> *@
+@*         <div class="b-brands__main d-flex flex-wrap"> *@
+@*             <a class="b-brands__item" href="index.html"> *@
+@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/1.png" alt="foto"> *@
+@*             </a> *@
+@*             <a class="b-brands__item" href="index.html"> *@
+@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/2.png" alt="foto"> *@
+@*             </a> *@
+@*             <a class="b-brands__item" href="index.html"> *@
+@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/3.png" alt="foto"> *@
+@*             </a> *@
+@*             <a class="b-brands__item" href="index.html"> *@
+@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/4.png" alt="foto"> *@
+@*             </a> *@
+@*             <a class="b-brands__item" href="index.html"> *@
+@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/5.png" alt="foto"> *@
+@*             </a> *@
+@*             <a class="b-brands__item" href="index.html"> *@
+@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/6.png" alt="foto"> *@
+@*             </a> *@
+@*         </div> *@
+@*     </div> *@
+@* </section><!-- end .b-brands--> *@
 </aside>
 </div>
 @* Car search 2 end *@
@@ -315,54 +316,5 @@
 @section Scripts
 {
     <script type="text/javascript" src="~/lib/nouislider/distribute/nouislider.min.js"></script>
-    <script type="text/javascript">
-     $(function () {
-         
-          var antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
-          
-                 $("#models").each(function () {
-                     if ($(this).find("option").length <= 1) {
-                         $(this).attr("disabled", "disabled");
-                     }
-                 });
-      
-                 $("#manufacturers").change(function () {
-                     
-                     var manufacturerId = $(this).find(":selected").val();
-                     $("#models").empty();
-                     $.ajax({
-                         type: "POST",
-                         url: "/Cars/ModelsById",
-                         data: { manufacturerId: manufacturerId },
-                          headers: {
-                              'X-CSRF-TOKEN': antiForgeryToken
-                         },
-                         success: function (response) {
-                             DisableDropDown("#models")
-                             PopulateDropDown("#models",response)
-                         },
-                         failure: function (response) {
-                             alert("Error occured" + response);
-                         },
-                         error: function (response) {
-                             alert("Error occured" + response);
-                         }
-                     });
-                 });
-             });
-      
-             function DisableDropDown(dropDownId) {
-                 $(dropDownId).attr("disabled", "disabled");
-                 $(dropDownId).empty().append('<option selected="selected" value="0">Please choose</option>');
-             }
-      
-             function PopulateDropDown(dropDownId, list) {
-                 if (list != null && list.length > 0) {
-                     $(dropDownId).removeAttr("disabled");
-                     $.each(list, function () {
-                         $(dropDownId).append($("<option></option>").val(this['id']).html(this['name']));
-                     });
-                 }
-             }
-    </script>
+    <script src="~/js/dynamicModelLoader.js" asp-append-version="true"></script>
 }
