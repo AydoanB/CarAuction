@@ -1,5 +1,3 @@
-using CarAuction.Common;
-
 namespace CarAuction.Services.Data
 {
     using System;
@@ -7,8 +5,6 @@ namespace CarAuction.Services.Data
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using CarAuction.Data;
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.CarModel;
     using CarAuction.Data.Models.CarModels;
@@ -29,7 +25,6 @@ namespace CarAuction.Services.Data
         private readonly IAuctionsService auctionsService;
         private readonly IImagesService imagesService;
         private readonly IBidsService bidsService;
-        private readonly ApplicationDbContext db;
 
         public CarsService(
             IDeletableEntityRepository<Car> carsRepository,
@@ -38,8 +33,7 @@ namespace CarAuction.Services.Data
             IEnginesService enginesService,
             IAuctionsService auctionsService,
             IImagesService imagesService,
-            IBidsService bidsService,
-            ApplicationDbContext db)
+            IBidsService bidsService)
         {
             this.carsRepository = carsRepository;
             this.manufacturersService = manufacturersService;
@@ -48,7 +42,6 @@ namespace CarAuction.Services.Data
             this.auctionsService = auctionsService;
             this.imagesService = imagesService;
             this.bidsService = bidsService;
-            this.db = db;
         }
 
         public async Task CreateAsync(CarInputModel input, string userId, string imagePath)
@@ -80,7 +73,7 @@ namespace CarAuction.Services.Data
                 BuyNowPrice = input.BuyNowPrice,
                 Color = input.Color,
                 Auction = this.auctionsService.GetById(input.AuctionId),
-                UserId = userId
+                UserId = userId,
             };
 
             Directory.CreateDirectory($"{imagePath}/{CarsImagesFolder}/");
@@ -275,7 +268,5 @@ namespace CarAuction.Services.Data
 
             return viewModel;
         }
-
-        
     }
 }

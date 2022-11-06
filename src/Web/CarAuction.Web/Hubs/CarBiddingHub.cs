@@ -1,7 +1,6 @@
-using System.Security.Claims;
-
 namespace CarAuction.Web.Hubs
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using CarAuction.Services.Data;
