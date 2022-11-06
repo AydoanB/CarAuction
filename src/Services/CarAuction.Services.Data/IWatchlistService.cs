@@ -7,7 +7,7 @@ namespace CarAuction.Services.Data
     {
          Task AddAsync(int carId, string userId);
          Task RemoveAsync(int carId, string userId);
-
-         Task<ICollection<T>> ReturnAllWatchedByUserAsync<T>(string userId);
+         Task<IEnumerable<T>> ReturnAllWatchedByUserAsync<T>(string userId);
+         Task<bool> IsInUsersWatchlist(string userId, int carId);
     }
 }

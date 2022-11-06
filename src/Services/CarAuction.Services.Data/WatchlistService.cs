@@ -29,16 +29,15 @@ namespace CarAuction.Services.Data
         public async Task AddAsync(int carId, string userId)
         {
             var car = await this.ReturnCarIfExistingAsync(carId);
-            var userWatchedCarsEntity = await this.ReturnUserWatchlistAsync(userId);
+            var user = await this.ReturnUserWatchlistAsync(userId);
 
-            if (userWatchedCarsEntity.WatchedCars.Contains(car))
+            if (user.WatchedCars.Contains(car))
             {
                return;
             }
 
-            userWatchedCarsEntity.WatchedCars.Add(car);
+            user.WatchedCars.Add(car);
 
-            await this.userWatchedCarsRepository.AddAsync(userWatchedCarsEntity);
             await this.userWatchedCarsRepository.SaveChangesAsync();
         }
 
@@ -56,13 +55,14 @@ namespace CarAuction.Services.Data
             await this.userWatchedCarsRepository.SaveChangesAsync();
         }
 
-        public async Task<ICollection<T>> ReturnAllWatchedByUserAsync<T>(string userId)
+        public async Task<IEnumerable<T>> ReturnAllWatchedByUserAsync<T>(string userId)
         {
             var user = await this.ReturnUserWatchlistAsync(userId);
 
             var watchedCars = await this.userWatchedCarsRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.UserId == user.UserId)
+                .Select(x => x.WatchedCars)
                 .To<T>()
                 .ToListAsync();
 
@@ -78,17 +78,24 @@ namespace CarAuction.Services.Data
         {
             var user = await this.userWatchedCarsRepository
                 .All()
-                .FirstOrDefaultAsync(x => x.UserId == userId) ?? new UserWatchedCars
+                .FirstOrDefaultAsync(x => x.UserId == userId);
+            if (user == null)
             {
-                UserId = userId,
-            };
+                user = new UserWatchedCars
+                {
+                    UserId = userId,
+                };
+                await this.userWatchedCarsRepository.AddAsync(user);
+            }
 
             return user;
         }
 
         private async Task<Car> ReturnCarIfExistingAsync(int carId)
         {
-            var car = await this.carsRepository.All().FirstOrDefaultAsync(x => x.Id == carId);
+            var car = await this.carsRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == carId);
 
             if (car == null)
             {
@@ -96,6 +103,14 @@ namespace CarAuction.Services.Data
             }
 
             return car;
+        }
+
+        public async Task<bool> IsInUsersWatchlist(string userId, int carId)
+        {
+            var car = await ReturnCarIfExistingAsync(carId);
+            var user = await ReturnUserWatchlistAsync(userId);
+
+            return user.WatchedCars.Contains(car);
         }
     }
 }

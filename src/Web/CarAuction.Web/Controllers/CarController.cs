@@ -9,6 +9,7 @@ namespace CarAuction.Web.Controllers
     using CarAuction.Services.Data;
     using CarAuction.Web.ViewModels;
     using CarAuction.Web.ViewModels.Cars;
+    using CarAuction.Web.ViewModels.Watchlist;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -21,17 +22,20 @@ namespace CarAuction.Web.Controllers
         private readonly IAutoDataScraper autoDataScraper;
         private readonly IWebHostEnvironment environment;
         private readonly IModelsService modelsService;
+        private readonly IWatchlistService watchlistService;
 
         public CarsController(
             ICarsService carsService,
             IAutoDataScraper autoDataScraper,
             IWebHostEnvironment environment,
-            IModelsService modelsService)
+            IModelsService modelsService,
+            IWatchlistService watchlistService)
         {
             this.carsService = carsService;
             this.autoDataScraper = autoDataScraper;
             this.environment = environment;
             this.modelsService = modelsService;
+            this.watchlistService = watchlistService;
         }
 
         [HttpGet]
@@ -125,6 +129,8 @@ namespace CarAuction.Web.Controllers
                 model.IsAbleToEditAndDelete = true;
             }
 
+            model.IsInUsersWatchlist = await this.watchlistService.IsInUsersWatchlist(userId, id);
+
             return this.View(model);
         }
 
@@ -169,12 +175,82 @@ namespace CarAuction.Web.Controllers
             return this.RedirectToAction(nameof(All));
         }
 
-        [HttpPost]
         public Task<JsonResult> ModelsById(int manufacturerId)
         {
             var models = this.modelsService.GetModels(manufacturerId);
 
             return Task.FromResult(this.Json(models));
+        }
+
+        // [HttpPost]
+        public async Task<IActionResult> AddToWatchlist(int id)
+        {
+            string userId = null;
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            }
+
+            try
+            {
+                await this.watchlistService.AddAsync(id, userId);
+            }
+            catch (NullReferenceException nullReffExcp)
+            {
+                this.ModelState.AddModelError(string.Empty, nullReffExcp.Message);
+                return this.NotFound(this.ModelState);
+            }
+
+            return this.RedirectToAction(nameof(this.ById), new { id });
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> RemoveFromWatchlist(int id)
+        {
+            string userId = null;
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            }
+
+            try
+            {
+                await this.watchlistService.RemoveAsync(id, userId);
+            }
+            catch (NullReferenceException nullReffExcp)
+            {
+                this.ModelState.AddModelError(string.Empty, nullReffExcp.Message);
+                return this.NotFound(this.ModelState);
+            }
+
+            return this.RedirectToAction(nameof(this.ById), new { id });
+        }
+
+        public async Task<IActionResult> WatchedCars()
+        {
+            // TODO extract method
+            string userId = null;
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            }
+
+            try
+            {
+                var viewModel = new UserWatchlistViewModel()
+                {
+                    WatchedCars = await this.watchlistService.ReturnAllWatchedByUserAsync<CarInWatchlistViewModel>(userId),
+                };
+                return this.View(viewModel);
+            }
+            catch (ArgumentNullException argNullExc)
+            {
+                this.ModelState.AddModelError(string.Empty, argNullExc.Message);
+                return this.RedirectToAction(nameof(All));
+            }
         }
 
         public async Task<IActionResult> Scrape()

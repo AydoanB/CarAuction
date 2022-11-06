@@ -1,5 +1,6 @@
 namespace CarAuction.Web.ViewModels.Cars
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using AutoMapper;
@@ -8,7 +9,7 @@ namespace CarAuction.Web.ViewModels.Cars
 
     using static CarAuction.Common.GlobalConstants;
 
-    public class WatchlistCarViewModel : IMapFrom<Car>, IHaveCustomMappings
+    public class CarInWatchlistViewModel : IMapFrom<ICollection<Car>>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -18,13 +19,13 @@ namespace CarAuction.Web.ViewModels.Cars
 
         public decimal StartingPrice { get; set; }
 
-        public decimal BuyNowPrice { get; set; }
+        public decimal? BuyNowPrice { get; set; }
 
         public string ImageUrl { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Car, SingleCarViewModel>()
+            configuration.CreateMap<Car, CarInWatchlistViewModel>()
                 .ForMember(x => x.ImageUrl, opt =>
                     opt.MapFrom(x =>
                         $"/images/{CarsResizedImagesFolder}/" + x.Images.FirstOrDefault().Id + "." +

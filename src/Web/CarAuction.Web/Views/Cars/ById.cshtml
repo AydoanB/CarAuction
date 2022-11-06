@@ -24,13 +24,26 @@
                 </button>
             </div>
         }
-        <div class="btn-transform transform-vertical">
-            <div>
-                <a asp-controller="Cars" asp-action="AddToWatchlist" asp-route-id="@Model.Id" class="btn btn-light">
-                    <i class="bi bi-pen-fill"></i> <span class="fa-regular fa-star"></span> Watch
-                </a>
+        @if (@Model.IsInUsersWatchlist == false)
+        {
+            <div class="btn-transform transform-vertical">
+                <div>
+                    <a asp-controller="Cars" asp-action="AddToWatchlist" asp-route-id="@Model.Id" class="btn btn-light">
+                        <i class="bi bi-pen-fill"></i> <span class="fa-regular fa-star"></span> Add to watchlist
+                    </a>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="btn-transform transform-vertical">
+                <div>
+                    <a asp-controller="Cars" asp-action="RemoveFromWatchlist" asp-route-id="@Model.Id" class="btn btn-light">
+                        <i class="bi bi-pen-fill"></i> <span class="fa-regular fa-star"></span> Remove from watchlist
+                    </a>
+                </div>
+            </div>
+        }
         <h1 class="display-4 text-uppercase mb-5 text-center">@Model.ModelManufacturerName @Model.ModelName</h1>
         <!-- Start -->
         <div id="mainCarousel" class="carousel w-10/12 max-w-5xl mx-auto">
@@ -61,7 +74,7 @@
                          <span>Start date: @Model.Auction.StartDate.ToString("g")</span>
                         <span>End date: @Model.Auction.EndDate.ToString("g")</span>
                         <div class="gmap_canvas">
-                            <iframe width="350" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q=@Model.Auction.LocationName%20rich%20str&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                            <iframe width="350" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q=@Model.Auction.LocationName%&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
                             </iframe>
                             <br>
                             <style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style>
@@ -85,7 +98,7 @@
                                 </tr>
                                 </thead>
                                 <tbody id="tableBodyBids">
-                                @foreach (var bid in Model.Bids.OrderByDescending(x => x.CreatedOn))
+                                @foreach (var bid in Model.Bids.OrderByDescending(x => x.AmountOfBid))
                                 {
                                     <tr>
                                         <th scope="row">@bid.UserName</th>
