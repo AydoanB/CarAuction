@@ -2,18 +2,20 @@
 <div class="row">
     @foreach (var auction in Model.Auctions)
     {
-        <div class="col-sm-3">
-            <div class="card" style="width: 18rem;">
+        <div class="col-md-4">
+            <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">@auction.LocationName</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Cars in auction: @auction.CarsInAuctionCount</h6>
-                    <div>
+                    <h6 class="card-subtitle mb-2 text-center text-muted">Cars in auction: @auction.CarsInAuctionCount</h6>
+                    <div class="text-center">
                         Start date: @auction.StartDate.ToShortDateString()
                     </div>
-                    <div class="justify-content-center">
+                    <div class="text-center">
                         End date: @auction.EndDate.ToShortDateString()
                     </div>
-                    <a href="#" class="col-lg-12 mt-2 btn btn-primary card-link">Cars</a>
+                    <div class="text-center">
+                        <a asp-action="GetCarsByAuction" asp-route-id="@auction.Id" class="col-lg-7 mt-2 btn btn-primary card-link">Cars</a>
+                    </div>
                 </div>
             </div>
         </div>
