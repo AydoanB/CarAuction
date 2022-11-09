@@ -17,6 +17,8 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
     public string UserId { get; set; }
 
     public bool IsAbleToEditAndDelete { get; set; }
+    public bool IsInUsersWatchlist { get; set; }
+
     public int Id { get; set; }
 
     public string ModelManufacturerName { get; set; }
@@ -50,7 +52,6 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
     public IEnumerable<CarImageViewModel> Images { get; set; }
 
     public IEnumerable<BidViewModel> Bids { get; set; }
-    public bool IsInUsersWatchlist { get; set; }
 
     public void CreateMappings(IProfileExpression configuration)
     {
