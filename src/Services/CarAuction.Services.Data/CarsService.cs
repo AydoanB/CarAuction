@@ -130,8 +130,8 @@ namespace CarAuction.Services.Data
 
             car.Model = model;
 
-            carsRepository.Update(car);
-            await carsRepository.SaveChangesAsync();
+            this.carsRepository.Update(car);
+            await this.carsRepository.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetCarsToSearch<T>(int page, int carsPerPage, SearchCarInputModel searchModel, string order, out int carsCount)
@@ -237,6 +237,20 @@ namespace CarAuction.Services.Data
                 .ToListAsync();
         }
 
+        public SearchCarInputModel PopulateSearchInputModelDropdowns(SearchCarInputModel viewModel)
+        {
+            viewModel.ManufacturerItems = this.manufacturersService.GetAllAsKeyValuePairs()
+                .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
+
+            viewModel.ModelsItems = this.modelsService.GetAllAsKeyValuePairs()
+                .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
+
+            viewModel.AuctionItems = this.auctionsService.GetAllAsKeyValuePairs()
+                .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
+
+            return viewModel;
+        }
+
         private static List<SelectListItem> PopulateEnumValuesIntoDropdown<T>()
         {
             Type enumType = typeof(T);
@@ -253,20 +267,6 @@ namespace CarAuction.Services.Data
             }
 
             return enumList;
-        }
-
-        public SearchCarInputModel PopulateSearchInputModelDropdowns(SearchCarInputModel viewModel)
-        {
-            viewModel.ManufacturerItems = this.manufacturersService.GetAllAsKeyValuePairs()
-                .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
-
-            viewModel.ModelsItems = this.modelsService.GetAllAsKeyValuePairs()
-                .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
-
-            viewModel.AuctionItems = this.auctionsService.GetAllAsKeyValuePairs()
-                .Select(x => new SelectListItem(x.Value, x.Key.ToString()));
-
-            return viewModel;
         }
     }
 }

@@ -12,5 +12,7 @@ namespace CarAuction.Services.Data
         public IEnumerable<KeyValuePair<int, string>> GetAllAsKeyValuePairs();
         IEnumerable<T> GetAllAuctions<T>(int page, int auctionsPerPage, string order, out int auctionsCount);
         Auction GetById(int id);
+        IEnumerable<T> GetCarsByAuction<T>(int id);
+
     }
 }

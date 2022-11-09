@@ -1,6 +1,3 @@
-using CarAuction.Services.Mapping;
-using Microsoft.EntityFrameworkCore;
-
 namespace CarAuction.Services.Data
 {
     using System;
@@ -10,6 +7,8 @@ namespace CarAuction.Services.Data
 
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.AuctionModels;
+    using CarAuction.Services.Mapping;
+
     using CarAuction.Web.ViewModels;
 
     public class AuctionsService : IAuctionsService
@@ -59,7 +58,6 @@ namespace CarAuction.Services.Data
                     x.Location.Name,
                 })
                 .OrderBy(x => x.Name)
-                .ToList()
                 .Select(x => new KeyValuePair<int, string>(x.Id, x.Name));
         }
 
@@ -81,6 +79,16 @@ namespace CarAuction.Services.Data
         public Auction GetById(int id)
         {
             return this.auctionRepository.All().FirstOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<T> GetCarsByAuction<T>(int id)
+        {
+            return this.auctionRepository
+                .AllAsNoTracking()
+                .AsQueryable()
+                .Where(x => x.Id == id)
+                .Select(x => x.CarsInAuction)
+                .To<T>();
         }
     }
 }

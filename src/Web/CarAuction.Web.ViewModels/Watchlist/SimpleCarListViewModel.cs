@@ -3,8 +3,8 @@ namespace CarAuction.Web.ViewModels.Watchlist
     using System.Collections.Generic;
     using CarAuction.Web.ViewModels.Cars;
 
-    public class UserWatchlistViewModel
+    public class SimpleCarListViewModel
     {
-        public IEnumerable<CarInWatchlistViewModel> WatchedCars { get; set; }
+        public IEnumerable<SimpleCarDetailsViewModel> WatchedCars { get; set; }
     }
 }

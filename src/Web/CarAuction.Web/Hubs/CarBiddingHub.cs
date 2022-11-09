@@ -5,8 +5,10 @@ namespace CarAuction.Web.Hubs
 
     using CarAuction.Services.Data;
     using CarAuction.Web.ViewModels.Bids;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.SignalR;
 
+    [Authorize]
     public class CarBiddingHub : Hub
     {
         private readonly IBidsService bidsService;

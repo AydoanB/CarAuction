@@ -182,7 +182,6 @@ namespace CarAuction.Web.Controllers
             return Task.FromResult(this.Json(models));
         }
 
-        // [HttpPost]
         public async Task<IActionResult> AddToWatchlist(int id)
         {
             string userId = null;
@@ -205,7 +204,6 @@ namespace CarAuction.Web.Controllers
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
-        [HttpPut]
         public async Task<IActionResult> RemoveFromWatchlist(int id)
         {
             string userId = null;
@@ -230,7 +228,6 @@ namespace CarAuction.Web.Controllers
 
         public async Task<IActionResult> WatchedCars()
         {
-            // TODO extract method
             string userId = null;
 
             if (this.User.Identity.IsAuthenticated)
@@ -240,9 +237,9 @@ namespace CarAuction.Web.Controllers
 
             try
             {
-                var viewModel = new UserWatchlistViewModel()
+                var viewModel = new SimpleCarListViewModel()
                 {
-                    WatchedCars = await this.watchlistService.ReturnAllWatchedByUserAsync<CarInWatchlistViewModel>(userId),
+                    WatchedCars = await this.watchlistService.ReturnAllWatchedByUserAsync<SimpleCarDetailsViewModel>(userId),
                 };
                 return this.View(viewModel);
             }

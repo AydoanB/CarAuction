@@ -9,7 +9,7 @@ namespace CarAuction.Web.ViewModels.Cars
 
     using static CarAuction.Common.GlobalConstants;
 
-    public class CarInWatchlistViewModel : IMapFrom<ICollection<Car>>, IHaveCustomMappings
+    public class SimpleCarDetailsViewModel : IMapFrom<ICollection<Car>>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -25,7 +25,7 @@ namespace CarAuction.Web.ViewModels.Cars
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Car, CarInWatchlistViewModel>()
+            configuration.CreateMap<Car, SimpleCarDetailsViewModel>()
                 .ForMember(x => x.ImageUrl, opt =>
                     opt.MapFrom(x =>
                         $"/images/{CarsResizedImagesFolder}/" + x.Images.FirstOrDefault().Id + "." +

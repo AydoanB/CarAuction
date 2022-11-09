@@ -1,31 +1,33 @@
-using System;
-using System.Security.Claims;
-using CarAuction.Services.Data;
-
 namespace CarAuction.Web.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using CarAuction.Services.Data;
     using CarAuction.Web.ViewModels;
+    using CarAuction.Web.ViewModels.Cars;
+    using CarAuction.Web.ViewModels.Watchlist;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class AuctionsController : Controller
     {
-        private readonly IAuctionsService auctionsService;
         private const int AuctionsPerPage = 24;
+        private readonly IAuctionsService auctionsService;
 
         public AuctionsController(IAuctionsService auctionsService)
         {
             this.auctionsService = auctionsService;
         }
 
-        [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(AuctionInputModel inputModel)
         {
             string userId = null;
@@ -40,7 +42,7 @@ namespace CarAuction.Web.Controllers
             }
 
             await this.auctionsService.CreateAsync(inputModel, userId);
-            return this.View(nameof(All));
+            return this.View(nameof(this.All));
         }
 
         public async Task<IActionResult> All(string order, SearchCarInputModel searchModel, int id = 1)
@@ -66,7 +68,15 @@ namespace CarAuction.Web.Controllers
                 return this.NotFound();
             }
 
-            //viewModel.SearchModel = this.carsService.PopulateDropdowns();
+            return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> GetCarsByAuction(int id)
+        {
+            var viewModel = new SimpleCarListViewModel
+            {
+                WatchedCars = this.auctionsService.GetCarsByAuction<SimpleCarDetailsViewModel>(id),
+            };
 
             return this.View(viewModel);
         }
