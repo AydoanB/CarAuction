@@ -10,7 +10,9 @@
 
         <div class="form-group">
             <label asp-for="ModelManufacturerId"></label>
-            <select id="manufacturers" asp-for="ModelManufacturerId" class="form-control" asp-items="Model.Manufacturers" data-live-search="true"></select>
+            <select id="manufacturers" asp-for="ModelManufacturerId" class="form-control" asp-items="Model.Manufacturers" data-live-search="true">
+                <option value="-1">Select:</option>
+            </select>
         </div>
     </div>
     
@@ -18,12 +20,6 @@
         <label asp-for="ModelModelId"></label>
         <select id="models" asp-for="ModelModelId" class="form-control" data-live-search="true"></select>
     </div>
-   
-    @* *@
-    @* <div class="form-group"> *@
-    @*     <label asp-for="EngineId"></label> *@
-    @*     <select id="engines" asp-for="EngineId" class="form-control" asp-items="Model.Engines"></select> *@
-    @* </div> *@
 
     <div class="form-group">
         <label asp-for="ModelVehicleType"></label>
@@ -84,11 +80,21 @@
         <span asp-validation-for="Images" class="text-danger"></span>
     </div>
 
-    <label asp-for="IsRunning"></label>
-    <input type="radio" value="true" asp-for="IsRunning" checked class="form-control"/>
-    <input type="radio" value="false" asp-for="IsRunning" class="form-control"/>
-    <span asp-validation-for="IsRunning" class="text-danger"></span>
-
+        <label asp-for="IsRunning"></label>
+    <div class="form-group radio">
+     <label>
+       <span class="button"><input asp-for="IsRunning" type="radio" name="optionsRadios" value="true"></span>
+       <span class="question-label"> Running/repairable condition</span>
+     </label>
+   </div>
+   
+    <div class="form-group radio">
+        <label>
+            <span class="button"><input asp-for="IsRunning" type="radio" name="optionsRadios" value="false"></span>
+            <span class="question-label">Non repairable condition</span>
+        </label>
+    </div>
+    
     <div class="form-group">
         <label asp-for="AuctionId"></label>
         <select asp-for="AuctionId" class="form-control" asp-items="Model.Auctions"></select>

@@ -31,6 +31,7 @@ namespace CarAuction.Web.ViewModels
             public int ModelYearOfProduction { get; set; } = DateTime.UtcNow.Year;
 
             [Required]
+            [DisplayName("Condition")]
             public bool IsRunning { get; set; }
 
             [Required]
