@@ -1,0 +1,35 @@
+@model CarAuction.Web.ViewModels.Cars.CarsListViewModel
+
+@foreach (var car in Model.Cars)
+{
+                @* <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id"> *@
+    <div class="col-lg-4 col-md-6 mb-2">
+        <div class="rent-item mb4">
+            <img class="img--cover" src="@car.ImageUrl" alt="">
+            <h4 class="text-uppercase mb-4 text-center">@car.Title</h4>
+            <div class="d-flex justify-content-center mb-4">
+                <div class="px-2">
+                    <i class="fa-regular fa-calendar-days text-primary mr-1"></i>
+                    <span>@car.ModelYearOfProduction</span>
+                </div>
+                <div class="px-2 border-left border-right">
+                    <i class="fa fa-cogs text-primary mr-1"></i>
+                    <span>@car.ModelVehicleType.ToString()</span>
+                </div>
+                <div class="px-2">
+                    <i class="fa fa-road text-primary mr-1"></i>
+                    <span>@car.Milleage</span>
+                </div>
+                <div class="px-2 border-left border-right">
+                    <i class="fa-sharp fa-solid fa-dollar-sign text-primary mr-1"></i>
+                    <span>@car.StartingPrice</span>
+                </div>
+                <div class="px-2">
+                    <i class="fa-sharp fa-solid fa-location-dot text-primary mr-1"></i>
+                    <span>@car.AuctionLocationName</span>
+                </div>
+            </div>
+            <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View</a>
+        </div>
+    </div>
+}

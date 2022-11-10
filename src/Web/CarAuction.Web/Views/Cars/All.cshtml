@@ -5,308 +5,53 @@
     <link href="~/lib/nouislider/distribute/nouislider.min.css" rel="stylesheet" asp-append-version="true">
 }
 
-<!-- Search Start -->
-@* <div class="container-fluid bg-white pt-3 px-lg-5"> *@
-@*     <div class="row mx-n2 justify-content-center"> *@
-@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
-@*             <select asp-for="SearchModel.AuctionId" class="form-control" asp-items="Model.SearchModel.AuctionItems" data-live-search="true"></select> *@
-@*         </div> *@
-@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
-@*             <select id="manufacturers" asp-for="SearchModel.ManufacturerId" class="form-control" asp-items="Model.SearchModel.ManufacturerItems" data-live-search="true"></select> *@
-@*         </div> *@
-@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
-@*             <select id="models" asp-for="SearchModel.ModelId" class="form-control mb-3" data-live-search="true"></select> *@
-@*         </div> *@
-@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
-@*             <div class="date mb-3" id="date" data-target-input="nearest"> *@
-@*                 <input type="date" class="form-control p-4" placeholder="Auction Start date" *@
-@*                        data-target="#date" data-toggle="datetimepicker"/> *@
-@*             </div> *@
-@*         </div> *@
-@*         <div class="col-xl-2 col-lg-4 col-md-6 px-2"> *@
-@*             $1$ <a class="btn btn-primary btn-block mb-3 text-lg-center submit" type="submit" style="height: 50px;">Search</a> #1# *@
-@*         </div> *@
-@*     </div> *@
-@* </div> *@
-<!-- Search End -->
-
 <!--Cars Start -->
 <div class="container-fluid py-5">
 <div class="container pt-5 pb-3">
 <h1 class="display-4 text-uppercase text-center mb-5">Find Your Next Car</h1>
 <div class="row">
 @* Car search 2 *@
-<form id="antiForgeryForm"></form>
-<div class="col-lg-3">
-    <aside class="l-sidebar">
-        <div class="widget section-sidebar bg-light">
-    <h3 class="widget-title bg-dark"><i class="ic flaticon-car-4"></i>Search for a car</h3>
-    <div class="widget-content">
-        <div class="widget-inner">
-            <form class="b-filter bg-light">
-                <div class="b-filter__main">
-                    <div class="b-filter__row">
-                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
-                            <select id="manufacturers" asp-for="SearchModel.ManufacturerId" class="form-control mb-4" asp-items="Model.SearchModel.ManufacturerItems" data-live-search="true">
-                                <option value="0">Select Make:</option>
-                            </select>
-                            <div class="dropdown-menu " role="combobox">
-                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
-                                    <ul class="dropdown-menu inner show"></ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-filter__row">
-                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
-                            <select id="models" asp-for="SearchModel.ModelId" class="form-control" data-live-search="true">
-                                <option value="0">Select Model:</option>
-                            </select>
-                            <div class="dropdown-menu " role="combobox">
-                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
-                                    <ul class="dropdown-menu inner show"></ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-filter__row">
-                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
-                            <select asp-for="SearchModel.AuctionId" asp-items="@Model.SearchModel.AuctionItems" class="form-control mt-4" data-live-search="true">
-                                <option value="0">Auction:</option>
-                            </select>
-                            <div class="dropdown-menu " role="combobox">
-                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
-                                    <ul class="dropdown-menu inner show"></ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @* <div class="b-filter__row"> *@
-                    @*     <div class="dropdown bootstrap-select show-tick" style="width: 100%;"> *@
-                    @*         <select class="selectpicker" data-width="100%" title="Vehicle Type" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98"> *@
-                    @*         </select> *@
-                    @*         <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Vehicle Type"> *@
-                    @*             <div class="filter-option"> *@
-                    @*                 <div class="filter-option-inner"> *@
-                    @*                     <div class="filter-option-inner-inner">Vehicle Type</div> *@
-                    @*                 </div> *@
-                    @*             </div> *@
-                    @*         </button> *@
-                    @*         <div class="dropdown-menu " role="combobox"> *@
-                    @*             <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1"> *@
-                    @*                 <ul class="dropdown-menu inner show"></ul> *@
-                    @*             </div> *@
-                    @*         </div> *@
-                    @*     </div> *@
-                    @* </div> *@
-                    <div class="b-filter__row row">
-                        <div class="b-filter__item col-md-6 col-lg-12 col-xl-6">
-                            <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
-                                <select class="selectpicker" data-width="100%" title="From" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98">
-                                    <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option>
-                                </select>
-                                <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="From">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-inner-inner">From</div>
-                                        </div>
-                                    </div>
-                                </button>
-                                <div class="dropdown-menu " role="combobox">
-                                    <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
-                                        <ul class="dropdown-menu inner show"></ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-filter__item col-md-6 col-lg-12 col-xl-6">
-                            <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
-                                <select class="selectpicker" data-width="100%" title="To" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98">
-                                    <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option>
-                                </select>
-                                <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="To">
-                                    <div class="filter-option">
-                                        <div class="filter-option-inner">
-                                            <div class="filter-option-inner-inner">To</div>
-                                        </div>
-                                    </div>
-                                </button>
-                                <div class="dropdown-menu " role="combobox">
-                                    <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
-                                        <ul class="dropdown-menu inner show"></ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-filter__row">
-                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
-                            <select class="selectpicker" data-width="100%" title="Transmission" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98">
-                                <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option>
-                            </select>
-                            <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Transmission">
-                                <div class="filter-option">
-                                    <div class="filter-option-inner">
-                                        <div class="filter-option-inner-inner">Transmission</div>
-                                    </div>
-                                </div>
-                            </button>
-                            <div class="dropdown-menu " role="combobox">
-                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
-                                    <ul class="dropdown-menu inner show"></ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-filter__row">
-                        <div class="dropdown bootstrap-select show-tick" style="width: 100%;">
-                            <select class="selectpicker" data-width="100%" title="Fuel Type" multiple="multiple" data-max-options="1" data-style="ui-select" tabindex="-98">
-                                <option>Select 1</option><option>Select 2</option><option>Select 3</option><option>Select 4</option>
-                            </select>
-                            <button type="button" class="btn dropdown-toggle bs-placeholder ui-select" data-toggle="dropdown" role="button" title="Fuel Type">
-                                <div class="filter-option">
-                                    <div class="filter-option-inner">
-                                        <div class="filter-option-inner-inner">Fuel Type</div>
-                                    </div>
-                                </div>
-                            </button>
-                            <div class="dropdown-menu " role="combobox">
-                                <div class="inner show" role="listbox" aria-expanded="false" tabindex="-1">
-                                    <ul class="dropdown-menu inner show"></ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="b-filter-slider ui-filter-slider">
-                    <div class="b-filter-slider__title">Price</div>
-                    <div class="b-filter-slider__main">
-                        <div id="filterPrice" class="noUi-target noUi-ltr noUi-horizontal">
-                            <div class="noUi-base">
-                                <div class="noUi-connects">
-                                    <div class="noUi-connect" style="transform: translate(2.04082%, 0px) scale(0.877551, 1);"></div>
-                                </div>
-                                <div class="noUi-origin" style="transform: translate(-97.9592%, 0px); z-index: 5;">
-                                    <div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="1000.0" aria-valuemax="45000.0" aria-valuenow="2000.0" aria-valuetext="$ 2,000"></div>
-                                </div>
-                                <div class="noUi-origin" style="transform: translate(-10.2041%, 0px); z-index: 4;">
-                                    <div class="noUi-handle noUi-handle-upper" data-handle="1" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="2000.0" aria-valuemax="50000.0" aria-valuenow="45000.0" aria-valuetext="$ 45,000"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="b-filter__row row">
-                            <div class="b-filter__item col-md-6 col-lg-12 col-xl-6">
-                                <input class="ui-select" id="input-with-keypress-0">
-                            </div>
-                            <div class="b-filter__item col-md-6 col-lg-12 col-xl-6">
-                                <input class="ui-select" id="input-with-keypress-1">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <a asp-action="All" class="b-filter__reset btn btn-default w-100" type="button">Reset Filters</a>
-                <button class="btn btn-primary w-100">Show results</button>
-            </form>
-        </div>
-    </div>
-</div><!-- end .b-filter-->
-@* <section class="widget b-brands section-sidebar"> *@
-@*     <h3 class="widget-title bg-dark"><i class="ic flaticon-car-4"></i>Popular brands</h3> *@
-@*     <div class="widget-content"> *@
-@*         <div class="b-brands__main d-flex flex-wrap"> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/1.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/2.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/3.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/4.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/5.png" alt="foto"> *@
-@*             </a> *@
-@*             <a class="b-brands__item" href="index.html"> *@
-@*                 <img class="b-brands__img img-fluid" src="assets/media/content/b-brands/6.png" alt="foto"> *@
-@*             </a> *@
+<partial name="SearchBar" model="@Model.SearchModel"/>
+<partial name="DefaultCar" model="@Model"/>
+@* @foreach (var car in Model.Cars) *@
+@* { *@
+@*                 $1$ <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id"> #1# *@
+@*     <div class="col-lg-4 col-md-6 mb-2"> *@
+@*         <div class="rent-item mb4"> *@
+@*             <img class="img--cover" src="@car.ImageUrl" alt=""> *@
+@*             <h4 class="text-uppercase mb-4 text-center">@car.Title</h4> *@
+@*             <div class="d-flex justify-content-center mb-4"> *@
+@*                 <div class="px-2"> *@
+@*                     <i class="fa-regular fa-calendar-days text-primary mr-1"></i> *@
+@*                     <span>@car.ModelYearOfProduction</span> *@
+@*                 </div> *@
+@*                 <div class="px-2 border-left border-right"> *@
+@*                     <i class="fa fa-cogs text-primary mr-1"></i> *@
+@*                     <span>@car.ModelVehicleType.ToString()</span> *@
+@*                 </div> *@
+@*                 <div class="px-2"> *@
+@*                     <i class="fa fa-road text-primary mr-1"></i> *@
+@*                     <span>@car.Milleage</span> *@
+@*                 </div> *@
+@*                 <div class="px-2 border-left border-right"> *@
+@*                     <i class="fa-sharp fa-solid fa-dollar-sign text-primary mr-1"></i> *@
+@*                     <span>@car.StartingPrice</span> *@
+@*                 </div> *@
+@*                 <div class="px-2"> *@
+@*                     <i class="fa-sharp fa-solid fa-location-dot text-primary mr-1"></i> *@
+@*                     <span>@car.AuctionLocationName</span> *@
+@*                 </div> *@
+@*             </div> *@
+@*             <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View</a> *@
 @*         </div> *@
 @*     </div> *@
-@* </section><!-- end .b-brands--> *@
-</aside>
-</div>
-@* Car search 2 end *@
-@foreach (var car in Model.Cars)
-{
-                @* <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id"> *@
-    <div class="col-lg-4 col-md-6 mb-2">
-        <div class="rent-item mb4">
-            <img class="img--cover" src="@car.ImageUrl" alt="">
-            <h4 class="text-uppercase mb-4 text-center">@car.Title</h4>
-            <div class="d-flex justify-content-center mb-4">
-                <div class="px-2">
-                    <i class="fa-regular fa-calendar-days text-primary mr-1"></i>
-                    <span>@car.ModelYearOfProduction</span>
-                </div>
-                <div class="px-2 border-left border-right">
-                    <i class="fa fa-cogs text-primary mr-1"></i>
-                    <span>@car.ModelVehicleType.ToString()</span>
-                </div>
-                <div class="px-2">
-                    <i class="fa fa-road text-primary mr-1"></i>
-                    <span>@car.Milleage</span>
-                </div>
-                <div class="px-2 border-left border-right">
-                    <i class="fa-sharp fa-solid fa-dollar-sign text-primary mr-1"></i>
-                    <span>@car.StartingPrice</span>
-                </div>
-                <div class="px-2">
-                    <i class="fa-sharp fa-solid fa-location-dot text-primary mr-1"></i>
-                    <span>@car.AuctionLocationName</span>
-                </div>
-            </div>
-            <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View</a>
-        </div>
-    </div>
-}
+@* } *@
 </div>
 </div>
 </div>
 <!-- Rent A Car End -->
 <!-- Pagination -->
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item">
-            <a class="page-link btn @if (Model.HasPreviousPage == false) {<text>disabled</text>}" asp-action="All" asp-route-id="@Model.PreviousPageNumber">Previous</a>
-        </li>
-        @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
-        {
-            if (i > 0)
-            {
-                <li class="page-item">
-                    <a class="page-link btn" asp-action="All" asp-route-id="@i">@i</a>
-                </li>
-            }
-        }
-        <li class="page-item">
-            <a class="page-link btn" asp-action="All" asp-route-id="@Model.PageNumber">@Model.PageNumber</a>
-        </li>
-        @for (int i = Model.PageNumber + 1; i < Model.PageNumber + 3; i++)
-        {
-            if (Model.PagesCount >= i)
-            {
-                <li class="page-item">
-                    <a class="page-link btn" asp-action="All" asp-route-id="@i">@i</a>
-                </li>
-            }
-        }
-        <li class="page-item">
-            <a class="page-link btn @if (Model.HasNextPage == false) {<text>disabled</text>}" asp-action="All" asp-route-id="@Model.NextPageNumber">Next</a>
-        </li>
-    </ul>
-</nav>
+<partial name="Pagination"/>
 <!-- Pagination End -->
 <div class="container-fluid">
     <vc:cars></vc:cars>

@@ -1,0 +1,33 @@
+@model CarAuction.Web.ViewModels.Cars.CarsListViewModel
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link btn @if (Model.HasPreviousPage == false) {<text>disabled</text>}" asp-action="All" asp-route-id="@Model.PreviousPageNumber">Previous</a>
+        </li>
+        @for (int i = Model.PageNumber - 3; i < Model.PageNumber; i++)
+        {
+            if (i > 0)
+            {
+                <li class="page-item">
+                    <a class="page-link btn" asp-action="All" asp-route-id="@i">@i</a>
+                </li>
+            }
+        }
+        <li class="page-item">
+            <a class="page-link btn" asp-action="All" asp-route-id="@Model.PageNumber">@Model.PageNumber</a>
+        </li>
+        @for (int i = Model.PageNumber + 1; i < Model.PageNumber + 3; i++)
+        {
+            if (Model.PagesCount >= i)
+            {
+                <li class="page-item">
+                    <a class="page-link btn" asp-action="All" asp-route-id="@i">@i</a>
+                </li>
+            }
+        }
+        <li class="page-item">
+            <a class="page-link btn @if (Model.HasNextPage == false) {<text>disabled</text>}" asp-action="All" asp-route-id="@Model.NextPageNumber">Next</a>
+        </li>
+    </ul>
+</nav>
