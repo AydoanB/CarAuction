@@ -58,7 +58,7 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
         configuration.CreateMap<Car, SingleCarViewModel>()
             .ForMember(x => x.ImageUrl, opt =>
                 opt.MapFrom(x =>
-                    $"/images/{CarsResizedImagesFolder}/" + x.Images.FirstOrDefault().Id + "." +
+                    $"/images/{CarsImagesFolder}/" + x.Images.FirstOrDefault().Id + "." +
                     x.Images.FirstOrDefault().Extension));
     }
 }
