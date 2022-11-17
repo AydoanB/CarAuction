@@ -9,6 +9,5 @@ namespace CarAuction.Services.Data
     {
         Task SaveImageToWebRootAsync(string imagePath, Image dbImage, IFormFile image, string folderPath);
         Image CreateImage(IFormFile image, string userId);
-        void Resizer(string imagesDirectory, string folderPath, string imageName);
     }
 }

@@ -10,8 +10,6 @@ namespace CarAuction.Services.Data
 
     using CarAuction.Data.Models.CarModels;
     using Microsoft.AspNetCore.Http;
-    using SixLabors.ImageSharp.Formats.Png;
-    using SixLabors.ImageSharp.PixelFormats;
     using SixLabors.ImageSharp.Processing;
 
     public class ImagesService : IImagesService
@@ -53,26 +51,6 @@ namespace CarAuction.Services.Data
             };
 
             return carImage;
-        }
-
-        public void Resizer(string imagesDirectory, string folderPath, string imageName)
-        {
-            var outDir = $"{imagesDirectory}/resized";
-                //var curDir = Directory.GetDirectoryRoot($"{imagesDirectory}/{folderPath}");
-            var imagePath = $"{imagesDirectory}/{folderPath}/{imageName}";
-
-            // foreach (FileInfo file in files.Where(x=> x.EndsWith(".png")).Select(x=> new FileInfo(x)))
-            // {
-                using (SixLabors.ImageSharp.Image<Rgba32> image = (SixLabors.ImageSharp.Image<Rgba32>)SixLabors.ImageSharp.Image.Load(imagePath))
-                {
-                    image.Mutate(x => x.Resize(256, 256));
-
-                    using Stream fileStream = new FileStream(outDir, FileMode.Create);
-
-                    image.Save(fileStream, new PngEncoder());
-                }
-
-            // }
         }
     }
 }

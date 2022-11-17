@@ -26,7 +26,6 @@ namespace CarAuction.Services.Data
 
         public Task<Bid> MakeBid(decimal amountOfBid, int carId, string userId)
         {
-            // SignalR problem with async methods
             this.UpdateCarPrice(amountOfBid, carId);
 
             var bid = new Bid

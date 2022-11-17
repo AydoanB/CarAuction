@@ -66,11 +66,6 @@ namespace CarAuction.Services.Data
                 .To<T>()
                 .ToListAsync();
 
-            if (watchedCars == null)
-            {
-                throw new ArgumentNullException(EmptyWatchedCarsCollection);
-            }
-
             return watchedCars;
         }
 
@@ -107,8 +102,8 @@ namespace CarAuction.Services.Data
 
         public async Task<bool> IsInUsersWatchlist(string userId, int carId)
         {
-            var car = await ReturnCarIfExistingAsync(carId);
-            var user = await ReturnUserWatchlistAsync(userId);
+            var car = await this.ReturnCarIfExistingAsync(carId);
+            var user = await this.ReturnUserWatchlistAsync(userId);
 
             return user.WatchedCars.Contains(car);
         }
