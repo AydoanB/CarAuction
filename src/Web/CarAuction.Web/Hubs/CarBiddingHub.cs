@@ -1,3 +1,5 @@
+using System;
+
 namespace CarAuction.Web.Hubs
 {
     using System.Security.Claims;
@@ -21,19 +23,32 @@ namespace CarAuction.Web.Hubs
         public async Task Send(decimal amountOfBid, int carId)
         {
             var user = this.Context.User;
-
-            var model = await this.bidsService.MakeBid(amountOfBid, carId, user.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            var viewModel = new BidViewModel
+            try
             {
-                UserName = user.Identity.Name,
-                CreatedOn = model.CreatedOn.ToString("g"),
-                AmountOfBid = model.AmountOfBid,
-            };
+                var model = await this.bidsService.MakeBid(amountOfBid, carId,
+                    user.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            await this.Groups.AddToGroupAsync(this.Context.ConnectionId, carId.ToString());
+                var viewModel = new BidViewModel
+                {
+                    UserName = user.Identity.Name,
+                    CreatedOn = model.CreatedOn.ToString("g"),
+                    AmountOfBid = model.AmountOfBid,
+                };
 
-            await this.Clients.Group(carId.ToString()).SendAsync("NewBid", viewModel);
+                await this.Groups.AddToGroupAsync(this.Context.ConnectionId, carId.ToString());
+
+                await this.Clients.Group(carId.ToString()).SendAsync("NewBid", viewModel);
+            }
+            catch (NullReferenceException nullRefExc)
+            {
+                Console.WriteLine(nullRefExc);
+                throw;
+            }
+            catch (InvalidOperationException invalidOpsExc)
+            {
+                Console.WriteLine(invalidOpsExc);
+                throw;
+            }
         }
     }
 }
