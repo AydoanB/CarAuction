@@ -1,7 +1,6 @@
-using System;
-
 namespace CarAuction.Web.Hubs
 {
+    using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -25,8 +24,7 @@ namespace CarAuction.Web.Hubs
             var user = this.Context.User;
             try
             {
-                var model = await this.bidsService.MakeBid(amountOfBid, carId,
-                    user.FindFirstValue(ClaimTypes.NameIdentifier));
+                var model = await this.bidsService.MakeBid(amountOfBid, carId, user.FindFirst(ClaimTypes.NameIdentifier).Value);
 
                 var viewModel = new BidViewModel
                 {

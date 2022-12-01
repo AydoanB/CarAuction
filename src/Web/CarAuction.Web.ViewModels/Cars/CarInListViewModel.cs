@@ -16,7 +16,7 @@ public class CarInListViewModel : IMapFrom<Car>, IHaveCustomMappings
 
     public decimal StartingPrice { get; set; }
 
-    public decimal BuyNowPrice { get; set; }
+    public decimal CurrentPrice { get; set; }
     public long Milleage { get; set; }
 
     public VehicleType ModelVehicleType { get; set; }

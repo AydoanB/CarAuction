@@ -2,7 +2,6 @@
 
 @foreach (var car in Model.Cars)
 {
-                @* <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id"> *@
     <div class="col-lg-4 col-md-6 mb-2">
         <div class="rent-item mb4">
             <img class="img--cover" src="@car.ImageUrl" alt="">
@@ -22,14 +21,14 @@
                 </div>
                 <div class="px-2 border-left border-right">
                     <i class="fa-sharp fa-solid fa-dollar-sign text-primary mr-1"></i>
-                    <span>@car.StartingPrice</span>
+                    <span>@( car.CurrentPrice == 0 ? car.StartingPrice : car.CurrentPrice)</span>
                 </div>
                 <div class="px-2">
                     <i class="fa-sharp fa-solid fa-location-dot text-primary mr-1"></i>
                     <span>@car.AuctionLocationName</span>
                 </div>
             </div>
-            <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View</a>
+            <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View </a>
         </div>
     </div>
 }
