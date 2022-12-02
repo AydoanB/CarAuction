@@ -11,7 +11,10 @@ using CarAuction.Services.Mapping;
 public class CarInListViewModel : IMapFrom<Car>, IHaveCustomMappings
 {
     public int Id { get; set; }
-    public string Title { get; set; }
+
+    public string ModelName { get; set; }
+
+    public string ModelManufacturerName { get; set; }
     public string ImageUrl { get; set; }
 
     public decimal StartingPrice { get; set; }
@@ -27,10 +30,6 @@ public class CarInListViewModel : IMapFrom<Car>, IHaveCustomMappings
     public void CreateMappings(IProfileExpression configuration)
     {
         configuration.CreateMap<Car, CarInListViewModel>()
-            .ForMember(
-                x => x.Title,
-                opt =>
-                    opt.MapFrom(x => $"{x.Model.Manufacturer.Name} - {x.Model.Name}"))
             .ForMember(x => x.ImageUrl, opt =>
                 opt.MapFrom(x => $"/images/{GlobalConstants.CarsResizedImagesFolder}/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
     }

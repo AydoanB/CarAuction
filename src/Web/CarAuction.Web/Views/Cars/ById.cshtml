@@ -220,9 +220,8 @@
         $("#bidBtn").click(function (e){
         e.preventDefault();
         var amount = $("#bidAmount").val();
-        connection.invoke("Send",parseFloat(amount), @Model.Id);    
+        connection.invoke("Send",parseFloat(amount), @Model.Id).catch((e)=>alert(e));    
         });
-    
         connection.start().catch(function (err) {
         return console.error(err.toString());
     });

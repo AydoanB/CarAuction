@@ -1,34 +1,82 @@
 @model CarAuction.Web.ViewModels.Cars.CarsListViewModel
 
-@foreach (var car in Model.Cars)
+@* @foreach (var car in Model.Cars) *@
+@* { *@
+@*     <div class="col-lg-4 col-md-6 mb-2"> *@
+@*         <div class="rent-item mb4"> *@
+@*             <img class="img--cover" src="@car.ImageUrl" alt=""> *@
+@*             <h4 class="text-uppercase mb-4 text-center">@car.Title</h4> *@
+@*             <div class="d-flex justify-content-center mb-4"> *@
+@*                 <div class="px-2"> *@
+@*                     <i class="fa-regular fa-calendar-days text-primary mr-1"></i> *@
+@*                     <span>@car.ModelYearOfProduction</span> *@
+@*                 </div> *@
+@*                 <div class="px-2 border-left border-right"> *@
+@*                     <i class="fa fa-cogs text-primary mr-1"></i> *@
+@*                     <span>@car.ModelVehicleType.ToString()</span> *@
+@*                 </div> *@
+@*                 <div class="px-2"> *@
+@*                     <i class="fa fa-road text-primary mr-1"></i> *@
+@*                     <span>@car.Milleage</span> *@
+@*                 </div> *@
+@*                 <div class="px-2 border-left border-right"> *@
+@*                     <i class="fa-sharp fa-solid fa-dollar-sign text-primary mr-1"></i> *@
+@*                     <span>@( car.CurrentPrice == 0 ? car.StartingPrice : car.CurrentPrice)</span> *@
+@*                 </div> *@
+@*                 <div class="px-2"> *@
+@*                     <i class="fa-sharp fa-solid fa-location-dot text-primary mr-1"></i> *@
+@*                     <span>@car.AuctionLocationName</span> *@
+@*                 </div> *@
+@*             </div> *@
+@*             <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View </a> *@
+@*         </div> *@
+@*     </div> *@
+@* } *@
+
+@section Styles
 {
-    <div class="col-lg-4 col-md-6 mb-2">
-        <div class="rent-item mb4">
-            <img class="img--cover" src="@car.ImageUrl" alt="">
-            <h4 class="text-uppercase mb-4 text-center">@car.Title</h4>
-            <div class="d-flex justify-content-center mb-4">
-                <div class="px-2">
-                    <i class="fa-regular fa-calendar-days text-primary mr-1"></i>
-                    <span>@car.ModelYearOfProduction</span>
-                </div>
-                <div class="px-2 border-left border-right">
-                    <i class="fa fa-cogs text-primary mr-1"></i>
-                    <span>@car.ModelVehicleType.ToString()</span>
-                </div>
-                <div class="px-2">
-                    <i class="fa fa-road text-primary mr-1"></i>
-                    <span>@car.Milleage</span>
-                </div>
-                <div class="px-2 border-left border-right">
-                    <i class="fa-sharp fa-solid fa-dollar-sign text-primary mr-1"></i>
-                    <span>@( car.CurrentPrice == 0 ? car.StartingPrice : car.CurrentPrice)</span>
-                </div>
-                <div class="px-2">
-                    <i class="fa-sharp fa-solid fa-location-dot text-primary mr-1"></i>
-                    <span>@car.AuctionLocationName</span>
-                </div>
-            </div>
-            <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id" class="btn btn-primary btn-md col-md-12 rounded"> View </a>
-        </div>
-    </div>
+  <link rel="stylesheet" href="css/customInventory.css" asp-append-version="true">
 }
+
+<body>
+<!--INVENTORY SECTION-->
+  <section class="inventory py-5" id="inventory">
+    <div>
+      <!--Cars-->
+      <div class="row">
+       @foreach (var car in Model.Cars)
+       {
+         <!--Single Car-->
+       <div class="col-10 mx-auto my-3 col-md-6 col-lg-4">
+         <div class="card car-card">
+           <a asp-action="ById" asp-route-id="@car.Id">
+           <img src="@car.ImageUrl" class="card-img-top car-img" alt="car">
+           </a>
+           <!--Card Body-->
+           <div class="card-body">
+             <div class="car-info d-flex justify-content-between">
+               <!--First Flex Child-->
+               <div class="car-text text-uppercase">
+                 <h6 class="font-weight-bold ">@car.ModelManufacturerName</h6>
+                 <h6>@car.ModelName</h6>
+               </div>
+               <!--Second Flex Child-->
+               <h5 class="car-value align-self-center py-6 px-1"> <span class="car-price">@car.CurrentPrice BGN</span></h5>
+               <h5 class="car-value align-self-center py-6 px-1"> <span class="car-price">@car.StartingPrice BGN</span></h5>
+             </div>
+           </div>
+           <!--End of Card -->
+           <div class="card-footer text-capitalize d-flex justify-content-between">
+             <p class=""><span class=""><i class="fas fa-car pr-1"></i></span>@car.ModelVehicleType</p>
+             <p class=""><span class=""><i class="fas fa-calendar-days pr-1"></i></span>@car.ModelYearOfProduction</p>
+             <p class=""><span class=""><i class="fas fa-location-pin pr-1"></i></span>@car.AuctionLocationName</p>
+           </div>
+         </div>
+       </div>
+         <!--End of Single Car-->
+       }
+      </div>
+    </div>
+  </section>
+  <!--END OF INVENTORY SECTION-->
+</body>
