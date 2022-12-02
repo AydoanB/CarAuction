@@ -113,7 +113,7 @@
                 </div>
                 @if (Model.BuyNowPrice != null)
                 {
-                    <a class="btn btn-success">Buy it now!</a>
+                    <a data-toggle="modal" data-target="#payModal" class="btn btn-success">Buy it now!</a>
                 }
             </div>
             <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt</p>
@@ -152,7 +152,7 @@
     </div>
 </div>
 <!-- Delete Modal -->
-<div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -188,8 +188,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" onclick="payForm.submit()">Pay</button>
-            </div>
+                <form method="post">
+                <button asp-action="Delete" asp-route-id="@Model.Id" type="submit" class="btn btn-success">Pay</button>
+                </form>
+                </div>
         </div>
     </div>
 </div>
@@ -206,18 +208,18 @@
     <script asp-append-version="true">
     	$(document).ready(function() {
     			 $('.minus').click(function () {
-    				var $input = $(this).parent().find('input');
+    				const $input = $(this).parent().find('input');
                     if (parseInt($input.val()) > @Model.StartingPrice){
                        $('.minus').css({ pointerEvents: "none" });
                     }
-    				var count = parseInt($input.val()) - 300;
+    				let count = parseInt($input.val()) - 300;
     				count = count < 1 ? 1 : count;
     				$input.val(count);
     				$input.change();
     				return false;
     			});
     			$('.plus').click(function () {
-    				var $input = $(this).parent().find('input');
+    				const $input = $(this).parent().find('input');
     				$input.val(parseInt($input.val()) + 300);
     				$input.change();
     				return false;
@@ -244,7 +246,7 @@
         const amount = $("#bidAmount").val();
         connection.invoke("Send", parseFloat(amount), @Model.Id) 
         .catch(function (e) {
-            console.log(e);
+            alert(e)
             });    
         });
         connection.start().catch(function (err) {
