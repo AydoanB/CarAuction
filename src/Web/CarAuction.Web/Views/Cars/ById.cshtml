@@ -71,7 +71,7 @@
             <div>
                 <div class="container">
                     <div class="mapouter">
-                         <span>Start date: @Model.Auction.StartDate.ToString("g")</span>
+                        <span>Start date: @Model.Auction.StartDate.ToString("g")</span>
                         <span>End date: @Model.Auction.EndDate.ToString("g")</span>
                         <div class="gmap_canvas">
                             <iframe width="350" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q=@Model.Auction.LocationName%&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="number">
                         <span class="minus">-</span>
-                        <input id="bidAmount" type="text" value="@Model.StartingPrice"/>
+                        <input id="bidAmount" type="text" value="@Model.CurrentPrice"/>
                         <span class="plus">+</span>
                         <button id="bidBtn" class="btn btn-success">Place bid</button>
                         @if (Model.Bids.Any())
@@ -151,6 +151,7 @@
         </div>
     </div>
 </div>
+<!-- Delete Modal -->
 <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -168,6 +169,26 @@
                 <form method="post">
                     <button asp-action="Delete" asp-route-id="@Model.Id" type="submit" class="btn btn-danger">Delete</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pay Modal -->
+<div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Pay</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Pay to owner - $@(Model.BuyNowPrice)
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="payForm.submit()">Pay</button>
             </div>
         </div>
     </div>
@@ -214,16 +235,20 @@
         connection.on("NewBid",
         function (bid){
         $("#bidAmount").val(bid.amountOfBid);
-        $("#tableBodyBids").prepend(`<tr><th scope="row">${bid.userName}</th><td>${bid.amountOfBid}</td><td>${bid.createdOn}</td></tr>`);
+        $("#tableBodyBids")
+        .prepend(`<tr><th scope="row">${bid.userName}</th><td>${bid.amountOfBid}</td><td>${bid.createdOn}</td></tr>`);
     });
     
         $("#bidBtn").click(function (e){
         e.preventDefault();
-        var amount = $("#bidAmount").val();
-        connection.invoke("Send",parseFloat(amount), @Model.Id).catch((e)=>alert(e));    
+        const amount = $("#bidAmount").val();
+        connection.invoke("Send", parseFloat(amount), @Model.Id) 
+        .catch(function (e) {
+            console.log(e);
+            });    
         });
         connection.start().catch(function (err) {
-        return console.error(err.toString());
+        return console.error(typeof err);
     });
         
     </script>

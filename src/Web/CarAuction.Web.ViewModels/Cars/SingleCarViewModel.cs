@@ -35,6 +35,8 @@ public class SingleCarViewModel : IMapFrom<Car>, IHaveCustomMappings
 
     public decimal BuyNowPrice { get; set; }
 
+    public decimal CurrentPrice { get; set; }
+
     public int ModelYearOfProduction { get; set; }
 
     public TransmissionType ModelEngineTransmissionType { get; set; }
