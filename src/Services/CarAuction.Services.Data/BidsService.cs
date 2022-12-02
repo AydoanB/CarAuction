@@ -59,11 +59,6 @@ namespace CarAuction.Services.Data
                 .Cars
                 .FirstOrDefault(x => x.Id == carId);
 
-            if (car == null)
-            {
-                throw new NullReferenceException(UnexistingListing);
-            }
-
             if (car.CurrentPrice >= bidAmount)
             {
                 throw new InvalidOperationException(string.Format(InvalidBid, car.CurrentPrice));
