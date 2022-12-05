@@ -1,4 +1,4 @@
-@model RandomCarsViewModel
+@model CarAuction.Web.ViewModels.Cars.RandomCarsViewModel
 
  <!-- Related Car Start -->
     <div class="container-fluid pb-5">
@@ -9,7 +9,7 @@
                 {
                     <div class="rent-item">
                         <img class="img-fluid mb-4" src="@car.ImageUrl" alt="">
-                        <h4 class="text-uppercase mb-4">@car.Title</h4>
+                        <h4 class="text-uppercase mb-4">@car.ModelManufacturerName</h4>
                         <div class="d-flex justify-content-center mb-4">
                             <div class="px-2">
                                 <i class="fa fa-car text-primary mr-1"></i>
@@ -24,7 +24,7 @@
                                 <span>@car.Milleage</span>
                             </div>
                         </div>
-                        <a class="btn btn-primary px-3" href="">$@car.BuyNowPrice</a>
+                        <a class="btn btn-primary px-3" href="">$@car.CurrentPrice</a>
                     </div>
                 }
             </div>

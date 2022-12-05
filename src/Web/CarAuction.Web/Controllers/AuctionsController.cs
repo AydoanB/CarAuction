@@ -6,7 +6,6 @@ namespace CarAuction.Web.Controllers
     using CarAuction.Services.Data;
     using CarAuction.Web.ViewModels;
     using CarAuction.Web.ViewModels.Cars;
-    using CarAuction.Web.ViewModels.Watchlist;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -73,10 +72,9 @@ namespace CarAuction.Web.Controllers
 
         public async Task<IActionResult> GetCarsByAuction(int id)
         {
-            var viewModel = new SimpleCarListViewModel
-            {
-                WatchedCars = this.auctionsService.GetCarsByAuction<SimpleCarDetailsViewModel>(id),
-            };
+            var viewModel = new RandomCarsViewModel();
+
+            viewModel.Cars = await this.auctionsService.GetCarsByAuction<CarInListViewModel>(id);
 
             return this.View(viewModel);
         }

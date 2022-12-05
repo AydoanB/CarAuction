@@ -8,8 +8,8 @@ namespace CarAuction.Services.Data
     using CarAuction.Data.Common.Repositories;
     using CarAuction.Data.Models.AuctionModels;
     using CarAuction.Services.Mapping;
-
     using CarAuction.Web.ViewModels;
+    using Microsoft.EntityFrameworkCore;
 
     public class AuctionsService : IAuctionsService
     {
@@ -81,14 +81,14 @@ namespace CarAuction.Services.Data
             return this.auctionRepository.All().FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<T> GetCarsByAuction<T>(int id)
+        public async Task<IEnumerable<T>> GetCarsByAuction<T>(int id)
         {
-            return this.auctionRepository
+            return await this.auctionRepository
                 .AllAsNoTracking()
-                .AsQueryable()
                 .Where(x => x.Id == id)
-                .Select(x => x.CarsInAuction)
-                .To<T>();
+                .SelectMany(x => x.CarsInAuction)
+                .To<T>()
+                .ToListAsync();
         }
     }
 }

@@ -9,7 +9,6 @@ namespace CarAuction.Web.Controllers
     using CarAuction.Services.Data;
     using CarAuction.Web.ViewModels;
     using CarAuction.Web.ViewModels.Cars;
-    using CarAuction.Web.ViewModels.Watchlist;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
@@ -76,7 +75,7 @@ namespace CarAuction.Web.Controllers
                 return this.View(input);
             }
 
-            return this.RedirectToAction(nameof(All));
+            return this.RedirectToAction(nameof(this.All));
         }
 
         public async Task<IActionResult> All(string order, SearchCarInputModel searchModel, int id = 1)
@@ -237,16 +236,17 @@ namespace CarAuction.Web.Controllers
 
             try
             {
-                var viewModel = new SimpleCarListViewModel()
+                var viewModel = new RandomCarsViewModel()
                 {
-                    WatchedCars = await this.watchlistService.ReturnAllWatchedByUserAsync<SimpleCarDetailsViewModel>(userId),
+                    Cars = await this.watchlistService.ReturnAllWatchedByUserAsync<CarInListViewModel>(userId),
                 };
+
                 return this.View(viewModel);
             }
             catch (ArgumentNullException argNullExc)
             {
                 this.ModelState.AddModelError(string.Empty, argNullExc.Message);
-                return this.RedirectToAction(nameof(All));
+                return this.RedirectToAction(nameof(this.All));
             }
         }
 
@@ -254,14 +254,14 @@ namespace CarAuction.Web.Controllers
         {
             await this.autoDataScraper.PopulateDbWithDataWithScraping();
 
-            return this.Redirect(nameof(Add));
+            return this.Redirect(nameof(this.Add));
         }
 
         public async Task<IActionResult> ApiData([FromQuery] int limit)
         {
             await this.autoDataScraper.PopulateDbWithDataFromApi(limit);
 
-            return this.Redirect(nameof(Add));
+            return this.Redirect(nameof(this.Add));
         }
     }
 }
