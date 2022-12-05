@@ -1,3 +1,6 @@
+using System.Linq;
+using System.Net;
+
 namespace CarAuction.Web.Controllers
 {
     using System.Security.Claims;
@@ -76,6 +79,12 @@ namespace CarAuction.Web.Controllers
             {
                 Cars = await this.auctionsService.GetCarsByAuction<CarInListViewModel>(id),
             };
+
+            if (!viewModel.Cars.Any())
+            {
+                this.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                return this.RedirectToAction("PageNotFound", "Error");
+            }
 
             return this.View(viewModel);
         }
