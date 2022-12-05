@@ -72,9 +72,10 @@ namespace CarAuction.Web.Controllers
 
         public async Task<IActionResult> GetCarsByAuction(int id)
         {
-            var viewModel = new RandomCarsViewModel();
-
-            viewModel.Cars = await this.auctionsService.GetCarsByAuction<CarInListViewModel>(id);
+            var viewModel = new CarsListViewModel
+            {
+                Cars = await this.auctionsService.GetCarsByAuction<CarInListViewModel>(id),
+            };
 
             return this.View(viewModel);
         }
