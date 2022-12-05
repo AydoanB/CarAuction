@@ -16,7 +16,7 @@
          <!--Single Car-->
        <div class="col-10 mx-auto my-3 col-md-6 col-lg-4">
          <div class="card car-card">
-           <a asp-action="ById" asp-route-id="@car.Id">
+           <a asp-controller="Cars" asp-action="ById" asp-route-id="@car.Id">
            <img src="@car.ImageUrl" class="card-img-top car-img" alt="car">
            </a>
            <!--Card Body-->
