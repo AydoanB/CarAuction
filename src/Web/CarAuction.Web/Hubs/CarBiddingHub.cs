@@ -37,15 +37,9 @@ namespace CarAuction.Web.Hubs
 
                 await this.Clients.Group(carId.ToString()).SendAsync("NewBid", viewModel);
             }
-            catch (NullReferenceException nullRefExc)
-            {
-                Console.WriteLine(nullRefExc);
-                throw;
-            }
             catch (InvalidOperationException invalidOpsExc)
             {
-                Console.WriteLine(invalidOpsExc);
-                throw;
+                throw new HubException(invalidOpsExc.Message.Split(":")[0]);
             }
         }
     }

@@ -31,4 +31,8 @@
     <ProjectReference Include="..\CarAuction.Web.Infrastructure\CarAuction.Web.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Watchlist" />
+  </ItemGroup>
+
 </Project>
