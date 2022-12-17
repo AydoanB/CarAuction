@@ -18,7 +18,6 @@ namespace CarAuction.Data.Seeding
 
             await dbContext.Models.AddAsync(new Model()
             {
-                EngineId = 1,
                 Drivetrain = DrivetrainType.Rwd,
                 ManufacturerId = 1,
                 Name = "E92",
