@@ -60,8 +60,6 @@
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.Configure<StripeSettings>(configuration.GetSection("Stripe"));
-
             services.AddSingleton(configuration);
 
             // Data repositories
