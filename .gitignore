@@ -358,3 +358,5 @@ MigrationBackup/
 .idea/.idea.CarAuction/.idea/workspace.xml
 .idea/
 *src/Web/CarAuction.Web/wwwroot
+/src/Data/CarAuction.Data/appsettings.json
+/src/Web/CarAuction.Web/appsettings.json
